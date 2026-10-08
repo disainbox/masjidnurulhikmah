@@ -1,26 +1,4 @@
 {
-  "cats": [
-    "Renovasi",
-    "Kegiatan",
-    "Artikel",
-    "Pengumuman"
-  ],
-  "settings": {
-    "heroTitle": "Bantu Renovasi Masjid Jami' Nurul Hikmah",
-    "heroSub": "Karena setiap tetes keringat dan rupiah Anda, akan menjadi pahala yang tak terputus (amal jariyah).",
-    "heroArabic": "وَمَن يَحْفَظْهُ يَحْفَظْهُ اللَّهُ",
-    "target": 276468000,
-    "terkumpul": 197576985,
-    "bank": "Bank BRI",
-    "an": "Panitia Renovasi Masjid Jami Nurul Hikmah",
-    "rekening": "6849-01-020766-53-9",
-    "kontakTelp": "0815-7887-9961",
-    "kontakEmail": "renovasinurulhikmahnadri@gmail.com",
-    "pencairan": 70000000,
-    "saldo": 127576985,
-    "pencairanKet": "Pencairan Termin 1 · 14-09-2026"
-  },
-  "pages": [],
   "posts": [
     {
       "id": "p1",
@@ -30,7 +8,7 @@
       "date": "2026-10-08",
       "excerpt": "Per 8 Oktober 2026 total infaq terkumpul Rp 197.576.985 dari target Rp 276.468.000. Terima kasih kepada seluruh donatur di dalam dan luar negeri.",
       "cover": "",
-      "content": "<p>Assalamu'alaikum warahmatullahi wabarakatuh.</p><p>Alhamdulillah, berkat limpahan rahmat Allah SWT dan kebaikan hati seluruh donatur, hingga <b>8 Oktober 2026</b> dana infaq renovasi Masjid Jami' Nurul Hikmah telah mencapai <b>Rp 197.576.985</b> dari target <b>Rp 276.468.000</b> (±71%).</p><p>Angka ini bersifat sementara dan terus diperbarui sistem setelah verifikasi bukti transaksi. Rincian perolehan dan penyaluran dapat dilihat di halaman Laporan Infaq dan Laporan Keuangan Publik.</p><blockquote>“Siapa yang membangun masjid karena Allah, maka Allah akan membangunkan baginya rumah di surga.” (HR. Bukhari &amp; Muslim)</blockquote><p>Semoga Allah melipatgandakan pahala setiap donatur, keluarga, dan harta yang dikeluarkan di jalan-Nya. Jazakumullahu khairan.</p>"
+      "content": "<p>Assalamu'alaikum warahmatullahi wabarakatuh.</p><p>Alhamdulillah, berkat limpahan rahmat Allah SWT dan kebaikan hati seluruh donatur, hingga <b>8 Oktober 2026</b> dana infaq renovasi Masjid Jami' Nurul Hikmah telah mencapai <b>Rp 197.576.985</b> dari target <b>Rp 276.468.000</b> (±71%).</p><p>Angka ini bersifat sementara dan terus diperbarui sistem setelah verifikasi bukti transaksi. Rincian perolehan dan penyaluran dapat dilihat di halaman <a href=\"#/donatur\">Laporan Infaq</a> dan <a href=\"#/keuangan\">Laporan Keuangan Publik</a>.</p><blockquote>“Siapa yang membangun masjid karena Allah, maka Allah akan membangunkan baginya rumah di surga.” (HR. Bukhari &amp; Muslim)</blockquote><p>Semoga Allah melipatgandakan pahala setiap donatur, keluarga, dan harta yang dikeluarkan di jalan-Nya. Jazakumullahu khairan.</p>"
     },
     {
       "id": "p2",
@@ -40,7 +18,7 @@
       "date": "2026-09-15",
       "excerpt": "Pada 14 September 2026 panitia mencairkan dana termin pertama untuk pembelian material atap dan upah tukang tahap awal.",
       "cover": "",
-      "content": "<p>Pada tanggal <b>14 September 2026</b>, panitia renovasi telah melakukan pencairan dana <b>Termin 1 sebesar Rp 70.000.000</b>.</p><h3>Rencana penggunaan dana Termin 1</h3><ul><li>Pembelian material atap baru (genteng, rangka, kayu)</li><li>Upah tukang dan kenek tahap pembongkaran</li><li>Biaya konsumsi pekerja</li><li>Transportasi material ke lokasi</li></ul><p>Sisa saldo rekening infaq setelah pencairan: <b>Rp 127.576.985</b>. Seluruh pencairan dicatat dan dilaporkan secara transparan di halaman Laporan Keuangan Publik.</p><p>Doakan agar pekerjaan renovasi berjalan lancar, berkah, dan sesuai rencana.</p>"
+      "content": "<p>Pada tanggal <b>14 September 2026</b>, panitia renovasi telah melakukan pencairan dana <b>Termin 1 sebesar Rp 70.000.000</b>.</p><h3>Rencana penggunaan dana Termin 1</h3><ul><li>Pembelian material atap baru (genteng, rangka, kayu)</li><li>Upah tukang dan kenek tahap pembongkaran</li><li>Biaya konsumsi pekerja</li><li>Transportasi material ke lokasi</li></ul><p>Sisa saldo rekening infaq setelah pencairan: <b>Rp 127.576.985</b>. Seluruh pencairan dicatat dan dilaporkan secara transparan di halaman <a href=\"#/keuangan\">Laporan Keuangan Publik</a>.</p><p>Doakan agar pekerjaan renovasi berjalan lancar, berkah, dan sesuai rencana.</p>"
     },
     {
       "id": "p3",
@@ -50,7 +28,7 @@
       "date": "2026-09-01",
       "excerpt": "Sedekah jariyah adalah amalan yang pahalanya terus mengalir meski kita telah tiada. Membangun masjid adalah salah satu bentuknya yang utama.",
       "cover": "",
-      "content": "<p style=\"font-size:22px;color:#0e5c45;text-align:center;margin:10px 0;font-family:Amiri,serif;direction:rtl\">وَمَن يَبْنِ مَسْجِدًا لِّلَّهِ يَبْنِ اللَّهُ لَهُ بَيْتًا فِي الْجَنَّةِ</p><p style=\"text-align:center;font-style:italic;color:#6b7f78;font-size:13px;margin-bottom:20px\">“Siapa yang membangun masjid karena Allah, Allah akan membangunkan baginya rumah di surga.” (HR. Bukhari &amp; Muslim)</p><p>Masjid adalah rumah Allah. Setiap batu bata, setiap lembar genteng, dan setiap rupiah yang menyertainya — jika diniatkan karena Allah — akan menjadi <b>amal jariyah</b> yang pahalanya tidak terputus.</p><h3>Mengapa renovasi masjid termasuk amal jariyah?</h3><ul><li>Selama masjid digunakan untuk shalat, mengaji, dan menuntut ilmu — pahala terus mengalir kepada yang membiayainya.</li><li>Masjid yang nyaman menarik lebih banyak jamaah, sehingga kebaikan yang terjadi di dalamnya terus bertambah.</li><li>Generasi setelah kita pun akan merasakan manfaatnya.</li></ul><p>Mari jadikan kesempatan renovasi Masjid Jami' Nurul Hikmah sebagai tabungan akhirat kita.</p>"
+      "content": "<p class=\"arabic\" style=\"font-size:22px;color:var(--green);text-align:center;margin:10px 0\">وَمَن يَبْنِ مَسْجِدًا لِّلَّهِ يَبْنِ اللَّهُ لَهُ بَيْتًا فِي الْجَنَّةِ</p><p style=\"text-align:center;font-style:italic;color:var(--muted);font-size:13px;margin-bottom:20px\">“Siapa yang membangun masjid karena Allah, Allah akan membangunkan baginya rumah di surga.” (HR. Bukhari &amp; Muslim)</p><p>Masjid adalah rumah Allah. Setiap batu bata, setiap lembar genteng, dan setiap rupiah yang menyertainya — jika diniatkan karena Allah — akan menjadi <b>amal jariyah</b> yang pahalanya tidak terputus.</p><h3>Mengapa renovasi masjid termasuk amal jariyah?</h3><ul><li>Selama masjid digunakan untuk shalat, mengaji, dan menuntut ilmu — pahala terus mengalir kepada yang membiayainya.</li><li>Masjid yang nyaman menarik lebih banyak jamaah, sehingga kebaikan yang terjadi di dalamnya terus bertambah.</li><li>Generasi setelah kita pun akan merasakan manfaatnya.</li></ul><p>Mari jadikan kesempatan renovasi Masjid Jami' Nurul Hikmah sebagai tabungan akhirat kita. <a href=\"#/donatur\">Klik di sini untuk cara berdonasi.</a></p>"
     },
     {
       "id": "p4",
@@ -60,8 +38,30 @@
       "date": "2026-08-30",
       "excerpt": "Agar donasi Anda tercatat dengan benar dalam laporan publik, ikuti langkah konfirmasi yang benar setelah melakukan transfer.",
       "cover": "",
-      "content": "<p>Agar donasi Anda tercatat dengan benar dan muncul dalam laporan publik, mohon lakukan konfirmasi setelah transfer.</p><h3>Langkah konfirmasi</h3><ul><li>Transfer ke rekening <b>Bank BRI 6849-01-020766-53-9</b> a.n. Panitia Renovasi Masjid Jami Nurul Hikmah.</li><li>Simpan <b>bukti transfer</b> (screenshot / struk).</li><li>Konfirmasi via WhatsApp ke <b>0815-7887-9961</b> dengan format: <i>Nama · Kota/Wilayah · Nominal · Bukti transfer</i>.</li><li>Atau melalui email: <b>renovasinurulhikmahnadri@gmail.com</b>.</li></ul><p>Konfirmasi wajib menyertakan bukti transaksi. Tanpa bukti, donasi tidak dapat diverifikasi dan tidak akan masuk laporan. Untuk menjaga privasi, nomor kontak dan bukti tidak ditampilkan di laporan publik.</p>"
+      "content": "<p>Agar donasi Anda tercatat dengan benar dan muncul dalam <a href=\"#/donatur\">laporan publik</a>, mohon lakukan konfirmasi setelah transfer.</p><h3>Langkah konfirmasi</h3><ul><li>Transfer ke rekening <b>Bank BRI 6849-01-020766-53-9</b> a.n. Panitia Renovasi Masjid Jami Nurul Hikmah.</li><li>Simpan <b>bukti transfer</b> (screenshot / struk).</li><li>Konfirmasi dengan mengisi Form Konfirmasi Donasi.</li></ul><p>Konfirmasi wajib menyertakan bukti transaksi. Tanpa bukti, donasi tidak dapat diverifikasi dan tidak akan masuk laporan. Untuk menjaga privasi, nomor kontak dan bukti tidak ditampilkan di laporan publik.</p>"
     }
   ],
-  "publishedAt": "2026-10-08T00:00:00Z"
+  "cats": [
+    "Renovasi",
+    "Kegiatan",
+    "Artikel",
+    "Pengumuman"
+  ],
+  "pages": [],
+  "settings": {
+    "heroTitle": "Bantu Renovasi Masjid Jami' Nurul Hikmah",
+    "heroSub": "Karena setiap tetes keringat dan rupiah Anda, akan menjadi pahala yang tak terputus (amal jariyah).",
+    "heroArabic": "وَمَن يَحْفَظْهُ يَحْفَظْهُ اللَّهُ",
+    "target": 276468000,
+    "terkumpul": 197576985,
+    "pencairan": 70000000,
+    "saldo": 127576985,
+    "pencairanKet": "Pencairan Termin 1 · 14-09-2026",
+    "bank": "Bank BRI",
+    "an": "Panitia Renovasi Masjid Jami Nurul Hikmah",
+    "rekening": "6849-01-020766-53-9",
+    "kontakTelp": "0815-7887-9961",
+    "kontakEmail": "renovasinurulhikmahnadri@gmail.com"
+  },
+  "publishedAt": "2026-10-08T15:01:45.350Z"
 }
