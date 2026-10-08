@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Konfirmasi Donasi — Masjid Nurul Hikmah</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --emerald:#0d9669; --emerald-dark:#0a7a55; --emerald-light:#e6f7ef;
+  --ink:#1f2937; --muted:#6b7280; --cloud:#f3f4f6; --white:#ffffff;
+  --radius:16px; --radius-sm:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:#fafcfa;color:var(--ink);line-height:1.6;padding:40px 20px}
+.container{max-width:520px;margin:0 auto}
+.card{background:var(--white);border-radius:var(--radius);padding:28px;box-shadow:0 4px 12px rgba(13,150,105,.08)}
+h1{font-size:22px;margin-bottom:8px;color:var(--emerald)}
+.subtitle{color:var(--muted);margin-bottom:24px;font-size:14px}
+form{display:grid;gap:16px}
+.form-group{display:grid;gap:6px}
+label{font-weight:600;font-size:14px}
+input,select,textarea{padding:10px 14px;border:1px solid #e8f3ec;border-radius:var(--radius-sm);font-size:15px;outline:none;background:#fff}
+input:disabled{background:var(--cloud);color:var(--muted)}
+textarea{resize:none}
+.btn{padding:12px 24px;background:var(--emerald);color:#fff;border-radius:var(--radius-sm);font-weight:700;font-size:16px;border:none;cursor:pointer;transition:.2s;width:100%}
+.btn:hover{background:var(--emerald-dark)}
+.btn:disabled{opacity:.7;cursor:not-allowed}
+.preview{margin-top:8px;display:none}
+.preview img{max-width:200px;border-radius:var(--radius-sm);border:1px solid #e5e7eb}
+.msg{margin-top:16px;padding:14px;border-radius:var(--radius-sm);font-weight:500;display:none}
+.msg.success{background:#f0fdf4;color:#166534;border:1px solid #bbf7d0}
+.msg.error{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca}
+.back{display:inline-block;margin-top:20px;color:var(--emerald);font-weight:600;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <h1>Konfirmasi Donasi</h1>
+    <p class="subtitle">Masjid Jami' Nurul Hikmah — Dusun Nadri, Krendetan</p>
+    
+    <form id="formKonfirmasi">
+      <div class="form-group" style="display:flex;align-items:center;gap:8px">
+        <input type="checkbox" id="anonim">
+        <label for="anonim" style="margin:0">Berinfaq secara anonim ("Hamba Allah")</label>
+      </div>
+      
+      <div class="form-group">
+        <label for="namaField">Nama / Atas Nama</label>
+        <input type="text" id="namaField" placeholder="Contoh: Siti Aisyah">
+      </div>
+      
+      <div class="form-group">
+        <label for="wilayah">Wilayah / Asal</label>
+        <input type="text" id="wilayah" placeholder="Contoh: Dusun Nadri, Purworejo">
+      </div>
+      
+      <div class="form-group">
+        <label for="nominal">Nominal Donasi (Rp) <span style="color:red">*</span></label>
+        <input type="number" id="nominal" min="100" placeholder="Contoh: 500000" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="metode">Metode Pembayaran</label>
+        <select id="metode">
+          <option value="Transfer BRI">Transfer Bank BRI</option>
+          <option value="Transfer Bank Lain">Transfer Bank Lain</option>
+          <option value="Tunai / Kotak Infaq">Tunai / Kotak Infaq</option>
+          <option value="Lainnya">Lainnya</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="keterangan">Doa / Pesan (opsional)</label>
+        <textarea id="keterangan" rows="2" placeholder="Semoga berkah untuk keluarga"></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label for="buktiFile">Unggah Bukti Transaksi <span style="color:red">*</span></label>
+        <input type="file" id="buktiFile" accept="image/*" required>
+        <div class="preview" id="previewBukti">
+          <img id="imgPreview" alt="Pratinjau bukti">
+        </div>
+      </div>
+      
+      <button type="submit" id="btnKirim" class="btn">✅ Kirim Konfirmasi</button>
+      
+      <div id="pesanForm" class="msg"></div>
+    </form>
+  </div>
+  
+  <a href="#donatur" class="back">← Kembali ke Laporan Donatur</a>
+</div>
+
+<script>
+const buktiFile = document.getElementById('buktiFile');
+const previewBukti = document.getElementById('previewBukti');
+const imgPreview = document.getElementById('imgPreview');
+let buktiBase64 = '';
+
+// Anonim toggle
+document.getElementById('anonim').addEventListener('change', function(){
+  const namaField = document.getElementById('namaField');
+  namaField.disabled = this.checked;
+  namaField.value = this.checked ? '' : namaField.value;
+});
+
+// Preview gambar
+buktiFile.addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) { buktiBase64 = ''; previewBukti.style.display = 'none'; return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    buktiBase64 = e.target.result;
+    imgPreview.src = buktiBase64;
+    previewBukti.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+});
+
+// Kirim data
+document.getElementById('formKonfirmasi').addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = document.getElementById('btnKirim');
+  const pesan = document.getElementById('pesanForm');
+  const isAnonim = document.getElementById('anonim').checked;
+  const nama = isAnonim ? 'Hamba Allah' : (document.getElementById('namaField').value.trim() || 'Hamba Allah');
+  const wilayah = document.getElementById('wilayah').value.trim() || '-';
+  const nominal = parseInt(document.getElementById('nominal').value);
+  const metode = document.getElementById('metode').value;
+  const keterangan = document.getElementById('keterangan').value.trim();
+
+  // Validasi
+  if (!nominal || nominal < 100) {
+    pesan.className = 'msg error';
+    pesan.textContent = '⚠️ Isi nominal dengan benar.';
+    pesan.style.display = 'block';
+    return;
+  }
+  if (!buktiBase64) {
+    pesan.className = 'msg error';
+    pesan.textContent = '⚠️ Unggah bukti transaksi terlebih dahulu.';
+    pesan.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Mengirim...';
+  pesan.style.display = 'none';
+
+  try {
+    // === GANTI URL DI BAWAH DENGAN MILIK ANDA ===
+    const URL_WEB_APP = 'https://script.google.com/macros/s/AKfycbx-NV_eO9OCvlxA0DNUxkL2uyr9vu_9Un3Dz2NyE-E-OykhVmgYX3m_Vh9kGQC6Pmf9Dw/exec';
+    // ============================================
+    
+    await fetch(URL_WEB_APP, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nama, wilayah, nominal, metode, keterangan, buktiGambar: buktiBase64 })
+    });
+
+    pesan.className = 'msg success';
+    pesan.innerHTML = '✅ <strong>Terima kasih!</strong> Konfirmasi donasi berhasil dicatat. Semoga Allah membalas kebaikan Anda.';
+    pesan.style.display = 'block';
+    
+    // Reset form
+    document.getElementById('formKonfirmasi').reset();
+    previewBukti.style.display = 'none';
+    buktiBase64 = '';
+    
+  } catch (err) {
+    pesan.className = 'msg error';
+    pesan.textContent = '❌ Gagal mengirim. Coba lagi atau hubungi panitia. ' + err.message;
+    pesan.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '✅ Kirim Konfirmasi';
+  }
+});
+</script>
+</body>
+</html>

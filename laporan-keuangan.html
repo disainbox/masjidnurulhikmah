@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laporan Keuangan Renovasi — Masjid Nurul Hikmah</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f9f6; --card:#ffffff; --text:#0f241b; --muted:#5b7a6c;
+  --accent:#0d9669; --accent-soft:rgba(13,150,105,.12);
+  --accent2:#d4724a; --accent2-soft:rgba(212,114,74,.12);
+  --danger:#dc2626; --border:rgba(15,36,27,.10);
+  --shadow:0 1px 3px rgba(15,36,27,.06),0 10px 30px rgba(15,36,27,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Nunito',system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 18px 56px}
+
+/* === HEADER / HERO === */
+.hero{
+  background:linear-gradient(135deg,#0d9669 0%,#0a7a55 60%,#086044 100%);
+  color:#fff;border-radius:18px;padding:30px 28px;position:relative;overflow:hidden;
+  box-shadow:var(--shadow);margin-bottom:22px;display:flex;align-items:center;gap:18px;flex-wrap:wrap
+}
+.hero::after{content:"";position:absolute;right:-60px;top:-60px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.08)}
+.hero::before{content:"";position:absolute;right:40px;bottom:-90px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.06)}
+.hero .logo{width:52px;height:52px;flex:0 0 auto;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:14px;display:flex;align-items:center;justify-content:center;color:#fff;position:relative;z-index:1}
+.hero .info{position:relative;z-index:1;flex:1;min-width:240px}
+.hero h1{margin:0 0 6px;font-size:clamp(20px,2.8vw,28px);font-weight:900;letter-spacing:-.01em}
+.hero p{margin:0;color:rgba(255,255,255,.85);font-size:14.5px}
+.hero-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;position:relative;z-index:1}
+.pill{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);padding:5px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.02em}
+.pill .dot{width:7px;height:7px;border-radius:50%;background:#7dffc8;animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.status{margin:.9rem 0;font-size:.88rem;color:var(--muted);display:flex;align-items:center;gap:.5rem;min-height:1.4em}
+.status.err{color:var(--danger);font-weight:600}
+.refresh{background:none;border:1.5px solid var(--border);color:var(--muted);font-family:inherit;font-size:.78rem;font-weight:700;padding:.3rem .7rem;border-radius:8px;cursor:pointer;margin-left:auto;transition:all .2s}
+.refresh:hover{color:var(--accent);border-color:var(--accent)}
+
+/* === KPI CARDS === */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:22px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 18px 16px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent)}
+.kpi.orange::before{background:var(--accent2)}
+.kpi.red::before{background:var(--danger)}
+.kpi .label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.kpi .value{font-size:clamp(20px,2.2vw,26px);font-weight:900;letter-spacing:-.01em;line-height:1.15}
+.kpi .sub{font-size:12.5px;color:var(--muted);margin-top:5px;font-weight:600}
+
+/* === PROGRESS BAR === */
+.progress-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow);margin-bottom:22px}
+.progress-card .top{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.progress-card .top .t{font-weight:800;font-size:15px}
+.progress-card .top .pct{font-weight:900;color:var(--accent2);font-size:18px}
+.bar-track{height:14px;background:var(--accent-soft);border-radius:999px;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--accent2),#e8916a);border-radius:999px;transition:width 1s ease;width:0%}
+.progress-card .note{font-size:12.5px;color:var(--muted);margin-top:8px}
+
+/* === CHARTS === */
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px}
+@media(max-width:760px){.charts{grid-template-columns:1fr}}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+.panel h3{margin:0 0 14px;font-size:15px;font-weight:800;display:flex;align-items:center;gap:8px}
+.panel h3::before{content:"";width:8px;height:8px;border-radius:3px;background:var(--accent);display:inline-block}
+.canvas-wrap{position:relative;height:260px}
+.empty-state{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.88rem;font-weight:600}
+
+/* === TABLE === */
+.table-panel{background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:22px}
+.table-head{padding:16px 18px 10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.table-head h3{margin:0;font-size:15px;font-weight:800}
+.table-head .cnt{font-size:12px;color:var(--muted);font-weight:700}
+.table-scroll{max-height:480px;overflow-y:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{position:sticky;top:0;background:#f0f6f2;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em;padding:10px 14px;text-align:left;z-index:2;border-bottom:1px solid var(--border)}
+tbody td{padding:10px 14px;border-bottom:1px solid rgba(15,36,27,.06);vertical-align:middle}
+tbody tr:nth-child(even){background:#fafdfb}
+tbody tr:hover{background:var(--accent-soft)}
+.badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:800}
+.badge.in{background:var(--accent-soft);color:var(--accent)}
+.badge.out{background:var(--accent2-soft);color:var(--accent2)}
+td.num{font-weight:800;text-align:right;white-space:nowrap}
+td.num.in{color:var(--accent)}
+td.num.out{color:var(--accent2)}
+.empty{padding:32px;text-align:center;color:var(--muted);font-size:.9rem;font-weight:600}
+
+/* === FOOTER === */
+.footer{text-align:center;font-size:12.5px;color:var(--muted);line-height:1.7;padding:20px 10px;border-top:1px solid var(--border);margin-top:10px}
+.footer a{color:var(--accent);font-weight:800;text-decoration:none}
+.loading{display:inline-block;width:14px;height:14px;border:2.5px solid var(--accent-soft);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle;margin-right:.4rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <!-- HEADER -->
+  <div class="hero">
+    <div class="logo" aria-hidden="true">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2c-1.2 1.6-3 2.6-3 4.2A3.3 3.3 0 0 0 12 9.5a3.3 3.3 0 0 0 3-3.3C15 4.6 13.2 3.6 12 2z"/>
+        <path d="M4 21v-7a8 8 0 0 1 16 0v7"/>
+        <path d="M2 21h20"/>
+        <path d="M9 21v-3a3 3 0 0 1 6 0v3"/>
+      </svg>
+    </div>
+    <div class="info">
+      <h1>Laporan Keuangan</h1>
+      <p>Laporan Pertanggungjawaban Keuangan Renovasi &mdash; Pemasukan & Pengeluaran</p>
+      <div class="hero-meta">
+        <span class="pill"><span class="dot"></span><span id="status">Memuat data…</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATUS BAR -->
+  <div class="status" id="loadStatus">
+    <span class="loading"></span>Memuat data laporan...
+    <button class="refresh" onclick="load()">Muat ulang</button>
+  </div>
+
+  <!-- KPI CARDS -->
+  <div class="kpis" id="metrics" style="display:none">
+    <div class="kpi">
+      <div class="label">Total Pemasukan</div>
+      <div class="value" id="masuk">Rp 0</div>
+      <div class="sub" id="cMasuk">0 transaksi</div>
+    </div>
+    <div class="kpi red">
+      <div class="label">Total Pengeluaran</div>
+      <div class="value" id="keluar">Rp 0</div>
+      <div class="sub" id="cKeluar">0 transaksi</div>
+    </div>
+    <div class="kpi orange">
+      <div class="label">Saldo / Sisa Dana</div>
+      <div class="value" id="saldo">Rp 0</div>
+      <div class="sub">Pemasukan dikurangi pengeluaran</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Jumlah Transaksi</div>
+      <div class="value" id="trx">0</div>
+      <div class="sub" id="lastTrx">—</div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-card" id="progressSection" style="display:none">
+    <div class="top">
+      <span class="t">Dana Terkumpul vs Target Renovasi</span>
+      <span class="pct" id="pct">0%</span>
+    </div>
+    <div class="bar-track"><div class="bar-fill" id="progressBar"></div></div>
+    <div class="note" id="progressNote"></div>
+  </div>
+
+  <!-- CHARTS -->
+  <div class="charts" id="chartSection" style="display:none">
+    <div class="panel">
+      <h3>Pemasukan vs Pengeluaran per Bulan</h3>
+      <div class="canvas-wrap">
+        <canvas id="cBulanan"></canvas>
+        <div class="empty-state" id="eBulanan" style="display:none">Belum ada data</div>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>Rincian Pengeluaran per Kategori</h3>
+      <div class="canvas-wrap">
+        <canvas id="cKategori"></canvas>
+        <div class="empty-state" id="eKategori" style="display:none">Belum ada pengeluaran</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-panel" id="tableSection" style="display:none">
+    <div class="table-head">
+      <h3>Riwayat Transaksi</h3>
+      <span class="cnt" id="tableCnt">—</span>
+    </div>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:95px">Tanggal</th>
+            <th style="width:95px">Jenis</th>
+            <th>Kategori</th>
+            <th>Keterangan</th>
+            <th style="width:130px;text-align:right">Jumlah</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div class="empty" id="tableEmpty" style="display:none">Belum ada transaksi yang dilaporkan.</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer" id="footer">Panitia Masjid Nurul Hikmah.</div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  // =========================================================
+  // WAJIB DIISI: URL Web App Google Apps Script Anda
+  // =========================================================
+  var MNH_URL = 'https://script.google.com/macros/s/AKfycbxHvggXge7w4nmb-gD9_40RUXJLv3D9IhUwuSyB-O4qJYRNdnbMMogNgO7ht44khr_Z/exec';
+  // Isi target dana renovasi dalam Rupiah, isi 0 untuk menyembunyikan
+  var MNH_TARGET = 0;
+
+  var PALETTE = ['#0d9669','#d4724a','#0a7a55','#e8916a','#5b7a6c','#086044','#b05c3a','#375f4f','#0c855c','#965436'];
+  var records = [];
+  var chartB = null, chartK = null;
+
+  var $ = function(id){ return document.getElementById(id); };
+  var rupiah = function(n){ return 'Rp ' + (Number(n)||0).toLocaleString('id-ID'); };
+
+  function inject(src, isStyle, cb){
+    var el = isStyle ? document.createElement('link') : document.createElement('script');
+    if (isStyle){ el.rel='stylesheet'; el.href=src; } else { el.src=src; el.async=true; }
+    (document.head||document.getElementsByTagName('head')[0]).appendChild(el);
+    if (!isStyle && cb){ el.onload = cb; el.onerror = function(){ cb(new Error('gagal memuat chart')); }; }
+  }
+
+  function setStatus(text, isErr){
+    var s = $('loadStatus');
+    if (!s) return;
+    s.innerHTML = '';
+    s.className = 'status' + (isErr ? ' err' : '');
+    if (text && text.loading){
+      var sp=document.createElement('span'); sp.className='loading'; s.appendChild(sp);
+    }
+    var t = document.createElement('span');
+    t.textContent = (typeof text==='object' ? text.text : text) || '';
+    s.appendChild(t);
+    var btn = document.createElement('button'); btn.className='refresh'; btn.textContent='Muat ulang';
+    btn.addEventListener('click', function(){ load(); });
+    s.appendChild(btn);
+    var statusText = isErr ? 'Terjadi kendala' : 'Live · diperbarui ' + new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
+    $('status').textContent = statusText;
+  }
+
+  function rekap(){
+    var m=0,k=0,cm=0,ck=0,last=null;
+    records.forEach(function(r){
+      if (r.jenis==='Pemasukan'){ m+=r.jumlah; cm++; } else { k+=r.jumlah; ck++; }
+      if (!last || r.tanggal>last) last=r.tanggal;
+    });
+    return {m:m,k:k,saldo:m-k,cm:cm,ck:ck,last:last};
+  }
+
+  function aggBulanan(){
+    var map={};
+    records.forEach(function(r){ var mo=(r.tanggal||'').slice(0,7); if(!mo)return; if(!map[mo])map[mo]={m:0,k:0}; if(r.jenis==='Pemasukan')map[mo].m+=r.jumlah; else map[mo].k+=r.jumlah; });
+    var keys=Object.keys(map).sort();
+    var nama=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+    return { labels: keys.map(function(ym){var p=ym.split('-');return nama[parseInt(p[1],10)-1]+' '+p[0];}), masuk: keys.map(function(k){return map[k].m;}), keluar: keys.map(function(k){return map[k].k;}) };
+  }
+
+  function aggKategori(){
+    var map={};
+    records.forEach(function(r){ if(r.jenis!=='Pengeluaran')return; map[r.kategori]=(map[r.kategori]||0)+r.jumlah; });
+    var keys=Object.keys(map).sort(function(a,b){return map[b]-map[a];});
+    return { labels:keys, values:keys.map(function(k){return map[k];}) };
+  }
+
+  function renderCharts(){
+    if (!window.Chart) return;
+    var b=aggBulanan(), k=aggKategori();
+    $('eBulanan').style.display = b.labels.length ? 'none' : 'flex';
+    $('eKategori').style.display = k.labels.length ? 'none' : 'flex';
+    if (chartB){ chartB.destroy(); chartB=null; }
+    if (chartK){ chartK.destroy(); chartK=null; }
+    if (b.labels.length){
+      chartB = new Chart($('cBulanan').getContext('2d'), {
+        type:'bar',
+        data:{ labels:b.labels, datasets:[
+          {label:'Pemasukan',data:b.masuk,backgroundColor:'#0d9669',borderRadius:6,maxBarThickness:34},
+          {label:'Pengeluaran',data:b.keluar,backgroundColor:'#d4724a',borderRadius:6,maxBarThickness:34}
+        ]},
+        options:{ responsive:true, maintainAspectRatio:false,
+          plugins:{ legend:{position:'bottom',labels:{font:{family:"'Nunito',sans-serif",size:12,weight:'600'},usePointStyle:true,pointStyle:'circle'}},
+            tooltip:{callbacks:{label:function(c){return c.dataset.label+': '+rupiah(c.parsed.y);}}}},
+          scales:{ y:{beginAtZero:true,ticks:{callback:function(v){return 'Rp '+(v>=1000000?(v/1000000)+'jt':v>=1000?(v/1000)+'rb':v);},font:{size:11,family:'Nunito'}},grid:{color:'rgba(15,36,27,.06)'}}, x:{grid:{display:false},ticks:{font:{size:11,family:'Nunito'}}} }
+        }
+      });
+    }
+    if (k.labels.length){
+      chartK = new Chart($('cKategori').getContext('2d'), {
+        type:'doughnut',
+        data:{ labels:k.labels, datasets:[{data:k.values,backgroundColor:PALETTE.slice(0,k.labels.length),borderWidth:3,borderColor:'#fff'}] },
+        options:{ responsive:true, maintainAspectRatio:false, cutout:'62%',
+          plugins:{ legend:{position:'right',labels:{font:{family:"'Nunito',sans-serif",size:12,weight:'600'},usePointStyle:true,pointStyle:'circle',boxWidth:10,padding:15}},
+            tooltip:{callbacks:{label:function(c){return c.label+': '+rupiah(c.parsed);}}}} }
+      });
+    }
+  }
+
+  function renderTable(){
+    var tb=$('tbody'); tb.innerHTML='';
+    var list=records.slice().sort(function(a,b){ if(a.tanggal!==b.tanggal)return a.tanggal<b.tanggal?1:-1; return (a.createdAt||0)<(b.createdAt||0)?1:-1; });
+    $('tableEmpty').style.display = list.length ? 'none' : 'block';
+    $('tableCnt').textContent = list.length+' transaksi · terurut terbaru';
+    var frag=document.createDocumentFragment();
+    list.forEach(function(r){
+      var tr=document.createElement('tr'), td;
+      td=document.createElement('td'); td.textContent=r.tanggal; tr.appendChild(td);
+      td=document.createElement('td'); var sp=document.createElement('span'); sp.className='badge '+(r.jenis==='Pemasukan'?'in':'out'); sp.textContent=r.jenis; td.appendChild(sp); tr.appendChild(td);
+      td=document.createElement('td'); td.textContent=r.kategori; tr.appendChild(td);
+      td=document.createElement('td'); td.textContent=r.keterangan; tr.appendChild(td);
+      td=document.createElement('td'); td.className='num '+(r.jenis==='Pemasukan'?'in':'out'); td.textContent=(r.jenis==='Pemasukan'?'+ ':'- ')+rupiah(r.jumlah); tr.appendChild(td);
+      frag.appendChild(tr);
+    });
+    tb.appendChild(frag);
+  }
+
+  function renderAll(){
+    var s=rekap();
+    $('metrics').style.display='grid';
+    $('masuk').textContent=rupiah(s.m);
+    $('keluar').textContent=rupiah(s.k);
+    $('saldo').textContent=rupiah(s.saldo);
+    $('trx').textContent=String(records.length);
+    $('cMasuk').textContent=s.cm+' transaksi';
+    $('cKeluar').textContent=s.ck+' transaksi';
+    $('lastTrx').textContent=s.last?'Terakhir: '+s.last:'Belum ada';
+    if (MNH_TARGET>0){
+      $('progressSection').style.display='block';
+      var pct=Math.min(100,Math.round(s.m/MNH_TARGET*100));
+      $('pct').textContent=pct+'%';
+      $('progressBar').style.width=pct+'%';
+      $('progressNote').textContent=rupiah(s.m)+' terkumpul dari target '+rupiah(MNH_TARGET);
+    }
+    $('chartSection').style.display='grid';
+    $('tableSection').style.display='block';
+    renderTable();
+    renderCharts();
+    $('footer').textContent='Dimuat otomatis pada '+new Date().toLocaleString('id-ID')+'. Panitia Masjid Nurul Hikmah.';
+  }
+
+  function load(){
+    if (!MNH_URL){
+      setStatus({text:'URL Google Apps Script belum dikonfigurasi. Hubungi admin.'}, true);
+      return;
+    }
+    setStatus({loading:true,text:'Memuat data laporan...'}, false);
+    var url = MNH_URL + (MNH_URL.indexOf('?')>-1?'&':'?') + 'action=list';
+    fetch(url)
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if (data && data.ok && Array.isArray(data.rows)){
+          records = data.rows.map(function(r){ return { id:r.id, tanggal:r.tanggal, jenis:r.jenis, kategori:r.kategori, keterangan:r.keterangan, jumlah:Number(r.jumlah)||0, pencatat:r.pencatat||'', createdAt:r.createdAt||0 }; });
+          setStatus({text:'Menampilkan '+records.length+' transaksi. '}, false);
+          if (window.Chart){ renderAll(); }
+          else { inject('https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.js', false, function(err){ if(err && !window.Chart){ setStatus({text:'Grafik gagal dimuat, tabel tetap tampil.'}, true); } renderAll(); }); }
+        } else {
+          setStatus({text:'Gagal membaca data: '+(data && data.error ? data.error : 'respon tidak valid')}, true);
+        }
+      })
+      .catch(function(){
+        setStatus({text:'Gagal terhubung ke server. Periksa koneksi atau URL Web App.'}, true);
+      });
+  }
+  load();
+})();
+</script>
+</body>
+</html>

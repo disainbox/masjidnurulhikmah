@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Masjid Jami' Nurul Hikmah — Dusun Nadri, Purworejo</title>
+<meta name="description" content="Website resmi Masjid Jami' Nurul Hikmah Dusun Nadri, Desa Krendetan, Bagelen, Purworejo. Informasi renovasi, laporan keuangan, donasi, dan kegiatan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Public+Sans:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#faf7f0; --bg2:#f3eee1; --card:#ffffff; --ink:#16302a; --ink-soft:#2c4a42;
+  --muted:#6b7f78; --green:#0e5c45; --green-dark:#083d2e; --green-deep:#062e23;
+  --gold:#c19a3f; --gold-light:#e0c074; --gold-soft:rgba(193,154,63,.14);
+  --green-soft:rgba(14,92,69,.09); --border:rgba(22,48,42,.10);
+  --shadow:0 1px 2px rgba(22,48,42,.05),0 12px 32px -16px rgba(22,48,42,.18);
+  --shadow-lg:0 2px 4px rgba(22,48,42,.06),0 24px 60px -24px rgba(8,61,46,.35);
+  --serif:'EB Garamond',Georgia,serif; --sans:'Public Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --arabic:'Amiri',serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+button{font-family:inherit;cursor:pointer}
+.wrap{max-width:1140px;margin:0 auto;padding:0 22px}
+.serif{font-family:var(--serif)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.eyebrow::before{content:"";width:26px;height:1.5px;background:var(--gold)}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.18;letter-spacing:-.01em;color:var(--ink)}
+.arabic{font-family:var(--arabic);direction:rtl;font-weight:400}
+
+/* ===== Islamic geometric pattern (subtle) ===== */
+.pattern-bg{position:relative}
+.pattern-bg::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%23c19a3f' stroke-width='.7' opacity='.35'%3E%3Cpath d='M36 4l8 12 14 2-10 10 2 14-14-8-14 8 2-14-10-10 14-2z'/%3E%3Ccircle cx='36' cy='36' r='5'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:72px 72px;}
+
+/* ===== NAV ===== */
+.nav{position:sticky;top:0;z-index:50;background:rgba(250,247,240,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav-in{display:flex;align-items:center;gap:18px;height:72px}
+.brand{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.brand-mark{width:44px;height:44px;border-radius:50%;background:linear-gradient(145deg,var(--green),var(--green-dark));display:flex;align-items:center;justify-content:center;color:var(--gold-light);box-shadow:inset 0 0 0 1.5px rgba(224,192,116,.45)}
+.brand-name{font-family:var(--serif);font-weight:700;font-size:17px;line-height:1.15;color:var(--ink)}
+.brand-name small{display:block;font-family:var(--sans);font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.nav-links{display:flex;align-items:center;gap:4px;margin-left:auto;flex-wrap:wrap}
+.nav-links a{padding:8px 13px;border-radius:999px;font-size:13.5px;font-weight:600;color:var(--ink-soft);transition:.2s}
+.nav-links a:hover{background:var(--green-soft);color:var(--green)}
+.nav-links a.active{background:var(--green);color:#fff}
+.nav-cta{background:var(--gold);color:#fff!important;padding:9px 18px!important;border-radius:999px;font-weight:700!important;box-shadow:0 6px 16px -6px rgba(193,154,63,.6)}
+.nav-cta:hover{background:#b08a32!important;color:#fff!important}
+.burger{display:none;background:none;border:1.5px solid var(--border);border-radius:10px;width:42px;height:42px;align-items:center;justify-content:center;color:var(--green);margin-left:auto}
+@media(max-width:900px){
+  .burger{display:flex}
+  .nav-links{display:none;position:absolute;top:72px;left:0;right:0;flex-direction:column;align-items:stretch;gap:2px;background:var(--card);padding:14px 18px;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:12px 14px;border-radius:10px}
+}
+
+/* ===== HERO / INFAQ STATIC BLOCK (top of Home) ===== */
+.hero{background:linear-gradient(150deg,var(--green-deep) 0%,var(--green-dark) 45%,var(--green) 100%);color:#fff;position:relative;overflow:hidden;padding:64px 0 72px}
+.hero .pattern-bg::before{opacity:.35}
+.hero-in{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:center}
+.hero .arabic{font-size:30px;color:var(--gold-light);margin-bottom:14px}
+.hero h1{color:#fff;font-size:clamp(30px,4.2vw,46px);font-weight:700;margin:10px 0 14px}
+.hero h1 em{font-style:italic;color:var(--gold-light)}
+.hero p.lead{color:rgba(255,255,255,.82);font-size:15.5px;max-width:52ch;margin-bottom:22px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:999px;font-weight:700;font-size:14px;transition:.2s;border:1.5px solid transparent}
+.btn-gold{background:var(--gold);color:#fff;box-shadow:0 10px 24px -8px rgba(193,154,63,.7)}
+.btn-gold:hover{transform:translateY(-2px);background:#d4ab4a}
+.btn-ghost{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.35)}
+.btn-ghost:hover{background:rgba(255,255,255,.2)}
+.btn-green{background:var(--green);color:#fff}
+.btn-green:hover{background:var(--green-dark)}
+.btn-outline{border-color:var(--green);color:var(--green)}
+.btn-outline:hover{background:var(--green-soft)}
+/* infaq card */
+.infaq-card{background:#fff;color:var(--ink);border-radius:20px;padding:26px 26px 24px;box-shadow:var(--shadow-lg);position:relative;overflow:hidden}
+.infaq-card::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--gold),var(--gold-light),var(--gold))}
+.infaq-card .ic-label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.infaq-card .ic-big{font-family:var(--serif);font-size:30px;font-weight:700;color:var(--green);line-height:1.1}
+.infaq-card .ic-sub{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.ic-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:6px 0 16px}
+.ic-kpi{background:var(--bg2);border-radius:11px;padding:11px 12px;border:1px solid rgba(193,154,63,.18)}
+.ic-kpi .k-l{font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.ic-kpi .k-v{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--green-dark);line-height:1.15}
+.ic-kpi.gold{background:var(--gold-soft);border-color:rgba(193,154,63,.4)}
+.ic-kpi.gold .k-v{color:#8a6d1f}
+.ic-kpi .k-sub{font-size:10.5px;color:var(--muted);margin-top:3px;font-weight:600}
+@media(max-width:420px){.ic-kpis{grid-template-columns:1fr}}
+.progress-track{height:12px;background:var(--green-soft);border-radius:999px;overflow:hidden;margin:6px 0 8px}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--green),#1a8a68);border-radius:999px;width:0;transition:width 1.2s cubic-bezier(.2,.8,.2,1)}
+.ic-meta{display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:18px}
+.ic-meta b{color:var(--ink)}
+.bank-box{background:var(--bg2);border:1px dashed rgba(193,154,63,.5);border-radius:12px;padding:14px 16px;margin-top:4px}
+.bank-box .bb-top{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);font-weight:600;margin-bottom:4px}
+.bank-box .bb-rek{font-family:var(--serif);font-size:22px;font-weight:700;letter-spacing:.04em;color:var(--green-dark)}
+.bank-box .bb-an{font-size:12px;color:var(--muted);margin-top:2px}
+.copy-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;color:var(--muted)}
+.copy-btn:hover{color:var(--green);border-color:var(--green)}
+@media(max-width:900px){.hero-in{grid-template-columns:1fr;gap:32px}}
+
+/* ===== SECTION ===== */
+section.block{padding:64px 0}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:32px;flex-wrap:wrap}
+.sec-head h2{font-size:clamp(26px,3vw,34px);margin-top:8px}
+.sec-head .link-more{font-size:13.5px;font-weight:700;color:var(--green);display:inline-flex;align-items:center;gap:6px}
+.sec-head .link-more:hover{gap:10px}
+
+/* ===== POST CARDS ===== */
+.posts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:24px}
+.post-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);transition:.25s;display:flex;flex-direction:column}
+.post-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.post-cover{aspect-ratio:16/9;background:linear-gradient(135deg,var(--green-soft),var(--gold-soft));position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.post-cover img{width:100%;height:100%;object-fit:cover}
+.post-cover .ph{color:var(--gold);opacity:.6}
+.post-body{padding:20px 22px 22px;display:flex;flex-direction:column;flex:1}
+.post-cat{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--green);background:var(--green-soft);padding:4px 10px;border-radius:999px;margin-bottom:10px;align-self:flex-start}
+.post-title{font-family:var(--serif);font-size:20px;font-weight:600;line-height:1.28;color:var(--ink);margin-bottom:8px}
+.post-card:hover .post-title{color:var(--green)}
+.post-excerpt{font-size:13.5px;color:var(--muted);margin-bottom:14px;flex:1}
+.post-meta{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted);font-weight:600;border-top:1px solid var(--border);padding-top:12px}
+.post-meta svg{flex-shrink:0}
+
+/* ===== QUICK LINKS (home) ===== */
+.quick-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.quick-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px 24px;box-shadow:var(--shadow);transition:.25s;position:relative;overflow:hidden}
+.quick-card:hover{transform:translateY(-3px);border-color:var(--gold)}
+.quick-card .qc-icon{width:48px;height:48px;border-radius:14px;background:var(--green-soft);color:var(--green);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.quick-card h3{font-size:19px;margin-bottom:6px}
+.quick-card p{font-size:13px;color:var(--muted)}
+.quick-card .qc-arrow{position:absolute;top:22px;right:22px;color:var(--gold);opacity:0;transition:.25s}
+.quick-card:hover .qc-arrow{opacity:1;transform:translateX(3px)}
+
+/* ===== PAGE HEADER (inner pages) ===== */
+.page-head{background:linear-gradient(150deg,var(--green-deep),var(--green-dark) 70%,var(--green));color:#fff;padding:56px 0 60px;position:relative;overflow:hidden}
+.page-head .pattern-bg::before{opacity:.3}
+.page-head-in{position:relative;z-index:2}
+.page-head h1{color:#fff;font-size:clamp(28px,3.6vw,40px);margin-top:10px}
+.page-head p{color:rgba(255,255,255,.8);max-width:64ch;margin-top:10px;font-size:14.5px}
+.page-head .eyebrow{color:var(--gold-light)}
+.page-head .eyebrow::before{background:var(--gold-light)}
+
+/* ===== DONATUR / KEUANGAN embed ===== */
+.embed-frame{width:100%;border:0;border-radius:16px;box-shadow:var(--shadow);background:#fff;display:block}
+.donate-info{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-bottom:28px}
+.di-card{background:var(--card);border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow)}
+.di-card h4{font-family:var(--serif);font-size:17px;margin-bottom:6px;color:var(--green-dark)}
+.di-card p{font-size:13.5px;color:var(--muted)}
+.di-card .big{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--green);letter-spacing:.03em}
+
+/* ===== RENOVASI TIMELINE ===== */
+.timeline{position:relative;max-width:760px;margin:0 auto;padding-left:36px}
+.timeline::before{content:"";position:absolute;left:11px;top:8px;bottom:8px;width:2px;background:linear-gradient(var(--gold),var(--green-soft))}
+.tl-item{position:relative;margin-bottom:30px}
+.tl-item::before{content:"";position:absolute;left:-31px;top:6px;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--gold);box-shadow:0 0 0 4px var(--gold-soft)}
+.tl-item.done::before{background:var(--green);border-color:var(--green)}
+.tl-item.active::before{animation:tlpulse 1.8s infinite}
+@keyframes tlpulse{0%,100%{box-shadow:0 0 0 4px var(--gold-soft)}50%{box-shadow:0 0 0 8px rgba(193,154,63,.08)}}
+.tl-date{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.tl-item h3{font-size:19px;margin:4px 0 6px}
+.tl-item p{font-size:13.5px;color:var(--muted);max-width:60ch}
+.tl-badge{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:999px;margin-left:10px;vertical-align:middle}
+.tl-badge.done{background:var(--green-soft);color:var(--green)}
+.tl-badge.active{background:var(--gold-soft);color:#9a7a26}
+.tl-badge.plan{background:rgba(107,127,120,.12);color:var(--muted)}
+.reno-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:20px}
+.reno-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:var(--shadow);display:flex;gap:14px;align-items:flex-start}
+.reno-item .ri-icon{width:40px;height:40px;border-radius:12px;background:var(--gold-soft);color:var(--gold);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.reno-item h4{font-family:var(--serif);font-size:16px;margin-bottom:4px}
+.reno-item p{font-size:12.5px;color:var(--muted)}
+
+/* ===== PROFIL ===== */
+.prose{max-width:760px}
+.prose h2{font-size:26px;margin:36px 0 14px;color:var(--green-dark)}
+.prose h3{font-size:20px;margin:24px 0 10px}
+.prose p{margin-bottom:14px;font-size:15px;color:var(--ink-soft)}
+.prose ul{margin:0 0 16px 22px}
+.prose li{margin-bottom:8px;font-size:14.5px;color:var(--ink-soft)}
+.prose blockquote{border-left:3px solid var(--gold);background:var(--gold-soft);padding:16px 20px;border-radius:0 12px 12px 0;margin:20px 0;font-family:var(--serif);font-style:italic;font-size:17px;color:var(--green-dark)}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:24px 0}
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:var(--shadow)}
+.info-card .ic-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.info-card p{font-size:14px;color:var(--ink-soft);font-weight:500}
+
+/* ===== BLOG FILTER ===== */
+.cat-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.cat-chip{background:var(--card);border:1px solid var(--border);padding:8px 16px;border-radius:999px;font-size:12.5px;font-weight:700;color:var(--muted);transition:.2s}
+.cat-chip:hover{border-color:var(--green);color:var(--green)}
+.cat-chip.active{background:var(--green);color:#fff;border-color:var(--green)}
+
+/* ===== SINGLE POST ===== */
+.single-post{max-width:760px;margin:0 auto}
+.single-post .post-cover{border-radius:16px;margin-bottom:28px;aspect-ratio:21/9}
+.single-post h1{font-size:clamp(28px,3.6vw,40px);margin:12px 0 14px}
+.single-post .post-content{font-size:15.5px;line-height:1.8;color:var(--ink-soft)}
+.single-post .post-content p{margin-bottom:16px}
+.single-post .post-content h2,.single-post .post-content h3{margin:26px 0 12px;color:var(--green-dark)}
+.single-post .post-content img{border-radius:12px;margin:18px 0}
+.single-post .post-content blockquote{border-left:3px solid var(--gold);background:var(--gold-soft);padding:14px 18px;border-radius:0 10px 10px 0;margin:18px 0;font-family:var(--serif);font-style:italic;font-size:17px;color:var(--green-dark)}
+.single-post .post-content ul{margin:0 0 16px 22px}
+.back-link{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--green);margin-bottom:20px}
+.back-link:hover{gap:12px}
+
+/* ===== FOOTER ===== */
+footer{background:var(--green-deep);color:rgba(255,255,255,.78);padding:56px 0 28px;margin-top:40px;position:relative;overflow:hidden}
+footer .pattern-bg::before{opacity:.25}
+.foot-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:36px;margin-bottom:36px}
+footer h4{color:#fff;font-family:var(--serif);font-size:18px;margin-bottom:14px}
+footer a{display:block;font-size:13.5px;padding:4px 0;color:rgba(255,255,255,.7);transition:.2s}
+footer a:hover{color:var(--gold-light);padding-left:4px}
+.foot-brand{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.foot-brand .brand-mark{width:50px;height:50px}
+.foot-brand .brand-name{color:#fff;font-size:19px}
+.foot-brand .brand-name small{color:rgba(255,255,255,.55)}
+footer p{font-size:13px;line-height:1.7}
+.foot-bottom{position:relative;z-index:2;border-top:1px solid rgba(255,255,255,.12);padding-top:20px;text-align:center;font-size:12px;color:rgba(255,255,255,.5)}
+@media(max-width:760px){.foot-grid{grid-template-columns:1fr;gap:28px}}
+
+/* ===== MISC ===== */
+.empty-state{text-align:center;padding:60px 20px;color:var(--muted)}
+.empty-state svg{margin:0 auto 16px;opacity:.4}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--green-dark);color:#fff;padding:12px 22px;border-radius:999px;font-size:13px;font-weight:600;box-shadow:var(--shadow-lg);opacity:0;transition:.3s;z-index:100;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.fade-in{animation:fadeIn .5s ease both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.arch-divider{display:flex;align-items:center;gap:14px;justify-content:center;margin:8px 0 0}
+.arch-divider span{height:1px;width:60px;background:linear-gradient(90deg,transparent,var(--gold))}
+.arch-divider span:last-child{background:linear-gradient(90deg,var(--gold),transparent)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a href="#/" class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-2.2 2-3.5 3.4-3.5 5.2A3.5 3.5 0 0 0 12 11.7a3.5 3.5 0 0 0 3.5-3.5C15.5 6.4 14.2 5 12 3z"/><path d="M4 21v-6.5a8 8 0 0 1 16 0V21"/><path d="M2 21h20"/><path d="M9.5 21v-2.5a2.5 2.5 0 0 1 5 0V21"/><path d="M18.5 8.5a2.6 2.6 0 1 1-3.2-3.9"/></svg>
+      </span>
+      <span class="brand-name">Masjid Jami' Nurul Hikmah<small>Dusun Nadri · Purworejo</small></span>
+    </a>
+    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <div class="nav-links" id="navLinks"></div>
+  </div>
+</nav>
+
+<main id="app"></main>
+
+<!-- FOOTER -->
+<footer class="pattern-bg">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">
+          <span class="brand-mark" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-2.2 2-3.5 3.4-3.5 5.2A3.5 3.5 0 0 0 12 11.7a3.5 3.5 0 0 0 3.5-3.5C15.5 6.4 14.2 5 12 3z"/><path d="M4 21v-6.5a8 8 0 0 1 16 0V21"/><path d="M2 21h20"/><path d="M9.5 21v-2.5a2.5 2.5 0 0 1 5 0V21"/></svg>
+          </span>
+          <span class="brand-name">Masjid Jami' Nurul Hikmah<small>Dusun Nadri · Krendetan · Bagelen</small></span>
+        </div>
+        <p>Masjid bukan sekadar tempat sujud. Ia adalah jantung kehidupan umat — tempat mendekatkan diri, belajar, dan bersilaturahmi. Mari bersama memakmurkannya.</p>
+      </div>
+      <div>
+        <h4>Navigasi</h4>
+        <a href="#/">Beranda</a>
+        <a href="#/renovasi">Progress Renovasi</a>
+        <a href="#/profil">Profil Masjid</a>
+        <a href="#/blog">Blog &amp; Kegiatan</a>
+      </div>
+      <div>
+        <h4>Laporan &amp; Donasi</h4>
+        <a href="#/donatur">Laporan Infaq &amp; Donatur</a>
+        <a href="#/keuangan">Laporan Keuangan Publik</a>
+        <a href="#/donatur">Cara Berdonasi</a>
+      </div>
+    </div>
+    <div class="foot-bottom">© <span id="year"></span> Panitia Masjid Jami' Nurul Hikmah · Dusun Nadri, RT 02/RW 02, Desa Krendetan, Kec. Bagelen, Kab. Purworejo, Jawa Tengah</div>
+<div class="foot-bottom">Developed by : disainbox
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+'use strict';
+/* ============================================================
+   DATA LAYER — shared with admin.html via localStorage
+   Keys: mnh_posts, mnh_categories, mnh_pages, mnh_settings
+   ============================================================ */
+var LS = {
+  posts: 'mnh_posts', cats: 'mnh_categories', pages: 'mnh_pages', settings: 'mnh_settings'
+};
+function read(key, fallback){
+  try{ var v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
+  catch(e){ return fallback; }
+}
+function seedIfEmpty(){
+  if(!localStorage.getItem(LS.posts)){
+    localStorage.setItem(LS.posts, JSON.stringify(SEED.posts));
+  }
+  if(!localStorage.getItem(LS.cats)){
+    localStorage.setItem(LS.cats, JSON.stringify(SEED.cats));
+  }
+  if(!localStorage.getItem(LS.pages)){
+    localStorage.setItem(LS.pages, JSON.stringify([]));
+  }
+  if(!localStorage.getItem(LS.settings)){
+    localStorage.setItem(LS.settings, JSON.stringify(SEED.settings));
+  }
+}
+var SEED = {
+  cats: ['Renovasi','Kegiatan','Artikel','Pengumuman'],
+  settings: {
+    heroTitle: 'Bantu Renovasi Masjid Jami\' Nurul Hikmah',
+    heroSub: 'Karena setiap tetes keringat dan rupiah Anda, akan menjadi pahala yang tak terputus (amal jariyah).',
+    heroArabic: 'وَمَن يَحْفَظْهُ يَحْفَظْهُ اللَّهُ',
+    target: 276468000,
+    terkumpul: 197576985,
+    pencairan: 70000000,
+    saldo: 127576985,
+    pencairanKet: 'Pencairan Termin 1 · 14-09-2026',
+    bank: 'Bank BRI',
+    an: 'Panitia Renovasi Masjid Jami Nurul Hikmah',
+    rekening: '6849-01-020766-53-9',
+    kontakTelp: '0815-7887-9961',
+    kontakEmail: 'renovasinurulhikmahnadri@gmail.com'
+  },
+  posts: [
+    { id:'p1', slug:'target-donasi-tercapai-71-persen', title:'Alhamdulillah, Donasi Renovasi Mencapai 71%', cat:'Renovasi', date:'2026-10-08', excerpt:'Per 8 Oktober 2026 total infaq terkumpul Rp 197.576.985 dari target Rp 276.468.000. Terima kasih kepada seluruh donatur di dalam dan luar negeri.', cover:'', content:'<p>Assalamu\'alaikum warahmatullahi wabarakatuh.</p><p>Alhamdulillah, berkat limpahan rahmat Allah SWT dan kebaikan hati seluruh donatur, hingga <b>8 Oktober 2026</b> dana infaq renovasi Masjid Jami\' Nurul Hikmah telah mencapai <b>Rp 197.576.985</b> dari target <b>Rp 276.468.000</b> (±71%).</p><p>Angka ini bersifat sementara dan terus diperbarui sistem setelah verifikasi bukti transaksi. Rincian perolehan dan penyaluran dapat dilihat di halaman <a href="#/donatur">Laporan Infaq</a> dan <a href="#/keuangan">Laporan Keuangan Publik</a>.</p><blockquote>“Siapa yang membangun masjid karena Allah, maka Allah akan membangunkan baginya rumah di surga.” (HR. Bukhari &amp; Muslim)</blockquote><p>Semoga Allah melipatgandakan pahala setiap donatur, keluarga, dan harta yang dikeluarkan di jalan-Nya. Jazakumullahu khairan.</p>' },
+    { id:'p2', slug:'pencairan-termin-1', title:'Pencairan Dana Termin 1 Sebesar Rp 70 Juta', cat:'Renovasi', date:'2026-09-15', excerpt:'Pada 14 September 2026 panitia mencairkan dana termin pertama untuk pembelian material atap dan upah tukang tahap awal.', cover:'', content:'<p>Pada tanggal <b>14 September 2026</b>, panitia renovasi telah melakukan pencairan dana <b>Termin 1 sebesar Rp 70.000.000</b>.</p><h3>Rencana penggunaan dana Termin 1</h3><ul><li>Pembelian material atap baru (genteng, rangka, kayu)</li><li>Upah tukang dan kenek tahap pembongkaran</li><li>Biaya konsumsi pekerja</li><li>Transportasi material ke lokasi</li></ul><p>Sisa saldo rekening infaq setelah pencairan: <b>Rp 127.576.985</b>. Seluruh pencairan dicatat dan dilaporkan secara transparan di halaman <a href="#/keuangan">Laporan Keuangan Publik</a>.</p><p>Doakan agar pekerjaan renovasi berjalan lancar, berkah, dan sesuai rencana.</p>' },
+    { id:'p3', slug:'keutamaan-amal-jariyah', title:'Keutamaan Membangun & Memakmurkan Masjid', cat:'Artikel', date:'2026-09-01', excerpt:'Sedekah jariyah adalah amalan yang pahalanya terus mengalir meski kita telah tiada. Membangun masjid adalah salah satu bentuknya yang utama.', cover:'', content:'<p class="arabic" style="font-size:22px;color:var(--green);text-align:center;margin:10px 0">وَمَن يَبْنِ مَسْجِدًا لِّلَّهِ يَبْنِ اللَّهُ لَهُ بَيْتًا فِي الْجَنَّةِ</p><p style="text-align:center;font-style:italic;color:var(--muted);font-size:13px;margin-bottom:20px">“Siapa yang membangun masjid karena Allah, Allah akan membangunkan baginya rumah di surga.” (HR. Bukhari &amp; Muslim)</p><p>Masjid adalah rumah Allah. Setiap batu bata, setiap lembar genteng, dan setiap rupiah yang menyertainya — jika diniatkan karena Allah — akan menjadi <b>amal jariyah</b> yang pahalanya tidak terputus.</p><h3>Mengapa renovasi masjid termasuk amal jariyah?</h3><ul><li>Selama masjid digunakan untuk shalat, mengaji, dan menuntut ilmu — pahala terus mengalir kepada yang membiayainya.</li><li>Masjid yang nyaman menarik lebih banyak jamaah, sehingga kebaikan yang terjadi di dalamnya terus bertambah.</li><li>Generasi setelah kita pun akan merasakan manfaatnya.</li></ul><p>Mari jadikan kesempatan renovasi Masjid Jami\' Nurul Hikmah sebagai tabungan akhirat kita. <a href="#/donatur">Klik di sini untuk cara berdonasi.</a></p>' },
+    { id:'p4', slug:'panduan-konfirmasi-donasi', title:'Panduan Konfirmasi Donasi & Bukti Transfer', cat:'Pengumuman', date:'2026-08-30', excerpt:'Agar donasi Anda tercatat dengan benar dalam laporan publik, ikuti langkah konfirmasi yang benar setelah melakukan transfer.', cover:'', content:'<p>Agar donasi Anda tercatat dengan benar dan muncul dalam <a href="#/donatur">laporan publik</a>, mohon lakukan konfirmasi setelah transfer.</p><h3>Langkah konfirmasi</h3><ul><li>Transfer ke rekening <b>Bank BRI 6849-01-020766-53-9</b> a.n. Panitia Renovasi Masjid Jami Nurul Hikmah.</li><li>Simpan <b>bukti transfer</b> (screenshot / struk).</li><li>Konfirmasi dengan mengisi form Konfirmasi Donasi</b>.</li></ul><p>Konfirmasi wajib menyertakan bukti transaksi. Tanpa bukti, donasi tidak dapat diverifikasi dan tidak akan masuk laporan. Untuk menjaga privasi, nomor kontak dan bukti tidak ditampilkan di laporan publik.</p>' }
+  ]
+};
+seedIfEmpty();
+
+/* REMOTE data.json (GitHub Pages / hosting publik) — sumber data utama jika berhasil di-fetch.
+   Jika gagal (mode file:// / offline), fallback ke localStorage. */
+var REMOTE = null;
+function getPosts(){ var src = REMOTE ? REMOTE.posts : read(LS.posts, SEED.posts); return (src||[]).slice().sort(function(a,b){return (b.date||'').localeCompare(a.date||'');}); }
+function getCats(){ return REMOTE ? (REMOTE.cats||SEED.cats) : read(LS.cats, SEED.cats); }
+function getPages(){ return REMOTE ? (REMOTE.pages||[]) : read(LS.pages, []); }
+function getSettings(){ return REMOTE ? (REMOTE.settings||SEED.settings) : read(LS.settings, SEED.settings); }
+function loadRemote(){
+  return fetch('data.json?ts='+Date.now(), {cache:'no-store'}).then(function(r){
+    if(!r.ok) throw new Error('http '+r.status);
+    return r.json();
+  }).then(function(d){
+    if(d && d.posts){
+      REMOTE = d;
+      try{ // cache ke localStorage untuk offline
+        localStorage.setItem(LS.posts, JSON.stringify(d.posts));
+        if(d.cats) localStorage.setItem(LS.cats, JSON.stringify(d.cats));
+        if(d.pages) localStorage.setItem(LS.pages, JSON.stringify(d.pages));
+        if(d.settings) localStorage.setItem(LS.settings, JSON.stringify(d.settings));
+      }catch(e){}
+    }
+  }).catch(function(){ REMOTE = null; });
+}
+/* ===== LIVE: angka infaq hero dari Google Sheets (sumber sama dgn laporan infaq) ===== */
+var SHEET_ID = '121xudObLmW5Egxs8INmVLg2tG0qPmYYRBVsD7c8jN9s';
+var GID_DETAIL = '743165966';
+var GID_OUT = '234314531';
+function parseCSV(text){
+  var rows=[], cur=[], field='', inQ=false;
+  for(var i=0;i<text.length;i++){
+    var c=text[i];
+    if(inQ){ if(c==='"'){ if(text[i+1]==='"'){field+='"';i++;} else inQ=false; } else field+=c; }
+    else { if(c==='"') inQ=true; else if(c===','){cur.push(field);field='';} else if(c==='\n'){cur.push(field);rows.push(cur);cur=[];field='';} else if(c==='\r'){} else field+=c; }
+  }
+  if(field!==''||cur.length){cur.push(field);rows.push(cur);}
+  return rows.filter(function(r){return r.length>1;});
+}
+function parseNominal(s){
+  s = String(s||'').replace(/[^\d.,]/g,'');            // sisakan angka & pemisah
+  if(/[.,]\d{2}$/.test(s)) s = s.slice(0, s.length-3);  // buang bagian desimal (,00 / .00)
+  return parseInt(s.replace(/[^\d]/g,''),10) || 0;      // sisakan angka saja (ribuan diabaikan)
+}
+function fetchCSV(gid){
+  return fetch('https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?tqx=out:csv&gid='+gid, {cache:'no-store'})
+    .then(function(r){ if(!r.ok) throw new Error('http '+r.status); return r.text(); })
+    .then(parseCSV);
+}
+function liveHero(){
+  var el = document.getElementById('heroLive'); if(!el) return;
+  el.textContent = '· memuat data live…'; el.style.color='var(--muted)';
+  var s = getSettings(); var target = Number(s.target)||0;
+  function setText(id,txt){ var e=document.getElementById(id); if(e) e.textContent=txt; }
+  Promise.all([fetchCSV(GID_DETAIL).catch(function(){return null;}), fetchCSV(GID_OUT).catch(function(){return null;})])
+    .then(function(res){
+      var detail=res[0], pcRows=res[1];
+      var total=0, n=0;
+      if(detail && detail.length>1){
+        var hdr=detail[0], nomIdx=-1;
+        for(var i=0;i<hdr.length;i++){ if(/nominal|infaq|jumlah/i.test(hdr[i])){ nomIdx=i; break; } }
+        if(nomIdx<0) nomIdx=hdr.length-1;
+        for(var j=1;j<detail.length;j++){ var v=parseNominal(detail[j][nomIdx]); if(v>500){ total+=v; n++; } }
+      }
+      var cair=null, saldo=null, ket='';
+      if(pcRows && pcRows.length>1){
+        var r1=pcRows[1];
+        cair=parseNominal(r1[2]); ket=(r1[3]||'')+(r1[1]?' · '+r1[1]:''); saldo=parseNominal(r1[4]);
+      }
+      if(total<=0 && cair==null) throw new Error('no data');
+      if(total>0){
+        var pct=target>0?Math.min(100,total/target*100):0;
+        setText('kpiTerkumpul', rupiah(total));
+        setText('heroPct', pct.toFixed(1).replace('.',',')+'%');
+        setText('heroSisa', 'Sisa '+rupiah(Math.max(0,target-total)));
+        var bar=document.getElementById('heroBar'); if(bar) bar.style.width=pct+'%';
+      }
+      if(cair!=null){ setText('kpiCair', rupiah(cair)); setText('kpiCairKet', ket); }
+      if(saldo!=null) setText('kpiSaldo', rupiah(saldo));
+      else if(total>0 && cair!=null) setText('kpiSaldo', rupiah(total-cair));
+      el.textContent='● LIVE dari Google Sheets'; el.style.color='var(--gold)';
+    })
+    .catch(function(){ el.textContent='· angka diperbarui berkala'; el.style.color='var(--muted)'; });
+}
+
+function findPost(slug){ var p=getPosts(); for(var i=0;i<p.length;i++){ if(p[i].slug===slug) return p[i]; } return null; }
+function findPage(slug){ var p=getPages(); for(var i=0;i<p.length;i++){ if(p[i].slug===slug) return p[i]; } return null; }
+function rupiah(n){ return 'Rp ' + Math.round(Number(n)||0).toLocaleString('id-ID'); }
+function fmtDate(s){ if(!s) return ''; var d=new Date(s+'T00:00:00'); if(isNaN(d)) return s; var m=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des']; return d.getDate()+' '+m[d.getMonth()]+' '+d.getFullYear(); }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function toast(msg){ var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(function(){t.classList.remove('show');},2200); }
+
+/* ===== ICONS (inline SVG) ===== */
+var ICON = {
+  cal:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
+  arrow:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+  back:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>',
+  dome:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-2.2 2-3.5 3.4-3.5 5.2A3.5 3.5 0 0 0 12 11.7a3.5 3.5 0 0 0 3.5-3.5C15.5 6.4 14.2 5 12 3z"/><path d="M4 21v-6.5a8 8 0 0 1 16 0V21"/><path d="M2 21h20"/></svg>',
+  hammer:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12l-8.5 8.5a2.12 2.12 0 0 1-3-3L12 9"/><path d="M17.64 15L22 10.64"/><path d="M20.91 11.7l-1.25-1.25a2.5 2.5 0 0 1 0-3.54l-.71-.71a2.5 2.5 0 0 0-3.54 0L14 7.59"/><path d="m9 11 4 4"/></svg>',
+  book:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+  wallet:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg>',
+  pin:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+  phone:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
+  mail:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>',
+  copy:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>'
+};
+
+/* ===== NAV ===== */
+var FIXED_NAV = [
+  {href:'#/', label:'Beranda', match:'home'},
+  {href:'#/renovasi', label:'Renovasi', match:'renovasi'},
+  {href:'#/profil', label:'Profil', match:'profil'},
+  {href:'#/blog', label:'Blog', match:'blog'},
+  {href:'#/donatur', label:'Donatur', match:'donatur'},
+  {href:'#/keuangan', label:'Keuangan', match:'keuangan'}
+];
+function renderNav(active){
+  var nl = document.getElementById('navLinks');
+  var custom = getPages();
+  var html = '';
+  FIXED_NAV.forEach(function(n){
+    var isActive = active===n.match || (n.match==='home' && active==='post');
+    html += '<a href="'+n.href+'" class="'+(isActive?'active':'')+'">'+n.label+'</a>';
+  });
+  custom.forEach(function(pg){
+    html += '<a href="#/halaman/'+esc(pg.slug)+'" class="'+(active==='page-'+pg.slug?'active':'')+'">'+esc(pg.title)+'</a>';
+  });
+  html += '<a href="#/donatur" class="nav-cta">Infaq Sekarang</a>';
+  nl.innerHTML = html;
+}
+
+/* ===== POST CARD ===== */
+function postCard(p){
+  var cover = p.cover
+    ? '<div class="post-cover"><img src="'+p.cover+'" alt="'+esc(p.title)+'" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=\\\'ph\\\'>'+ICON.dome+'</div>\'"></div>'
+    : '<div class="post-cover"><span class="ph">'+ICON.dome+'</span></div>';
+  return '<article class="post-card fade-in"><a href="#/blog/'+esc(p.slug)+'">'+cover+
+    '<div class="post-body">'+
+      '<span class="post-cat">'+esc(p.cat||'Umum')+'</span>'+
+      '<h3 class="post-title">'+esc(p.title)+'</h3>'+
+      '<p class="post-excerpt">'+esc(p.excerpt||'')+'</p>'+
+      '<div class="post-meta">'+ICON.cal+'<span>'+fmtDate(p.date)+'</span><span style="margin-left:auto">Baca '+ICON.arrow+'</span></div>'+
+    '</div></a></article>';
+}
+
+/* ===== VIEWS ===== */
+var views = {
+  home: function(){
+    var s = getSettings();
+    var posts = getPosts().slice(0,6);
+    var pct = s.target>0 ? Math.min(100, s.terkumpul/s.target*100) : 0;
+    var html = '';
+    // Static infaq CTA block at top
+    html += '<header class="hero pattern-bg"><div class="wrap hero-in">'+
+      '<div>'+
+        (s.heroArabic?'<div class="arabic">'+esc(s.heroArabic)+'</div>':'')+
+        '<span class="eyebrow" style="color:var(--gold-light)">Program Amal Jariyah</span>'+
+        '<h1>'+esc(s.heroTitle).replace(/Nurul Hikmah/,'<em>Nurul Hikmah</em>')+'</h1>'+
+        '<p class="lead">'+esc(s.heroSub)+'</p>'+
+        '<div class="hero-actions">'+
+          '<a href="#/donatur" class="btn btn-gold">Donasi Sekarang '+ICON.arrow+'</a>'+
+          '<a href="#/renovasi" class="btn btn-ghost">Lihat Progress Renovasi</a>'+
+        '</div>'+
+      '</div>'+
+      '<div class="infaq-card">'+
+        '<div class="ic-label">Laporan Keuangan Infaq <span id="heroLive" style="font-weight:700;letter-spacing:.04em"></span></div>'+
+        '<div class="ic-kpis">'+
+          '<div class="ic-kpi"><div class="k-l">Total Perolehan</div><div class="k-v" id="kpiTerkumpul">'+rupiah(s.terkumpul)+'</div></div>'+
+          '<div class="ic-kpi gold"><div class="k-l">Telah Disalurkan</div><div class="k-v" id="kpiCair">'+rupiah(Number(s.pencairan)||0)+'</div><div class="k-sub" id="kpiCairKet">'+esc(s.pencairanKet||'')+'</div></div>'+
+          '<div class="ic-kpi"><div class="k-l">Saldo Rekening</div><div class="k-v" id="kpiSaldo">'+rupiah(s.saldo!=null?Number(s.saldo):((Number(s.terkumpul)||0)-(Number(s.pencairan)||0)))+'</div></div>'+
+        '</div>'+
+        '<div class="ic-label" style="margin-top:4px">Progress vs Target Renovasi</div>'+
+        '<div class="progress-track"><div class="progress-fill" id="heroBar"></div></div>'+
+        '<div class="ic-meta"><span><b id="heroPct">'+pct.toFixed(1).replace('.',',')+'%</b> tercapai</span><span id="heroSisa">Sisa '+rupiah(Math.max(0,s.target-s.terkumpul))+'</span></div>'+
+        '<div class="bank-box">'+
+          '<div class="bb-top"><span>'+esc(s.bank)+' · a.n. '+esc(s.an)+'</span><button class="copy-btn" id="copyRek">'+ICON.copy+' Salin</button></div>'+
+          '<div class="bb-rek" id="rekNum">'+esc(s.rekening)+'</div>'+
+          '<div class="bb-an">Transfer sesuai kemampuan</div>'+
+        '</div>'+
+      '</div>'+
+    '</div></header>';
+
+    // Quick links
+    html += '<section class="block"><div class="wrap">'+
+      '<div class="quick-grid">'+
+        '<a href="#/renovasi" class="quick-card"><span class="qc-icon">'+ICON.hammer+'</span><h3>Progress Renovasi</h3><p>Timeline tahapan pekerjaan &amp; cakupan renovasi atap, plafon, dinding, dan finishing.</p><span class="qc-arrow">'+ICON.arrow+'</span></a>'+
+        '<a href="#/donatur" class="quick-card"><span class="qc-icon">'+ICON.wallet+'</span><h3>Laporan Infaq</h3><p>Transparansi perolehan &amp; penyaluran dana infaq secara live, lengkap dengan riwayat donatur.</p><span class="qc-arrow">'+ICON.arrow+'</span></a>'+
+        '<a href="#/keuangan" class="quick-card"><span class="qc-icon">'+ICON.book+'</span><h3>Laporan Keuangan</h3><p>Pemasukan &amp; pengeluaran renovasi per periode, grafik bulanan, dan rincian kategori.</p><span class="qc-arrow">'+ICON.arrow+'</span></a>'+
+        '<a href="#/profil" class="quick-card"><span class="qc-icon">'+ICON.dome+'</span><h3>Profil Masjid</h3><p>Sejarah, visi-misi, alamat, dan kontak pengurus Masjid Jami\' Nurul Hikmah.</p><span class="qc-arrow">'+ICON.arrow+'</span></a>'+
+      '</div></div></section>';
+
+    // Latest posts (dynamic)
+    html += '<section class="block" style="padding-top:0"><div class="wrap">'+
+      '<div class="sec-head"><div><span class="eyebrow">Kabar Terbaru</span><h2>Postingan &amp; Kegiatan Terbaru</h2></div>'+
+      '<a href="#/blog" class="link-more">Lihat semua '+ICON.arrow+'</a></div>'+
+      '<div class="posts-grid" id="postsGrid">'+posts.map(postCard).join('')+'</div>'+
+    '</div></section>';
+
+    // Quote band
+    html += '<section style="padding:48px 0;background:var(--bg2)"><div class="wrap" style="text-align:center;max-width:720px">'+
+      '<div class="arabic" style="font-size:26px;color:var(--green);margin-bottom:12px">مَن يَحْفَظْهُ يَحْفَظْهُ اللَّهُ</div>'+
+      '<p class="serif" style="font-size:19px;font-style:italic;color:var(--green-dark)">“Barang siapa memakmurkan masjid, maka Allah akan memakmurkan (kebahagiaan) baginya di dunia dan akhirat.”</p>'+
+      '<div class="arch-divider"><span></span>'+ICON.dome+'<span></span></div>'+
+    '</div></section>';
+
+    document.getElementById('app').innerHTML = html;
+    setTimeout(function(){ var b=document.getElementById('heroBar'); if(b) b.style.width=pct+'%'; },120);
+    setTimeout(liveHero, 400); // live update angka infaq dari Google Sheets
+    var cb=document.getElementById('copyRek');
+    if(cb) cb.addEventListener('click', function(){
+      var t=document.getElementById('rekNum').textContent;
+      if(navigator.clipboard){ navigator.clipboard.writeText(t.replace(/\s/g,'')).then(function(){toast('No. rekening disalin');}); }
+      else toast('Salin manual: '+t);
+    });
+  },
+
+  donatur: function(){
+    var s = getSettings();
+    var html = '<header class="page-head pattern-bg"><div class="wrap page-head-in">'+
+      '<span class="eyebrow">Transparansi Donasi</span>'+
+      '<h1>Laporan Infaq &amp; Donatur</h1>'+
+      '<p>Setiap rupiah donatur kami catat dan laporkan secara terbuka. Berikut perolehan, penyaluran, dan riwayat donasi renovasi Masjid Jami\' Nurul Hikmah — diperbarui otomatis.</p>'+
+    '</div></header>'+
+    '<section class="block"><div class="wrap">'+
+      '<div class="donate-info">'+
+        '<div class="di-card"><h4>'+esc(s.bank)+'</h4><div class="big">'+esc(s.rekening)+'</div><p>a.n. '+esc(s.an)+'</p></div>'+
+        '<div class="di-card" style="text-align:left">'+
+  '<h4 style="margin-top:0;margin-bottom:8px">Konfirmasi Donasi</h4>'+
+  '<p style="margin-bottom:14px;font-size:14px;color:var(--muted)">Sudah transfer? Klik tombol di bawah untuk mengisi form konfirmasi.</p>'+
+  '<a href="form-konfirmasi.html" target="_blank" style="display:inline-block;padding:10px 22px;background:var(--emerald);color:#fff;border-radius:var(--radius-sm);font-weight:600;font-size:15px;text-decoration:none;transition:.2s">'+
+    'Buka Form Konfirmasi'+
+  '</a>'+
+'</div>'+
+        '<div class="di-card"><h4>Kerahasiaan</h4><p>Nomor kontak &amp; bukti transaksi tidak ditampilkan di laporan publik ini untuk menjaga privasi donatur.</p></div>'+
+      '</div>'+
+      '<iframe class="embed-frame" id="infaqFrame" src="laporan-infaq.html" title="Laporan Infaq" style="height:2100px"></iframe>'+
+    '</div></section>';
+    document.getElementById('app').innerHTML = html;
+  },
+
+  keuangan: function(){
+    var html = '<header class="page-head pattern-bg"><div class="wrap page-head-in">'+
+      '<span class="eyebrow">Pertanggungjawaban</span>'+
+      '<h1>Laporan Keuangan Publik</h1>'+
+      '<p>Laporan pemasukan &amp; pengeluaran dana renovasi secara live dari Google Sheets — dilengkapi grafik bulanan, rincian kategori, dan riwayat transaksi.</p>'+
+    '</div></header>'+
+    '<section class="block"><div class="wrap">'+
+      '<iframe class="embed-frame" src="laporan-keuangan.html" title="Laporan Keuangan Publik" style="height:1500px"></iframe>'+
+    '</div></section>';
+    document.getElementById('app').innerHTML = html;
+  },
+
+  renovasi: function(){
+    var phases = [
+      {date:'2025 – Sekarang', title:'Perencanaan & Penggalangan Dana', desc:'Penyusunan RAB, proposal, dan pembukaan rekening infaq publik. Target terkumpul Rp 276.468.000.', status:'done'},
+      {date:'14 Sep 2026', title:'Pencairan Termin 1 & Pembelian Material', desc:'Dana Rp 70.000.000 dicairkan untuk material atap, upah tukang tahap awal, dan konsumsi pekerja.', status:'active'},
+      {date:'Rencana', title:'Pembongkaran Atap Lama & Pemasangan Atap Baru', desc:'Atap serambi yang bocor dan rapuh dibongkar total, diganti rangka & genteng baru yang kokoh.', status:'plan'},
+      {date:'Rencana', title:'Peninggian Dinding & Pemasangan Plafon Gypsum', desc:'Dinding ditinggikan menutup celah dengan atap; plafon gypsum baru dipasang mengikuti struktur atap untuk sirkulasi udara yang lebih baik.', status:'plan'},
+      {date:'Rencana', title:'Pengecatan & Aksesoris', desc:'Pengecatan ulang seluruh dinding, pemasangan lampu, kipas angin (fan), dan sistem audio.', status:'plan'},
+      {date:'Rencana', title:'Finishing & Serah Terima', desc:'Pembersihan, penataan, dan serah terima masjid kepada jamaah. Alhamdulillah.', status:'plan'}
+    ];
+    var items = [
+      {t:'Atap Baru', d:'Pembongkaran atap lama yang bocor dan penggantian dengan rangka & genteng baru yang kokoh.'},
+      {t:'Dinding Ditinggikan', d:'Menutup celah antara dinding dan atap untuk menjaga kebersihan, kenyamanan, dan keamanan.'},
+      {t:'Plafon Gypsum', d:'Pemasangan plafon baru mengikuti struktur atap agar sirkulasi udara lebih baik.'},
+      {t:'Pengecatan & Aksesoris', d:'Pengecatan ulang, lampu, kipas angin, dan sound system untuk kenyamanan jamaah.'}
+    ];
+    var html = '<header class="page-head pattern-bg"><div class="wrap page-head-in">'+
+      '<span class="eyebrow">Pembangunan & Perbaikan</span>'+
+      '<h1>Progress Renovasi Masjid</h1>'+
+      '<p>Atap serambi bocor saat hujan, cat dinding kusam dan mengelupas, plafon berlubang dan lepas. Inilah yang sedang dan akan kami perbaiki — insyaAllah bertahap sesuai dana yang terkumpul.</p>'+
+    '</div></header>'+
+    '<section class="block"><div class="wrap">'+
+      '<div class="sec-head"><div><span class="eyebrow">Cakupan Pekerjaan</span><h2>Apa Saja yang Direnovasi?</h2></div></div>'+
+      '<div class="reno-list">'+items.map(function(it){
+        return '<div class="reno-item"><span class="ri-icon">'+ICON.hammer+'</span><div><h4>'+it.t+'</h4><p>'+it.d+'</p></div></div>';
+      }).join('')+'</div>'+
+    '</div></section>'+
+    '<section class="block" style="padding-top:0"><div class="wrap">'+
+      '<div class="sec-head"><div><span class="eyebrow">Tahapan Pekerjaan</span><h2>Timeline Renovasi</h2></div></div>'+
+      '<div class="timeline">'+phases.map(function(ph){
+        return '<div class="tl-item '+ph.status+'"><div class="tl-date">'+ph.date+' <span class="tl-badge '+ph.status+'">'+(ph.status==='done'?'Selesai':ph.status==='active'?'Berjalan':'Rencana')+'</span></div><h3>'+ph.title+'</h3><p>'+ph.desc+'</p></div>';
+      }).join('')+'</div>'+
+      '<div style="text-align:center;margin-top:36px"><a href="#/donatur" class="btn btn-green">Dukung Lewat Infaq '+ICON.arrow+'</a></div>'+
+    '</div></section>';
+    document.getElementById('app').innerHTML = html;
+  },
+
+  profil: function(){
+    var s = getSettings();
+    var html = '<header class="page-head pattern-bg"><div class="wrap page-head-in">'+
+      '<span class="eyebrow">Tentang Kami</span>'+
+      '<h1>Profil Masjid Jami\' Nurul Hikmah</h1>'+
+      '<p>Masjid yang telah berdiri puluhan tahun dan menjadi pusat kegiatan ibadah serta sosial warga Dusun Nadri, Desa Krendetan, Kecamatan Bagelen, Kabupaten Purworejo, Jawa Tengah.</p>'+
+    '</div></header>'+
+    '<section class="block"><div class="wrap prose">'+
+      '<h2>Sejarah Singkat</h2>'+
+      '<p>Masjid Jami\' Nurul Hikmah berdiri di atas tanah wakaf di <b>Dusun Nadri, RT 02/RW 02, Desa Krendetan, Kecamatan Bagelen, Kabupaten Purworejo, Jawa Tengah</b>. Sejak puluhan tahun lalu, masjid ini menjadi jantung kehidupan keagamaan warga: tempat shalat berjamaah, mengaji anak-anak, peringatan hari besar Islam, serta musyawarah dan kegiatan sosial warga.</p>'+
+      '<p>Seiring waktu, bangunan mengalami kerusakan: atap serambi bocor, plafon berlubang dan lepas, cat dinding kusam mengelupas. Pada 2025–2026, panitia menggalang dana renovasi secara publik agar masjid kembali layak, nyaman, dan makmur — insyaAllah.</p>'+
+      '<blockquote>“Masjid yang pertama didirikan atas dasar takwa adalah Masjid Quba. Sungguh di dalamnya ada orang-orang yang mencintai kesucian. Dan Allah mencintai orang-orang yang mensucikan diri.” (QS. At-Taubah: 108)</blockquote>'+
+      '<h2>Visi</h2>'+
+      '<p>Menjadi masjid yang <b>makmur, bersih, dan nyaman</b> sebagai pusat ibadah, ilmu, dan ukhuwah warga Dusun Nadri serta sekitarnya.</p>'+
+      '<h2>Misi</h2>'+
+      '<ul><li>Memakmurkan shalat berjamaah lima waktu dan shalat Jumat.</li><li>Menyelenggarakan pendidikan Al-Qur\'an (TPA) untuk anak-anak dan remaja.</li><li>Mengadakan pengajian rutin, peringatan Maulid Nabi, dan hari besar Islam.</li><li>Menjalankan kegiatan sosial: santunan anak yatim & dhuafa, serta membantu warga yang membutuhkan.</li><li>Menjaga kebersihan, keamanan, dan aset masjid secara bertanggung jawab.</li></ul>'+
+      '<h2>Kontak & Lokasi</h2>'+
+    '</div>'+
+    '<div class="wrap"><div class="info-grid">'+
+      '<div class="info-card"><div class="ic-label">'+ICON.pin+' Alamat</div><p>Dusun Nadri, RT 02/RW 02<br>Desa Krendetan, Kec. Bagelen<br>Kab. Purworejo, Jawa Tengah</p></div>'+
+      '<div class="info-card"><div class="ic-label">'+ICON.phone+' Telepon / WhatsApp</div><p>'+esc(s.kontakTelp)+'</p></div>'+
+      '<div class="info-card"><div class="ic-label">'+ICON.mail+' Email</div><p>'+esc(s.kontakEmail)+'</p></div>'+
+      '<div class="info-card"><div class="ic-label">'+ICON.wallet+' Rekening Infaq</div><p>'+esc(s.bank)+' '+esc(s.rekening)+'<br>a.n. '+esc(s.an)+'</p></div>'+
+    '</div></div></section>';
+    document.getElementById('app').innerHTML = html;
+  },
+
+  blog: function(cat){
+    var cats = getCats();
+    var posts = getPosts();
+    if(cat && cat!=='all') posts = posts.filter(function(p){return p.cat===cat;});
+    var html = '<header class="page-head pattern-bg"><div class="wrap page-head-in">'+
+      '<span class="eyebrow">Kabar & Kegiatan</span>'+
+      '<h1>Blog &amp; Pengumuman</h1>'+
+      '<p>Update terbaru seputar renovasi, kegiatan masjid, dan artikel keislaman dari pengurus Masjid Jami\' Nurul Hikmah.</p>'+
+    '</div></header>'+
+    '<section class="block"><div class="wrap">'+
+      '<div class="cat-filter" id="catFilter">'+
+        '<button class="cat-chip '+(cat==='all'||!cat?'active':'')+'" data-cat="all">Semua</button>'+
+        cats.map(function(c){return '<button class="cat-chip '+(cat===c?'active':'')+'" data-cat="'+esc(c)+'">'+esc(c)+'</button>';}).join('')+
+      '</div>'+
+      (posts.length ? '<div class="posts-grid">'+posts.map(postCard).join('')+'</div>'
+        : '<div class="empty-state">'+ICON.dome+'<p>Belum ada postingan pada kategori ini.</p></div>')+
+    '</div></section>';
+    document.getElementById('app').innerHTML = html;
+    document.getElementById('catFilter').addEventListener('click', function(e){
+      var b = e.target.closest('.cat-chip'); if(!b) return;
+      location.hash = '#/blog?cat=' + encodeURIComponent(b.dataset.cat);
+    });
+  },
+
+  post: function(slug){
+    var p = findPost(slug);
+    if(!p){ document.getElementById('app').innerHTML = '<section class="block"><div class="wrap empty-state">'+ICON.dome+'<h2 style="margin-bottom:8px">Postingan tidak ditemukan</h2><p><a href="#/blog" class="back-link">Kembali ke Blog</a></p></div></section>'; return; }
+    var cover = p.cover
+      ? '<div class="post-cover"><img src="'+p.cover+'" alt="'+esc(p.title)+'"></div>'
+      : '';
+    var html = '<section class="block"><div class="wrap single-post">'+
+      '<a href="#/blog" class="back-link">'+ICON.back+' Kembali ke Blog</a>'+
+      cover+
+      '<span class="post-cat">'+esc(p.cat||'Umum')+'</span>'+
+      '<h1>'+esc(p.title)+'</h1>'+
+      '<div class="post-meta" style="border:none;padding:0;margin-bottom:22px">'+ICON.cal+'<span>'+fmtDate(p.date)+'</span></div>'+
+      '<div class="post-content">'+(p.content||'<p>'+esc(p.excerpt||'')+'</p>')+'</div>'+
+      '<div style="margin-top:40px;padding-top:24px;border-top:1px solid var(--border)"><a href="#/blog" class="back-link">'+ICON.back+' Kembali ke Blog</a></div>'+
+    '</div></section>';
+    document.getElementById('app').innerHTML = html;
+  },
+
+  page: function(slug){
+    var pg = findPage(slug);
+    if(!pg){ document.getElementById('app').innerHTML = '<section class="block"><div class="wrap empty-state">'+ICON.dome+'<h2 style="margin-bottom:8px">Halaman tidak ditemukan</h2><p><a href="#/" class="back-link">Kembali ke Beranda</a></p></div></section>'; return; }
+    var html = '<header class="page-head pattern-bg"><div class="wrap page-head-in">'+
+      '<span class="eyebrow">Halaman</span><h1>'+esc(pg.title)+'</h1>'+
+    '</div></header>'+
+    '<section class="block"><div class="wrap prose"><div class="post-content">'+(pg.content||'')+'</div></div></section>';
+    document.getElementById('app').innerHTML = html;
+  }
+};
+
+/* ===== ROUTER ===== */
+function route(){
+  var hash = location.hash.replace(/^#\/?/, '');
+  var parts = hash.split('?');
+  var path = parts[0] || '';
+  var qp = {};
+  if(parts[1]) parts[1].split('&').forEach(function(kv){ var x=kv.split('='); qp[decodeURIComponent(x[0])]=decodeURIComponent(x[1]||''); });
+  var segs = path.split('/').filter(Boolean);
+  var active, cat = qp.cat || 'all';
+  window.scrollTo(0,0);
+  document.getElementById('navLinks').classList.remove('open');
+  document.getElementById('burger').setAttribute('aria-expanded','false');
+
+  if(segs.length===0){ active='home'; renderNav('home'); views.home(); }
+  else if(segs[0]==='donatur'){ active='donatur'; renderNav('donatur'); views.donatur(); }
+  else if(segs[0]==='keuangan'){ active='keuangan'; renderNav('keuangan'); views.keuangan(); }
+  else if(segs[0]==='renovasi'){ active='renovasi'; renderNav('renovasi'); views.renovasi(); }
+  else if(segs[0]==='profil'){ active='profil'; renderNav('profil'); views.profil(); }
+  else if(segs[0]==='blog' && segs[1]){ active='post'; renderNav('blog'); views.post(segs[1]); }
+  else if(segs[0]==='blog'){ active='blog'; renderNav('blog'); views.blog(cat); }
+  else if(segs[0]==='halaman' && segs[1]){ active='page-'+segs[1]; renderNav('page-'+segs[1]); views.page(segs[1]); }
+  else { active='home'; renderNav('home'); views.home(); }
+  document.title = (active==='home'?'':'Halaman ') + 'Masjid Jami\' Nurul Hikmah';
+}
+
+document.getElementById('burger').addEventListener('click', function(){
+  var nl = document.getElementById('navLinks');
+  var open = nl.classList.toggle('open');
+  this.setAttribute('aria-expanded', open?'true':'false');
+});
+window.addEventListener('hashchange', route);
+// Live update: if admin edits in another tab, re-render current view
+window.addEventListener('storage', function(e){
+  if(e.key && e.key.indexOf('mnh_')===0){ route(); }
+});
+document.getElementById('year').textContent = new Date().getFullYear();
+route(); // render segera dari data lokal
+loadRemote().then(function(){ if(REMOTE) route(); }); // refresh dari data.json (publikasi GitHub) bila tersedia
+})();
+</script>
+</body>
+</html>

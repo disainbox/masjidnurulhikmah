@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laporan Keuangan Renovasi — Masjid Nurul Hikmah (Publik)</title>
+</head>
+<body style="margin:0;background:#faf9f4">
+
+<!-- ============================================================
+     AWAL SNIPPET WORDPRESS
+     Salin semua baris dari sini hingga tulisan AKHIR SNIPPET WORDPRESS,
+     lalu tempel di blok "Custom HTML" pada posting/halaman WordPress.
+     JANGAN LUPA isi MNH_URL dengan URL Web App Google Apps Script Anda.
+     ============================================================ -->
+<style>
+.mnh-report{
+  --mnh-bg:#faf9f4; --mnh-card:#ffffff; --mnh-text:#0f172a; --mnh-muted:#64748b;
+  --mnh-accent:#297a2e; --mnh-accent-soft:rgba(41,122,46,.14);
+  --mnh-gold:#d97706; --mnh-gold-soft:rgba(217,119,6,.14);
+  --mnh-border:rgba(15,23,42,.08); --mnh-danger:#dc2626; --mnh-info:#0d9488;
+  --mnh-shadow:0 1px 3px rgba(15,23,42,.06),0 8px 24px -12px rgba(15,23,42,.12);
+  font-family:'Baloo 2',system-ui,-apple-system,'Segoe UI',sans-serif;
+  color:var(--mnh-text); line-height:1.55; max-width:1100px; margin:0 auto; padding:0 4px;
+  box-sizing:border-box;
+}
+.mnh-report *,.mnh-report *::before,.mnh-report *::after{box-sizing:border-box;margin:0;padding:0}
+.mnh-report .mnh-head{
+  background:linear-gradient(135deg,#1d5c22 0%,#297a2e 55%,#3a9440 100%);
+  color:#fff; border-radius:18px; padding:1.5rem 1.4rem; position:relative; overflow:hidden;
+  display:flex; align-items:center; gap:1rem; flex-wrap:wrap; margin-top:8px;
+}
+.mnh-report .mnh-head::before{content:"";position:absolute;inset:0;opacity:.08;pointer-events:none;background-image:radial-gradient(circle at 1px 1px,#fff 1px,transparent 0);background-size:22px 22px}
+.mnh-report .mnh-logo{width:52px;height:52px;flex:0 0 auto;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:14px;display:flex;align-items:center;justify-content:center;color:#fde68a;position:relative}
+.mnh-report .mnh-head h1{font-size:1.3rem;font-weight:800;line-height:1.2;position:relative;color:#fff}
+.mnh-report .mnh-head p{font-size:.84rem;opacity:.9;font-weight:500;position:relative;color:#fff}
+.mnh-report .mnh-head .mnh-live{margin-left:auto;display:inline-flex;align-items:center;gap:.45rem;font-size:.76rem;font-weight:700;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);padding:.4rem .8rem;border-radius:999px;position:relative;color:#fff}
+.mnh-report .mnh-head .mnh-live .dot{width:8px;height:8px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 3px rgba(74,222,128,.3);animation:mnhpulse 1.6s infinite}
+@keyframes mnhpulse{0%,100%{opacity:1}50%{opacity:.4}}
+.mnh-report .mnh-status{margin:.9rem 0;font-size:.85rem;color:var(--mnh-muted);display:flex;align-items:center;gap:.5rem;min-height:1.4em}
+.mnh-report .mnh-status.err{color:var(--mnh-danger);font-weight:600}
+.mnh-report .mnh-refresh{background:none;border:1.5px solid var(--mnh-border);color:var(--mnh-muted);font-family:inherit;font-size:.78rem;font-weight:700;padding:.3rem .7rem;border-radius:8px;cursor:pointer;margin-left:auto}
+.mnh-report .mnh-refresh:hover{color:var(--mnh-accent);border-color:var(--mnh-accent)}
+.mnh-report .mnh-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.9rem;margin:1rem 0}
+.mnh-report .mnh-card{background:var(--mnh-card);border:1px solid var(--mnh-border);border-radius:14px;padding:1rem 1.1rem;box-shadow:var(--mnh-shadow);position:relative;overflow:hidden}
+.mnh-report .mnh-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--mnh-accent)}
+.mnh-report .mnh-card.g::before{background:var(--mnh-gold)}
+.mnh-report .mnh-card.r::before{background:var(--mnh-danger)}
+.mnh-report .mnh-card.b::before{background:var(--mnh-info)}
+.mnh-report .mnh-card .lbl{font-size:.74rem;color:var(--mnh-muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.mnh-report .mnh-card .val{font-size:1.4rem;font-weight:800;margin-top:.2rem;font-variant-numeric:tabular-nums}
+.mnh-report .mnh-card .sub{font-size:.74rem;color:var(--mnh-muted);margin-top:.15rem}
+.mnh-report .mnh-progress{background:var(--mnh-card);border:1px solid var(--mnh-border);border-radius:14px;padding:1rem 1.1rem;box-shadow:var(--mnh-shadow);margin-bottom:1rem}
+.mnh-report .mnh-progress .ph{display:flex;justify-content:space-between;font-size:.82rem;font-weight:700;margin-bottom:.45rem}
+.mnh-report .mnh-progress .ph .pct{color:var(--mnh-accent)}
+.mnh-report .mnh-progress .bar{height:12px;background:rgba(15,23,42,.07);border-radius:999px;overflow:hidden}
+.mnh-report .mnh-progress .fill{height:100%;width:0%;background:linear-gradient(90deg,#297a2e,#4d9c52);border-radius:999px;transition:width .8s ease}
+.mnh-report .mnh-progress .note{font-size:.74rem;color:var(--mnh-muted);margin-top:.35rem}
+.mnh-report .mnh-charts{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+@media(max-width:760px){.mnh-report .mnh-charts{grid-template-columns:1fr}}
+.mnh-report .mnh-chart-card{background:var(--mnh-card);border:1px solid var(--mnh-border);border-radius:14px;padding:1rem;box-shadow:var(--mnh-shadow)}
+.mnh-report .mnh-chart-card h3{font-size:.86rem;font-weight:700;margin-bottom:.5rem;color:var(--mnh-text)}
+.mnh-report .mnh-canvas{position:relative;height:260px}
+.mnh-report .mnh-empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--mnh-muted);font-size:.82rem;font-weight:600}
+.mnh-report .mnh-table-card{background:var(--mnh-card);border:1px solid var(--mnh-border);border-radius:14px;padding:1rem;box-shadow:var(--mnh-shadow)}
+.mnh-report .mnh-table-card h3{font-size:.95rem;font-weight:700;margin-bottom:.7rem;display:flex;align-items:center;gap:.4rem}
+.mnh-report .mnh-table-scroll{overflow-x:auto;border:1px solid var(--mnh-border);border-radius:10px;max-height:480px;overflow-y:auto}
+.mnh-report .mnh-report table{width:100%;border-collapse:collapse;font-size:.84rem;min-width:640px}
+.mnh-report .mnh-report thead th{background:#f3f5ee;text-align:left;padding:.55rem .7rem;font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--mnh-muted);border-bottom:1px solid var(--mnh-border);position:sticky;top:0;z-index:1}
+.mnh-report .mnh-report tbody td{padding:.5rem .7rem;border-bottom:1px solid var(--mnh-border);vertical-align:middle}
+.mnh-report .mnh-report tbody tr:last-child td{border-bottom:none}
+.mnh-report .mnh-report tbody tr:nth-child(even){background:#fafaf5}
+.mnh-report .mnh-badge{display:inline-block;padding:.12rem .55rem;border-radius:999px;font-size:.7rem;font-weight:700}
+.mnh-report .mnh-badge.in{background:var(--mnh-accent-soft);color:var(--mnh-accent)}
+.mnh-report .mnh-badge.out{background:rgba(220,38,38,.10);color:var(--mnh-danger)}
+.mnh-report .mnh-num{font-variant-numeric:tabular-nums;font-weight:700;text-align:right;white-space:nowrap}
+.mnh-report .mnh-num.in{color:var(--mnh-accent)}
+.mnh-report .mnh-num.out{color:var(--mnh-danger)}
+.mnh-report .mnh-empty-state{text-align:center;padding:2rem 1rem;color:var(--mnh-muted);font-size:.88rem;font-weight:600}
+.mnh-report .mnh-foot{text-align:center;font-size:.74rem;color:var(--mnh-muted);margin:1.2rem 0 .8rem;padding-top:.8rem;border-top:1px solid var(--mnh-border)}
+.mnh-report .mnh-loading{display:inline-block;width:14px;height:14px;border:2.5px solid var(--mnh-accent-soft);border-top-color:var(--mnh-accent);border-radius:50%;animation:mnhspin .8s linear infinite;vertical-align:middle;margin-right:.4rem}
+@keyframes mnhspin{to{transform:rotate(360deg)}}
+</style>
+
+<div class="mnh-report" id="mnhpub">
+  <div class="mnh-head">
+    <div class="mnh-logo" aria-hidden="true">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-1.2 1.6-3 2.6-3 4.2A3.3 3.3 0 0 0 12 9.5a3.3 3.3 0 0 0 3-3.3C15 4.6 13.2 3.6 12 2z"/><path d="M4 21v-7a8 8 0 0 1 16 0v7"/><path d="M2 21h20"/><path d="M9 21v-3a3 3 0 0 1 6 0v3"/></svg>
+    </div>
+    <div>
+      <h1>Masjid Nurul Hikmah</h1>
+      <p>Laporan Pertanggungjawaban Keuangan Renovasi &mdash; Pemasukan &amp; Pengeluaran</p>
+    </div>
+    <span class="mnh-live"><span class="dot"></span> LIVE dari Google Sheets</span>
+  </div>
+
+  <div class="mnh-status" id="mnhpub_status"><span class="mnh-loading"></span>Memuat data laporan...</div>
+
+  <div class="mnh-grid" id="mnhpub_metrics" style="display:none">
+    <div class="mnh-card"><div class="lbl">Total Pemasukan</div><div class="val" id="mnhpub_masuk">Rp 0</div><div class="sub" id="mnhpub_cmasuk">0 transaksi</div></div>
+    <div class="mnh-card r"><div class="lbl">Total Pengeluaran</div><div class="val" id="mnhpub_keluar">Rp 0</div><div class="sub" id="mnhpub_ckeluar">0 transaksi</div></div>
+    <div class="mnh-card g"><div class="lbl">Saldo / Sisa Dana</div><div class="val" id="mnhpub_saldo">Rp 0</div><div class="sub">Pemasukan dikurangi pengeluaran</div></div>
+    <div class="mnh-card b"><div class="lbl">Jumlah Transaksi</div><div class="val" id="mnhpub_trx">0</div><div class="sub" id="mnhpub_last">—</div></div>
+  </div>
+
+  <div class="mnh-progress" id="mnhpub_progress" style="display:none">
+    <div class="ph"><span>Dana Terkumpul vs Target Renovasi</span><span class="pct" id="mnhpub_pct">0%</span></div>
+    <div class="bar"><div class="fill" id="mnhpub_fill"></div></div>
+    <div class="note" id="mnhpub_pnote"></div>
+  </div>
+
+  <div class="mnh-charts" id="mnhpub_charts" style="display:none">
+    <div class="mnh-chart-card">
+      <h3>Pemasukan vs Pengeluaran per Bulan</h3>
+      <div class="mnh-canvas"><canvas id="mnhpub_cBulanan"></canvas><div class="mnh-empty" id="mnhpub_eBulanan" style="display:none">Belum ada data</div></div>
+    </div>
+    <div class="mnh-chart-card">
+      <h3>Rincian Pengeluaran per Kategori</h3>
+      <div class="mnh-canvas"><canvas id="mnhpub_cKategori"></canvas><div class="mnh-empty" id="mnhpub_eKategori" style="display:none">Belum ada pengeluaran</div></div>
+    </div>
+  </div>
+
+  <div class="mnh-table-card" id="mnhpub_tablecard" style="display:none">
+    <h3>Riwayat Transaksi</h3>
+    <div class="mnh-table-scroll">
+      <table>
+        <thead><tr><th style="width:90px">Tanggal</th><th style="width:105px">Jenis</th><th>Kategori</th><th>Keterangan</th><th style="width:110px;text-align:right">Jumlah</th></tr></thead>
+        <tbody id="mnhpub_tbody"></tbody>
+      </table>
+      <div class="mnh-empty-state" id="mnhpub_emptystate" style="display:none">Belum ada transaksi yang dilaporkan.</div>
+    </div>
+  </div>
+
+  <div class="mnh-foot" id="mnhpub_foot">Panitia Masjid Nurul Hikmah.</div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  /* =========================================================
+     >>> WAJIB DIISI: URL Web App Google Apps Script Anda
+     (yang sama dengan yang dipakai di aplikasi input, berakhiran /exec)
+     ========================================================= */
+  var MNH_URL = 'https://script.google.com/macros/s/AKfycbxHvggXge7w4nmb-gD9_40RUXJLv3D9IhUwuSyB-O4qJYRNdnbMMogNgO7ht44khr_Z/exec';
+
+  /* Opsional: target dana renovasi (Rp) untuk progress bar. Isi 0 untuk menyembunyikan. */
+  var MNH_TARGET = 0;
+
+  var PALETTE = ['#297a2e','#d97706','#0d9488','#b45309','#64748b','#4d7c0f','#a16207','#334155','#0f766e','#92400e'];
+  var records = [];
+  var chartB = null, chartK = null;
+  var $ = function(id){ return document.getElementById(id); };
+  var rupiah = function(n){ return 'Rp ' + (Number(n)||0).toLocaleString('id-ID'); };
+
+  // Muat font Baloo 2 & Chart.js secara dinamis (aman untuk embed WordPress)
+  function inject(src, isStyle, cb){
+    var el = isStyle ? document.createElement('link') : document.createElement('script');
+    if (isStyle){ el.rel='stylesheet'; el.href=src; } else { el.src=src; el.async=true; }
+    (document.head||document.getElementsByTagName('head')[0]).appendChild(el);
+    if (!isStyle && cb){ el.onload = cb; el.onerror = function(){ cb(new Error('gagal memuat chart')); }; }
+  }
+  inject('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap', true);
+
+  function setStatus(msg, isErr){
+    var s = $('mnhpub_status');
+    if (!s) return;
+    s.innerHTML = '';
+    if (isErr){ s.className = 'mnh-status err'; } else { s.className = 'mnh-status'; }
+    if (msg && msg.loading){ var sp=document.createElement('span'); sp.className='mnh-loading'; s.appendChild(sp); }
+    var t = document.createElement('span'); t.textContent = msg ? msg.text : ''; s.appendChild(t);
+    var btn = document.createElement('button'); btn.className='mnh-refresh'; btn.textContent='Muat ulang';
+    btn.addEventListener('click', function(){ load(); });
+    s.appendChild(btn);
+  }
+
+  function rekap(){
+    var m=0,k=0,cm=0,ck=0,last=null;
+    records.forEach(function(r){
+      if (r.jenis==='Pemasukan'){ m+=r.jumlah; cm++; } else { k+=r.jumlah; ck++; }
+      if (!last || r.tanggal>last) last=r.tanggal;
+    });
+    return {m:m,k:k,saldo:m-k,cm:cm,ck:ck,last:last};
+  }
+
+  function aggBulanan(){
+    var map={};
+    records.forEach(function(r){ var mo=(r.tanggal||'').slice(0,7); if(!mo)return; if(!map[mo])map[mo]={m:0,k:0}; if(r.jenis==='Pemasukan')map[mo].m+=r.jumlah; else map[mo].k+=r.jumlah; });
+    var keys=Object.keys(map).sort();
+    var nama=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+    return { labels: keys.map(function(ym){var p=ym.split('-');return nama[parseInt(p[1],10)-1]+' '+p[0];}), masuk: keys.map(function(k){return map[k].m;}), keluar: keys.map(function(k){return map[k].k;}) };
+  }
+  function aggKategori(){
+    var map={};
+    records.forEach(function(r){ if(r.jenis!=='Pengeluaran')return; map[r.kategori]=(map[r.kategori]||0)+r.jumlah; });
+    var keys=Object.keys(map).sort(function(a,b){return map[b]-map[a];});
+    return { labels:keys, values:keys.map(function(k){return map[k];}) };
+  }
+
+  function renderCharts(){
+    if (!window.Chart) return;
+    var b=aggBulanan(), k=aggKategori();
+    $('mnhpub_eBulanan').style.display = b.labels.length ? 'none' : 'flex';
+    $('mnhpub_eKategori').style.display = k.labels.length ? 'none' : 'flex';
+    if (chartB){ chartB.destroy(); chartB=null; }
+    if (chartK){ chartK.destroy(); chartK=null; }
+    if (b.labels.length){
+      chartB = new Chart($('mnhpub_cBulanan').getContext('2d'), {
+        type:'bar',
+        data:{ labels:b.labels, datasets:[
+          {label:'Pemasukan',data:b.masuk,backgroundColor:'#297a2e',borderRadius:6,maxBarThickness:34},
+          {label:'Pengeluaran',data:b.keluar,backgroundColor:'#d97706',borderRadius:6,maxBarThickness:34}
+        ]},
+        options:{ responsive:true, maintainAspectRatio:false,
+          plugins:{ legend:{position:'bottom',labels:{font:{family:"'Baloo 2',sans-serif",size:11},usePointStyle:true,pointStyle:'circle'}},
+            tooltip:{callbacks:{label:function(c){return c.dataset.label+': '+rupiah(c.parsed.y);}}}},
+          scales:{ y:{beginAtZero:true,ticks:{callback:function(v){return 'Rp '+(v>=1000000?(v/1000000)+'jt':v>=1000?(v/1000)+'rb':v);},font:{size:10}},grid:{color:'rgba(15,23,42,.06)'}}, x:{grid:{display:false},ticks:{font:{size:10}}} }
+        }
+      });
+    }
+    if (k.labels.length){
+      chartK = new Chart($('mnhpub_cKategori').getContext('2d'), {
+        type:'doughnut',
+        data:{ labels:k.labels, datasets:[{data:k.values,backgroundColor:PALETTE.slice(0,k.labels.length),borderWidth:2,borderColor:'#fff'}] },
+        options:{ responsive:true, maintainAspectRatio:false, cutout:'62%',
+          plugins:{ legend:{position:'right',labels:{font:{family:"'Baloo 2',sans-serif",size:11},usePointStyle:true,pointStyle:'circle',boxWidth:8}},
+            tooltip:{callbacks:{label:function(c){return c.label+': '+rupiah(c.parsed);}}}} }
+      });
+    }
+  }
+
+  function renderTable(){
+    var tb=$('mnhpub_tbody'); tb.innerHTML='';
+    var list=records.slice().sort(function(a,b){ if(a.tanggal!==b.tanggal)return a.tanggal<b.tanggal?1:-1; return (a.createdAt||0)<(b.createdAt||0)?1:-1; });
+    $('mnhpub_emptystate').style.display = list.length ? 'none' : 'block';
+    var frag=document.createDocumentFragment();
+    list.forEach(function(r){
+      var tr=document.createElement('tr'), td;
+      td=document.createElement('td'); td.textContent=r.tanggal; tr.appendChild(td);
+      td=document.createElement('td'); var sp=document.createElement('span'); sp.className='mnh-badge '+(r.jenis==='Pemasukan'?'in':'out'); sp.textContent=r.jenis; td.appendChild(sp); tr.appendChild(td);
+      td=document.createElement('td'); td.textContent=r.kategori; tr.appendChild(td);
+      td=document.createElement('td'); td.textContent=r.keterangan; tr.appendChild(td);
+      td=document.createElement('td'); td.className='mnh-num '+(r.jenis==='Pemasukan'?'in':'out'); td.textContent=(r.jenis==='Pemasukan'?'+ ':'- ')+rupiah(r.jumlah); tr.appendChild(td);
+      frag.appendChild(tr);
+    });
+    tb.appendChild(frag);
+  }
+
+  function renderAll(){
+    var s=rekap();
+    $('mnhpub_metrics').style.display='grid';
+    $('mnhpub_masuk').textContent=rupiah(s.m);
+    $('mnhpub_keluar').textContent=rupiah(s.k);
+    $('mnhpub_saldo').textContent=rupiah(s.saldo);
+    $('mnhpub_trx').textContent=String(records.length);
+    $('mnhpub_cmasuk').textContent=s.cm+' transaksi';
+    $('mnhpub_ckeluar').textContent=s.ck+' transaksi';
+    $('mnhpub_last').textContent=s.last?'Terakhir: '+s.last:'Belum ada';
+    if (MNH_TARGET>0){
+      $('mnhpub_progress').style.display='block';
+      var pct=Math.min(100,Math.round(s.m/MNH_TARGET*100));
+      $('mnhpub_pct').textContent=pct+'%';
+      $('mnhpub_fill').style.width=pct+'%';
+      $('mnhpub_pnote').textContent=rupiah(s.m)+' terkumpul dari target '+rupiah(MNH_TARGET);
+    }
+    $('mnhpub_charts').style.display='grid';
+    $('mnhpub_tablecard').style.display='block';
+    renderTable();
+    renderCharts();
+    var now=new Date().toLocaleString('id-ID');
+    $('mnhpub_foot').textContent='Dimuat otomatis pada '+now+'. Developed by : disainbox';
+  }
+
+  function load(){
+    if (!MNH_URL){
+      setStatus({text:'URL Google Sheets belum dikonfigurasi pada kode embed (MNH_URL). Hubungi admin.'}, true);
+      return;
+    }
+    setStatus({loading:true,text:'Memuat data laporan...'}, false);
+    var url = MNH_URL + (MNH_URL.indexOf('?')>-1?'&':'?') + 'action=list';
+    fetch(url)
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if (data && data.ok && Array.isArray(data.rows)){
+          records = data.rows.map(function(r){ return { id:r.id, tanggal:r.tanggal, jenis:r.jenis, kategori:r.kategori, keterangan:r.keterangan, jumlah:Number(r.jumlah)||0, pencatat:r.pencatat||'', createdAt:r.createdAt||0 }; });
+          setStatus({text:'Menampilkan '+records.length+' transaksi. '}, false);
+          if (window.Chart){ renderAll(); }
+          else { inject('https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.js', false, function(err){ if(err && !window.Chart){ setStatus({text:'Grafik gagal dimuat, tabel tetap tampil.'}, true); } renderAll(); }); }
+        } else {
+          setStatus({text:'Gagal membaca data: '+(data && data.error ? data.error : 'respon tidak valid')}, true);
+        }
+      })
+      .catch(function(){
+        setStatus({text:'Gagal terhubung ke Google Sheets. Periksa koneksi atau konfigurasi URL (Who has access: Anyone).'}, true);
+      });
+  }
+
+  // Jalankan segera (elemen di atas sudah ada saat script ini dibaca)
+  load();
+})();
+</script>
+<!-- ============================================================
+     AKHIR SNIPPET WORDPRESS
+     ============================================================ -->
+
+</body>
+</html>

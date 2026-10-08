@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin — Masjid Jami' Nurul Hikmah</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=EB+Garamond:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f1e8; --card:#fff; --ink:#16302a; --muted:#6b7f78;
+  --green:#0e5c45; --green-dark:#083d2e; --gold:#c19a3f; --gold-soft:rgba(193,154,63,.14);
+  --green-soft:rgba(14,92,69,.09); --border:rgba(22,48,42,.12); --danger:#b3372f; --danger-soft:rgba(179,55,47,.1);
+  --shadow:0 1px 2px rgba(22,48,42,.05),0 10px 28px -14px rgba(22,48,42,.2);
+  --sans:'Public Sans',system-ui,-apple-system,'Segoe UI',sans-serif; --serif:'EB Garamond',Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.55}
+a{color:var(--green);font-weight:600}
+button{font-family:inherit;cursor:pointer}
+input,textarea,select{font-family:inherit;font-size:14px;color:var(--ink)}
+.topbar{background:linear-gradient(135deg,#062e23,#0e5c45);color:#fff;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;position:sticky;top:0;z-index:40;box-shadow:0 4px 16px rgba(6,46,35,.3)}
+.topbar h1{font-family:var(--serif);font-size:19px;font-weight:700}
+.topbar .sub{font-size:11.5px;opacity:.7;letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+.topbar .spacer{flex:1}
+.topbar a.view-site{background:var(--gold);color:#fff;padding:8px 16px;border-radius:999px;font-weight:700;font-size:13px;text-decoration:none}
+.topbar a.view-site:hover{background:#d4ab4a}
+.tabs{display:flex;gap:4px;padding:0 24px;background:var(--card);border-bottom:1px solid var(--border);overflow-x:auto;position:sticky;top:57px;z-index:30}
+.tab{background:none;border:none;padding:14px 18px;font-size:13.5px;font-weight:700;color:var(--muted);border-bottom:3px solid transparent;white-space:nowrap}
+.tab:hover{color:var(--green)}
+.tab.active{color:var(--green);border-bottom-color:var(--gold)}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 24px 80px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;box-shadow:var(--shadow);margin-bottom:18px}
+.card h2{font-family:var(--serif);font-size:20px;margin-bottom:4px}
+.card .hint{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:14px}
+.field label{display:block;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;background:#fcfbf7;transition:.15s}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--green);background:#fff}
+.field textarea{min-height:90px;resize:vertical;font-family:inherit}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:9px;font-weight:700;font-size:13.5px;border:1.5px solid transparent;transition:.15s}
+.btn-primary{background:var(--green);color:#fff}
+.btn-primary:hover{background:var(--green-dark)}
+.btn-gold{background:var(--gold);color:#fff}
+.btn-gold:hover{background:#b08a32}
+.btn-ghost{background:transparent;border-color:var(--border);color:var(--muted)}
+.btn-ghost:hover{border-color:var(--green);color:var(--green)}
+.btn-danger{background:var(--danger-soft);color:var(--danger);border-color:transparent}
+.btn-danger:hover{background:var(--danger);color:#fff}
+.btn-sm{padding:6px 12px;font-size:12px;border-radius:7px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.list-item{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--border);border-radius:11px;margin-bottom:10px;background:#fcfbf7}
+.list-item:hover{border-color:var(--gold)}
+.list-item .li-main{flex:1;min-width:0}
+.list-item .li-title{font-weight:700;font-size:14.5px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.list-item .li-meta{font-size:11.5px;color:var(--muted)}
+.badge{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:var(--green-soft);color:var(--green)}
+.badge.gold{background:var(--gold-soft);color:#9a7a26}
+.empty{text-align:center;padding:40px 20px;color:var(--muted);font-size:13.5px}
+/* editor */
+.editor-toolbar{display:flex;gap:4px;flex-wrap:wrap;padding:8px;border:1.5px solid var(--border);border-bottom:none;border-radius:9px 9px 0 0;background:#f7f4ec}
+.tbtn{background:none;border:1px solid transparent;border-radius:6px;padding:6px 9px;font-size:13px;color:var(--ink-soft);min-width:32px;font-weight:700}
+.tbtn:hover{background:var(--green-soft);color:var(--green)}
+.tbtn.active{background:var(--green);color:#fff}
+.editor{border:1.5px solid var(--border);border-radius:0 0 9px 9px;padding:16px 18px;min-height:280px;background:#fff;outline:none;line-height:1.75}
+.editor:focus{border-color:var(--green)}
+.editor img{max-width:100%;border-radius:8px;margin:10px 0}
+.editor blockquote{border-left:3px solid var(--gold);background:var(--gold-soft);padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0;font-style:italic;color:var(--green-dark)}
+.editor h2,.editor h3{font-family:var(--serif);margin:16px 0 8px;color:var(--green-dark)}
+.html-source{width:100%;min-height:300px;border:1.5px solid var(--border);border-radius:9px;padding:14px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;background:#fcfbf7;resize:vertical;display:none}
+.html-source.show{display:block}
+.editor.hide{display:none}
+.cover-preview{max-width:260px;border-radius:10px;margin-top:10px;display:none}
+.cover-preview.show{display:block}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--green-dark);color:#fff;padding:12px 22px;border-radius:999px;font-size:13px;font-weight:600;box-shadow:0 12px 30px rgba(6,46,35,.4);opacity:0;transition:.3s;z-index:100;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.err{background:var(--danger)}
+.cat-pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.cat-pill{display:inline-flex;align-items:center;gap:8px;background:var(--green-soft);color:var(--green);padding:6px 12px;border-radius:999px;font-size:12.5px;font-weight:700}
+.cat-pill button{background:none;border:none;color:var(--green);font-size:14px;font-weight:800;line-height:1;padding:0}
+.cat-pill button:hover{color:var(--danger)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:760px){.grid-2{grid-template-columns:1fr}}
+.stat{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+.stat .st{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 18px;box-shadow:var(--shadow);flex:1;min-width:140px}
+.stat .st .n{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--green)}
+.stat .st .l{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <h1>Panel Admin Masjid</h1>
+    <div class="sub">Masjid Jami' Nurul Hikmah · Tanpa login · Perubahan tersimpan otomatis (live)</div>
+  </div>
+  <div class="spacer"></div>
+  <a class="view-site" href="index.html" target="_blank">Lihat Situs ↗</a>
+</div>
+
+<div class="tabs" id="tabs">
+  <button class="tab active" data-tab="posts">Postingan</button>
+  <button class="tab" data-tab="cats">Kategori</button>
+  <button class="tab" data-tab="pages">Halaman</button>
+  <button class="tab" data-tab="settings">Pengaturan Infaq</button>
+  <button class="tab" data-tab="backup">Backup Data</button>
+  <button class="tab" data-tab="github">Publikasi GitHub</button>
+</div>
+
+<div class="wrap" id="content"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+'use strict';
+var LS = { posts:'mnh_posts', cats:'mnh_categories', pages:'mnh_pages', settings:'mnh_settings' };
+function read(k,f){ try{ var v=localStorage.getItem(k); return v?JSON.parse(v):f; }catch(e){ return f; } }
+function write(k,v){ localStorage.setItem(k, JSON.stringify(v)); }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function slugify(s){ return String(s||'').toLowerCase().trim().replace(/[^a-z0-9\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-').slice(0,60) || ('post-'+Date.now()); }
+function rupiah(n){ return 'Rp '+Math.round(Number(n)||0).toLocaleString('id-ID'); }
+function fmtDate(s){ if(!s) return ''; var d=new Date(s+'T00:00:00'); if(isNaN(d)) return s; var m=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des']; return d.getDate()+' '+m[d.getMonth()]+' '+d.getFullYear(); }
+function toast(msg,err){ var t=document.getElementById('toast'); t.textContent=msg; t.className='toast show'+(err?' err':''); setTimeout(function(){t.className='toast';},2400); }
+function uid(){ return 'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+
+var curTab = 'posts';
+var editingPost = null;   // post object or null
+var editingPage = null;
+var htmlMode = false;
+
+/* ===== TABS ===== */
+document.getElementById('tabs').addEventListener('click', function(e){
+  var b = e.target.closest('.tab'); if(!b) return;
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  b.classList.add('active');
+  curTab = b.dataset.tab;
+  editingPost = null; editingPage = null;
+  render();
+});
+
+/* ============ POSTS LIST ============ */
+function renderPostsList(){
+  var posts = read(LS.posts, []).slice().sort(function(a,b){return (b.date||'').localeCompare(a.date||'');});
+  var cats = read(LS.cats, []);
+  var h = '<div class="stat">'+
+    '<div class="st"><div class="n">'+posts.length+'</div><div class="l">Total Postingan</div></div>'+
+    '<div class="st"><div class="n">'+cats.length+'</div><div class="l">Kategori</div></div>'+
+    '<div class="st"><div class="n">'+read(LS.pages,[]).length+'</div><div class="l">Halaman Kustom</div></div>'+
+  '</div>';
+  h += '<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px"><div><h2>Postingan</h2><div class="hint" style="margin:0">Postingan terbaru tampil di halaman Beranda & Blog. Klik edit untuk mengubah.</div></div><button class="btn btn-primary" id="newPost">+ Postingan Baru</button></div>';
+  if(!posts.length){ h += '<div class="empty">Belum ada postingan. Buat postingan pertama Anda.</div>'; }
+  else {
+    h += posts.map(function(p){
+      return '<div class="list-item"><div class="li-main"><div class="li-title">'+esc(p.title)+'</div><div class="li-meta">'+fmtDate(p.date)+' · <span class="badge">'+esc(p.cat||'Umum')+'</span> · #/blog/'+esc(p.slug)+'</div></div>'+
+        '<button class="btn btn-ghost btn-sm" data-edit="'+p.id+'">Edit</button>'+
+        '<button class="btn btn-danger btn-sm" data-del="'+p.id+'">Hapus</button></div>';
+    }).join('');
+  }
+  h += '</div>';
+  document.getElementById('content').innerHTML = h;
+  document.getElementById('newPost').addEventListener('click', function(){ editingPost={id:uid(),title:'',slug:'',cat:cats[0]||'Umum',date:new Date().toISOString().slice(0,10),excerpt:'',cover:'',content:''}; render(); });
+  document.getElementById('content').addEventListener('click', function(e){
+    var ed = e.target.closest('[data-edit]'); var dl = e.target.closest('[data-del]');
+    if(ed){ var p = read(LS.posts,[]).find(function(x){return x.id===ed.dataset.edit;}); if(p){ editingPost=JSON.parse(JSON.stringify(p)); render(); } }
+    if(dl){ if(confirm('Hapus postingan ini?')){ var list=read(LS.posts,[]).filter(function(x){return x.id!==dl.dataset.del;}); write(LS.posts,list); toast('Postingan dihapus'); render(); } }
+  });
+}
+
+/* ============ POST EDITOR ============ */
+function renderPostEditor(){
+  var p = editingPost;
+  var cats = read(LS.cats, []);
+  var h = '<div class="card"><button class="btn btn-ghost btn-sm" id="backList">← Kembali ke daftar</button><h2 style="margin-top:14px">'+(p.title?'Edit: '+esc(p.title):'Postingan Baru')+'</h2><div class="hint">Perubahan disimpan ke browser dan langsung tampil di situs (tab lain akan auto-refresh).</div>';
+  h += '<div class="row">'+
+    '<div class="field" style="grid-column:1/-1"><label>Judul *</label><input id="f_title" value="'+esc(p.title)+'" placeholder="Judul postingan"></div>'+
+    '<div class="field"><label>Slug (URL)</label><input id="f_slug" value="'+esc(p.slug)+'" placeholder="otomatis dari judul"></div>'+
+    '<div class="field"><label>Kategori</label><select id="f_cat">'+cats.map(function(c){return '<option '+(p.cat===c?'selected':'')+'>'+esc(c)+'</option>';}).join('')+'</select></div>'+
+    '<div class="field"><label>Tanggal</label><input type="date" id="f_date" value="'+esc(p.date)+'"></div>'+
+    '<div class="field" style="grid-column:1/-1"><label>Ringkasan (excerpt)</label><textarea id="f_excerpt" placeholder="Ringkasan singkat untuk kartu postingan">'+esc(p.excerpt)+'</textarea></div>'+
+    '<div class="field" style="grid-column:1/-1"><label>Gambar Sampul (upload / akan tersimpan otomatis)</label><input type="file" id="f_cover" accept="image/*"><img class="cover-preview '+(p.cover?'show':'')+'" id="coverPrev" src="'+(p.cover||'')+'"><button class="btn btn-ghost btn-sm" id="clearCover" style="margin-top:8px;'+(p.cover?'':'display:none')+'">Hapus Gambar</button></div>'+
+  '</div>';
+  h += '<div class="field"><label>Isi Konten — bisa tempel gambar (Ctrl+V) & HTML khusus</label>'+
+    '<div class="editor-toolbar">'+
+      '<button class="tbtn" data-cmd="bold" title="Tebal"><b>B</b></button>'+
+      '<button class="tbtn" data-cmd="italic" title="Miring"><i>I</i></button>'+
+      '<button class="tbtn" data-cmd="formatBlock" data-val="h2" title="Judul Bagian">H2</button>'+
+      '<button class="tbtn" data-cmd="formatBlock" data-val="h3" title="Sub Judul">H3</button>'+
+      '<button class="tbtn" data-cmd="formatBlock" data-val="blockquote" title="Kutipan">❝</button>'+
+      '<button class="tbtn" data-cmd="insertUnorderedList" title="Daftar">• List</button>'+
+      '<button class="tbtn" id="tLink" title="Tautan">Link</button>'+
+      '<button class="tbtn" id="tImage" title="Sisipkan Gambar">🖼 Gambar</button>'+
+      '<button class="tbtn" id="tHtml" title="Tempel HTML khusus">&lt;/&gt; HTML</button>'+
+      '<button class="tbtn" data-cmd="removeFormat" title="Bersihkan format">⌫</button>'+
+      '<span style="flex:1"></span>'+
+      '<button class="tbtn" id="toggleHtml" title="Mode sumber HTML">Mode HTML: Mati</button>'+
+    '</div>'+
+    '<div class="editor" id="editor" contenteditable="true"></div>'+
+    '<textarea class="html-source" id="htmlSource" spellcheck="false"></textarea>'+
+  '</div>';
+  h += '<div class="actions"><button class="btn btn-primary" id="savePost">Simpan & Publikasikan</button><button class="btn btn-ghost" id="cancelEdit">Batal</button></div>';
+  h += '</div>';
+  document.getElementById('content').innerHTML = h;
+
+  var editor = document.getElementById('editor');
+  var source = document.getElementById('htmlSource');
+  editor.innerHTML = p.content || '';
+  source.value = p.content || '';
+
+  // auto slug
+  document.getElementById('f_title').addEventListener('input', function(){
+    var sl = document.getElementById('f_slug');
+    if(!sl.value || sl.dataset.auto!=='0'){ sl.value = slugify(this.value); sl.dataset.auto='1'; }
+  });
+  document.getElementById('f_slug').addEventListener('input', function(){ this.dataset.auto='0'; });
+
+  // cover upload
+  document.getElementById('f_cover').addEventListener('change', function(){
+    var f = this.files[0]; if(!f) return;
+    if(f.size > 2*1024*1024){ toast('Gambar terlalu besar (maks 2 MB)', true); return; }
+    var r = new FileReader();
+    r.onload = function(){ p.cover = r.result; var pv=document.getElementById('coverPrev'); pv.src=r.result; pv.classList.add('show'); document.getElementById('clearCover').style.display='inline-flex'; toast('Gambar sampul dimuat'); };
+    r.readAsDataURL(f);
+  });
+  document.getElementById('clearCover').addEventListener('click', function(){ p.cover=''; var pv=document.getElementById('coverPrev'); pv.src=''; pv.classList.remove('show'); this.style.display='none'; });
+
+  // toolbar
+  document.querySelector('.editor-toolbar').addEventListener('mousedown', function(e){ if(e.target.closest('.tbtn')) e.preventDefault(); });
+  document.querySelector('.editor-toolbar').addEventListener('click', function(e){
+    var b = e.target.closest('.tbtn'); if(!b) return;
+    if(b.id==='tLink'){ var u=prompt('URL tautan:','https://'); if(u){ document.execCommand('createLink',false,u); } return; }
+    if(b.id==='tImage'){
+      var inp=document.createElement('input'); inp.type='file'; inp.accept='image/*';
+      inp.onchange=function(){ var f=inp.files[0]; if(!f)return; if(f.size>1.5*1024*1024){toast('Gambar terlalu besar (maks 1.5 MB)',true);return;} var r=new FileReader(); r.onload=function(){document.execCommand('insertImage',false,r.result);}; r.readAsDataURL(f); };
+      inp.click(); return;
+    }
+    if(b.id==='tHtml'){
+      var html=prompt('Tempel HTML khusus (misal embed video, tabel, form):','');
+      if(html){ editor.focus(); document.execCommand('insertHTML',false,'<!--custom-html-->'+html+'<!--/custom-html-->'); toast('HTML khusus disisipkan'); }
+      return;
+    }
+    if(b.id==='toggleHtml'){
+      htmlMode = !htmlMode;
+      if(htmlMode){ source.value = editor.innerHTML; editor.classList.add('hide'); source.classList.add('show'); b.textContent='Mode HTML: Aktif'; }
+      else { editor.innerHTML = source.value; editor.classList.remove('hide'); source.classList.remove('show'); b.textContent='Mode HTML: Mati'; }
+      return;
+    }
+    editor.focus();
+    if(b.dataset.cmd){ document.execCommand(b.dataset.cmd, false, b.dataset.val||null); }
+  });
+
+  // paste image from clipboard
+  editor.addEventListener('paste', function(e){
+    var items = e.clipboardData && e.clipboardData.items;
+    if(!items) return;
+    for(var i=0;i<items.length;i++){
+      if(items[i].type.indexOf('image')===0){
+        e.preventDefault();
+        var f = items[i].getAsFile();
+        if(f.size > 1.5*1024*1024){ toast('Gambar terlalu besar (maks 1.5 MB)', true); return; }
+        var r = new FileReader();
+        r.onload = function(){ editor.focus(); document.execCommand('insertImage', false, r.result); toast('Gambar ditempel'); };
+        r.readAsDataURL(f);
+        return;
+      }
+    }
+  });
+
+  document.getElementById('backList').addEventListener('click', function(){ editingPost=null; render(); });
+  document.getElementById('cancelEdit').addEventListener('click', function(){ editingPost=null; render(); });
+  document.getElementById('savePost').addEventListener('click', function(){
+    var title = document.getElementById('f_title').value.trim();
+    if(!title){ toast('Judul wajib diisi', true); return; }
+    p.title = title;
+    p.slug = document.getElementById('f_slug').value.trim() || slugify(title);
+    p.cat = document.getElementById('f_cat').value;
+    p.date = document.getElementById('f_date').value || new Date().toISOString().slice(0,10);
+    p.excerpt = document.getElementById('f_excerpt').value.trim();
+    p.content = htmlMode ? source.value : editor.innerHTML;
+    if(!p.excerpt){ p.excerpt = (p.content||'').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim().slice(0,140); }
+    var list = read(LS.posts, []);
+    var idx = list.findIndex(function(x){return x.id===p.id;});
+    if(idx>=0) list[idx]=p; else list.push(p);
+    write(LS.posts, list);
+    toast('Postingan dipublikasikan ✓');
+    editingPost = null;
+    render();
+  });
+}
+
+/* ============ CATEGORIES ============ */
+function renderCats(){
+  var cats = read(LS.cats, []);
+  var h = '<div class="card"><h2>Kategori Postingan</h2><div class="hint">Kategori digunakan untuk menyaring postingan di halaman Blog. Menghapus kategori tidak menghapus postingan.</div>';
+  h += '<div style="display:flex;gap:10px;margin-bottom:18px"><input id="newCat" placeholder="Nama kategori baru" style="flex:1;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px"><button class="btn btn-gold" id="addCat">+ Tambah</button></div>';
+  h += '<div class="cat-pills">'+cats.map(function(c,i){
+    return '<span class="cat-pill">'+esc(c)+' <button data-delcat="'+i+'" title="Hapus">×</button></span>';
+  }).join('')+'</div>';
+  if(!cats.length) h += '<div class="empty">Belum ada kategori.</div>';
+  h += '</div>';
+  document.getElementById('content').innerHTML = h;
+  document.getElementById('addCat').addEventListener('click', addCat);
+  document.getElementById('newCat').addEventListener('keydown', function(e){ if(e.key==='Enter') addCat(); });
+  function addCat(){
+    var v = document.getElementById('newCat').value.trim();
+    if(!v) return;
+    var list = read(LS.cats, []);
+    if(list.indexOf(v)>=0){ toast('Kategori sudah ada', true); return; }
+    list.push(v); write(LS.cats, list); toast('Kategori ditambahkan'); render();
+  }
+  document.getElementById('content').addEventListener('click', function(e){
+    var b = e.target.closest('[data-delcat]'); if(!b) return;
+    if(confirm('Hapus kategori ini?')){ var list=read(LS.cats,[]); list.splice(Number(b.dataset.delcat),1); write(LS.cats,list); toast('Kategori dihapus'); render(); }
+  });
+}
+
+/* ============ PAGES ============ */
+function renderPages(){
+  var pages = read(LS.pages, []);
+  var h = '<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px"><div><h2>Halaman Kustom</h2><div class="hint" style="margin:0">Halaman kustom otomatis muncul di menu navigasi situs. Mendukung HTML penuh.</div></div><button class="btn btn-primary" id="newPage">+ Halaman Baru</button></div>';
+  if(!pages.length) h += '<div class="empty">Belum ada halaman kustom.</div>';
+  else h += pages.map(function(pg,i){
+    return '<div class="list-item"><div class="li-main"><div class="li-title">'+esc(pg.title)+'</div><div class="li-meta">#/halaman/'+esc(pg.slug)+'</div></div>'+
+      '<button class="btn btn-ghost btn-sm" data-editpage="'+i+'">Edit</button>'+
+      '<button class="btn btn-danger btn-sm" data-delpage="'+i+'">Hapus</button></div>';
+  }).join('');
+  h += '</div>';
+  document.getElementById('content').innerHTML = h;
+  document.getElementById('newPage').addEventListener('click', function(){ editingPage={slug:'',title:'',content:''}; renderPageEditor(); });
+  document.getElementById('content').addEventListener('click', function(e){
+    var ed=e.target.closest('[data-editpage]'); var dl=e.target.closest('[data-delpage]');
+    if(ed){ editingPage=JSON.parse(JSON.stringify(pages[Number(ed.dataset.editpage)])); renderPageEditor(); }
+    if(dl){ if(confirm('Hapus halaman ini?')){ pages.splice(Number(dl.dataset.delpage),1); write(LS.pages,pages); toast('Halaman dihapus'); render(); } }
+  });
+}
+function renderPageEditor(){
+  var pg = editingPage;
+  var h = '<div class="card"><button class="btn btn-ghost btn-sm" id="backPages">← Kembali</button><h2 style="margin-top:14px">'+(pg.title?'Edit Halaman':'Halaman Baru')+'</h2><div class="hint">Halaman ini akan muncul di menu navigasi situs. Konten mendukung HTML penuh (embed, tabel, dll).</div>';
+  h += '<div class="row">'+
+    '<div class="field"><label>Judul Halaman *</label><input id="pg_title" value="'+esc(pg.title)+'"></div>'+
+    '<div class="field"><label>Slug (URL)</label><input id="pg_slug" value="'+esc(pg.slug)+'"></div>'+
+  '</div>';
+  h += '<div class="field"><label>Konten (HTML)</label><textarea id="pg_content" style="min-height:340px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px">'+esc(pg.content)+'</textarea></div>';
+  h += '<div class="actions"><button class="btn btn-primary" id="savePage">Simpan Halaman</button><button class="btn btn-ghost" id="cancelPage">Batal</button></div></div>';
+  document.getElementById('content').innerHTML = h;
+  document.getElementById('pg_title').addEventListener('input', function(){
+    var sl=document.getElementById('pg_slug'); if(!sl.value || sl.dataset.auto!=='0'){ sl.value=slugify(this.value); sl.dataset.auto='1'; }
+  });
+  document.getElementById('pg_slug').addEventListener('input', function(){ this.dataset.auto='0'; });
+  document.getElementById('backPages').addEventListener('click', function(){ editingPage=null; render(); });
+  document.getElementById('cancelPage').addEventListener('click', function(){ editingPage=null; render(); });
+  document.getElementById('savePage').addEventListener('click', function(){
+    var title=document.getElementById('pg_title').value.trim();
+    if(!title){ toast('Judul wajib diisi', true); return; }
+    pg.title=title; pg.slug=document.getElementById('pg_slug').value.trim()||slugify(title);
+    pg.content=document.getElementById('pg_content').value;
+    var list=read(LS.pages,[]);
+    var idx=list.findIndex(function(x){return x.slug===pg.slug;});
+    if(idx>=0) list[idx]=pg; else list.push(pg);
+    write(LS.pages,list); toast('Halaman disimpan ✓'); editingPage=null; render();
+  });
+}
+
+/* ============ SETTINGS (infaq hero block) ============ */
+function renderSettings(){
+  var s = read(LS.settings, {});
+  var h = '<div class="card"><h2>Pengaturan Blok Infaq (Beranda)</h2><div class="hint">Blok ajakan berinfaq statis di bagian atas halaman Beranda. Ubah angka terkumpul secara berkala.</div>';
+  h += '<div class="row">'+
+    '<div class="field" style="grid-column:1/-1"><label>Judul Hero</label><input id="s_heroTitle" value="'+esc(s.heroTitle||'')+'"></div>'+
+    '<div class="field" style="grid-column:1/-1"><label>Sub-judul / Ajakan</label><textarea id="s_heroSub">'+esc(s.heroSub||'')+'</textarea></div>'+
+    '<div class="field"><label>Arabic (opsional)</label><input id="s_heroArabic" value="'+esc(s.heroArabic||'')+'"></div>'+
+    '<div class="field"><label>Target Donasi (Rp, angka saja)</label><input id="s_target" type="number" value="'+(s.target||0)+'"></div>'+
+    '<div class="field"><label>Dana Terkumpul (Rp, angka) — fallback bila live Sheets gagal</label><input id="s_terkumpul" type="number" value="'+(s.terkumpul||0)+'"></div>'+
+    '<div class="field"><label>Total Pencairan (Rp, angka) — fallback</label><input id="s_pencairan" type="number" value="'+(s.pencairan||0)+'"></div>'+
+    '<div class="field"><label>Saldo Rekening (Rp, angka) — fallback</label><input id="s_saldo" type="number" value="'+(s.saldo||0)+'"></div>'+
+    '<div class="field"><label>Keterangan Pencairan (fallback)</label><input id="s_pencairanKet" value="'+esc(s.pencairanKet||'')+'"></div>'+
+    '<div class="field"><label>Bank</label><input id="s_bank" value="'+esc(s.bank||'')+'"></div>'+
+    '<div class="field"><label>Atas Nama Rekening</label><input id="s_an" value="'+esc(s.an||'')+'"></div>'+
+    '<div class="field"><label>No. Rekening</label><input id="s_rekening" value="'+esc(s.rekening||'')+'"></div>'+
+    '<div class="field"><label>No. HP / WhatsApp</label><input id="s_kontakTelp" value="'+esc(s.kontakTelp||'')+'"></div>'+
+    '<div class="field"><label>Email</label><input id="s_kontakEmail" value="'+esc(s.kontakEmail||'')+'"></div>'+
+  '</div>';
+  h += '<div class="actions"><button class="btn btn-primary" id="saveSettings">Simpan Pengaturan</button></div></div>';
+  document.getElementById('content').innerHTML = h;
+  document.getElementById('saveSettings').addEventListener('click', function(){
+    var ns = {};
+    ['heroTitle','heroSub','heroArabic','bank','an','rekening','kontakTelp','kontakEmail'].forEach(function(k){ ns[k]=document.getElementById('s_'+k).value.trim(); });
+    ns.target = Number(document.getElementById('s_target').value)||0;
+    ns.terkumpul = Number(document.getElementById('s_terkumpul').value)||0;
+    ns.pencairan = Number(document.getElementById('s_pencairan').value)||0;
+    ns.saldo = Number(document.getElementById('s_saldo').value)||0;
+    ns.pencairanKet = document.getElementById('s_pencairanKet').value.trim();
+    write(LS.settings, ns);
+    toast('Pengaturan disimpan ✓ — Beranda diperbarui');
+  });
+}
+
+/* ============ BACKUP ============ */
+function renderBackup(){
+  var h = '<div class="card"><h2>Backup & Pemulihan Data</h2><div class="hint">Semua data tersimpan di browser (localStorage). Ekspor JSON untuk cadangan atau pindah ke perangkat/browser lain, lalu impor di tempat tujuan.</div>';
+  h += '<div class="actions"><button class="btn btn-gold" id="exportBtn">⬇ Ekspor Semua Data (JSON)</button><label class="btn btn-ghost" style="cursor:pointer">⬆ Impor Data (JSON)<input type="file" id="importFile" accept=".json,application/json" style="display:none"></label><button class="btn btn-danger" id="resetBtn">Reset ke Konten Awal</button></div>';
+  h += '<div style="margin-top:18px;padding:14px;background:#fcfbf7;border:1px dashed var(--border);border-radius:10px;font-size:12.5px;color:var(--muted)"><b>Catatan live-update:</b> situs publik (<code>index.html</code>) membaca data yang sama. Jika admin dibuka di tab terpisah, setiap penyimpanan akan langsung memperbarui tab situs secara otomatis. Jika di perangkat berbeda, gunakan ekspor-impor JSON di atas.</div>';
+  h += '</div>';
+  document.getElementById('content').innerHTML = h;
+  document.getElementById('exportBtn').addEventListener('click', function(){
+    var data = { posts:read(LS.posts,[]), cats:read(LS.cats,[]), pages:read(LS.pages,[]), settings:read(LS.settings,{}), exportedAt:new Date().toISOString() };
+    var blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'backup-masjid-mnh-'+new Date().toISOString().slice(0,10)+'.json';
+    a.click();
+    toast('File backup diunduh');
+  });
+  document.getElementById('importFile').addEventListener('change', function(){
+    var f=this.files[0]; if(!f) return;
+    var r=new FileReader();
+    r.onload=function(){
+      try{
+        var d=JSON.parse(r.result);
+        if(d.posts) write(LS.posts,d.posts);
+        if(d.cats) write(LS.cats,d.cats);
+        if(d.pages) write(LS.pages,d.pages);
+        if(d.settings) write(LS.settings,d.settings);
+        toast('Data berhasil diimpor ✓');
+        render();
+      }catch(err){ toast('File JSON tidak valid', true); }
+    };
+    r.readAsText(f);
+  });
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    if(confirm('Reset SEMUA data ke konten awal? Postingan & perubahan Anda akan hilang.')){
+      Object.keys(LS).forEach(function(k){ localStorage.removeItem(LS[k]); });
+      toast('Data direset. Buka index.html untuk memuat konten awal.');
+      render();
+    }
+  });
+}
+
+/* ============ GITHUB PUBLISH ============ */
+var LSGH = 'mnh_github';
+function b64encodeUnicode(str){
+  // base64 yang aman untuk konten ber-UTF-8 (JSON)
+  return btoa(unescape(encodeURIComponent(str)));
+}
+function renderGithub(){
+  var g = read(LSGH, {owner:'', repo:'', branch:'main', token:''});
+  var h = '<div class="card"><h2>Publikasi ke GitHub Pages</h2><div class="hint">Setelah disimpan di sini, perubahan hanya tersimpan di browser Anda. Klik <b>Publikasikan</b> untuk meng-commit <code>data.json</code> ke repo GitHub — situs publik (pengunjung) akan membaca file tersebut.</div>';
+  h += '<div class="row">'+
+    '<div class="field"><label>Username / Organisasi GitHub</label><input id="gh_owner" value="'+esc(g.owner)+'" placeholder="contoh: panitiamnh"></div>'+
+    '<div class="field"><label>Nama Repository</label><input id="gh_repo" value="'+esc(g.repo)+'" placeholder="contoh: masjid-nurulhikmah"></div>'+
+    '<div class="field"><label>Branch</label><input id="gh_branch" value="'+esc(g.branch||'main')+'"></div>'+
+    '<div class="field" style="grid-column:1/-1"><label>Personal Access Token (rahasia — hanya tersimpan di browser ini)</label><input id="gh_token" type="password" value="'+esc(g.token)+'" placeholder="ghp_...  (scope: public_repo / Contents read&amp;write)"></div>'+
+  '</div>';
+  h += '<div class="actions"><button class="btn btn-ghost" id="saveGh">Simpan Pengaturan</button><button class="btn btn-gold" id="publishGh">↑ Publikasikan Sekarang</button></div>';
+  h += '<div id="ghStatus" style="margin-top:16px;font-size:13px;min-height:1.4em"></div>';
+  h += '<div style="margin-top:20px;padding:16px 18px;background:#fcfbf7;border:1px dashed var(--border);border-radius:10px;font-size:12.5px;color:var(--muted);line-height:1.7">'+
+    '<b style="color:var(--ink)">Cara setup (sekali saja):</b><br>'+
+    '1. Buat repository <b>public</b> di GitHub, upload semua file (index.html, admin.html, laporan-*.html, data.json).<br>'+
+    '2. Aktifkan <b>Settings → Pages → Deploy from branch</b> (pilih branch <code>main</code>, folder /root). URL: <code>https://&lt;username&gt;.github.io/&lt;repo&gt;/</code><br>'+
+    '3. Buat token: <b>Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate</b>, centang scope <code>public_repo</code>. Atau fine-grained token dengan izin <b>Contents: Read and write</b>.<br>'+
+    '4. Isi form di atas, klik <b>Publikasikan</b>. Halaman situs publik akan terbarui dalam ±1–2 menit (cache GitHub Pages).'+
+    '</div></div>';
+  document.getElementById('content').innerHTML = h;
+  document.getElementById('saveGh').addEventListener('click', function(){
+    write(LSGH, {owner:val('gh_owner'), repo:val('gh_repo'), branch:val('gh_branch')||'main', token:val('gh_token')});
+    toast('Pengaturan GitHub disimpan');
+  });
+  document.getElementById('publishGh').addEventListener('click', publishToGithub);
+  function val(id){ return document.getElementById(id).value.trim(); }
+  function publishToGithub(){
+    var owner=val('gh_owner'), repo=val('gh_repo'), branch=val('gh_branch')||'main', token=val('gh_token');
+    var st = document.getElementById('ghStatus');
+    if(!owner||!repo||!token){ st.innerHTML='<span style="color:var(--danger)">Lengkapi username, repo, dan token.</span>'; return; }
+    write(LSGH, {owner:owner,repo:repo,branch:branch,token:token});
+    var data = { posts:read(LS.posts,[]), cats:read(LS.cats,[]), pages:read(LS.pages,[]), settings:read(LS.settings,{}), publishedAt:new Date().toISOString() };
+    var content = b64encodeUnicode(JSON.stringify(data,null,2));
+    var api = 'https://api.github.com/repos/'+owner+'/'+repo+'/contents/data.json';
+    st.innerHTML='<span style="color:var(--muted)">Menghubungi GitHub…</span>';
+    var hdrs = { 'Authorization':'token '+token, 'Accept':'application/vnd.github+json', 'Content-Type':'application/json' };
+    fetch(api+'?ref='+encodeURIComponent(branch), {headers:hdrs})
+      .then(function(r){ return r.json().then(function(j){ return {status:r.status, j:j}; }); })
+      .then(function(res){
+        var sha = (res.j && res.j.sha) ? res.j.sha : null;
+        var body = { message:'Update konten masjid — '+new Date().toLocaleString('id-ID'), content:content, branch:branch };
+        if(sha) body.sha = sha;
+        return fetch(api, { method:'PUT', headers:hdrs, body:JSON.stringify(body) });
+      })
+      .then(function(r){ return r.json().then(function(j){ return {status:r.status, j:j}; }); })
+      .then(function(res){
+        if(res.status===200 || res.status===201){
+          st.innerHTML = '<span style="color:var(--green);font-weight:700">✓ Berhasil dipublikasikan! Commit: '+(res.j.commit?res.j.commit.sha.slice(0,7):'')+'. Halaman publik terbarui dalam 1–2 menit.</span>';
+          toast('Publikasi berhasil ✓');
+        } else {
+          st.innerHTML = '<span style="color:var(--danger)">Gagal (HTTP '+res.status+'): '+(res.j && res.j.message ? esc(res.j.message) : 'periksa token & izin repo')+'</span>';
+        }
+      })
+      .catch(function(err){ st.innerHTML='<span style="color:var(--danger)">Kesalahan jaringan: '+esc(err.message)+'</span>'; });
+  }
+}
+
+/* ============ RENDER DISPATCH ============ */
+function render(){
+  if(curTab==='posts'){ if(editingPost) renderPostEditor(); else renderPostsList(); }
+  else if(curTab==='cats') renderCats();
+  else if(curTab==='pages'){ if(editingPage) renderPageEditor(); else renderPages(); }
+  else if(curTab==='settings') renderSettings();
+  else if(curTab==='backup') renderBackup();
+  else if(curTab==='github') renderGithub();
+}
+render();
+})();
+</script>
+</body>
+</html>

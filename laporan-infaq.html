@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laporan Infaq Renovasi Masjid Nurul Hikmah</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f9f6; --card:#ffffff; --text:#0f241b; --muted:#5b7a6c;
+  --accent:#0d9669; --accent-soft:rgba(13,150,105,.12); --accent2:#d4724a; --accent2-soft:rgba(212,114,74,.12);
+  --border:rgba(15,36,27,.10); --shadow:0 1px 3px rgba(15,36,27,.06),0 10px 30px rgba(15,36,27,.06);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Nunito',system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 18px 56px}
+/* HERO */
+.hero{background:linear-gradient(135deg,#0d9669 0%,#0a7a55 60%,#086044 100%);color:#fff;border-radius:18px;padding:30px 28px;position:relative;overflow:hidden;box-shadow:var(--shadow);margin-bottom:22px}
+.hero::after{content:"";position:absolute;right:-60px;top:-60px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.08)}
+.hero::before{content:"";position:absolute;right:40px;bottom:-90px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.06)}
+.hero h1{margin:0 0 6px;font-size:clamp(22px,3vw,32px);font-weight:900;letter-spacing:-.01em;position:relative;z-index:1}
+.hero p{margin:0;color:rgba(255,255,255,.85);font-size:14.5px;position:relative;z-index:1}
+.hero-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;position:relative;z-index:1}
+.pill{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);padding:5px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.02em}
+.pill .dot{width:7px;height:7px;border-radius:50%;background:#7dffc8;animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+/* KPI CARDS */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:22px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 18px 16px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent)}
+.kpi.orange::before{background:var(--accent2)}
+.kpi .label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.kpi .value{font-size:clamp(20px,2.2vw,26px);font-weight:900;letter-spacing:-.01em;line-height:1.15}
+.kpi .sub{font-size:12.5px;color:var(--muted);margin-top:5px;font-weight:600}
+/* PROGRESS PENYALURAN */
+.progress-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow);margin-bottom:22px}
+.progress-card .top{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.progress-card .top .t{font-weight:800;font-size:15px}
+.progress-card .top .pct{font-weight:900;color:var(--accent2);font-size:18px}
+.bar-track{height:14px;background:var(--accent-soft);border-radius:999px;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--accent2),#e8916a);border-radius:999px;transition:width 1s ease;width:0%}
+.progress-card .note{font-size:12.5px;color:var(--muted);margin-top:8px}
+/* CHARTS ROW */
+.charts{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;margin-bottom:22px}
+@media(max-width:760px){.charts{grid-template-columns:1fr}}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+.panel h3{margin:0 0 14px;font-size:15px;font-weight:800;display:flex;align-items:center;gap:8px}
+.panel h3::before{content:"";width:8px;height:8px;border-radius:3px;background:var(--accent);display:inline-block}
+/* monthly bars */
+.bars{display:flex;align-items:flex-end;gap:8px;height:200px;padding-top:24px;position:relative}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:6px;min-width:0}
+.bar-col .val{font-size:10.5px;font-weight:800;color:var(--muted);white-space:nowrap;transform:rotate(-35deg);transform-origin:center;opacity:0;transition:opacity .3s}
+.bar-col:hover .val{opacity:1}
+.bar-col .bar{width:100%;max-width:38px;background:linear-gradient(180deg,#12b981,var(--accent));border-radius:6px 6px 0 0;min-height:3px;transition:height .8s cubic-bezier(.2,.8,.2,1);height:0;position:relative}
+.bar-col .bar.peak{background:linear-gradient(180deg,#e8916a,var(--accent2))}
+.bar-col .mlabel{font-size:10.5px;font-weight:700;color:var(--muted);white-space:nowrap}
+/* donut */
+.donut-wrap{display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:center}
+.donut{width:150px;height:150px;border-radius:50%;position:relative;flex-shrink:0;background:conic-gradient(var(--accent) 0% 0%, #e8efe9 0% 100%);transition:background 1s}
+.donut::after{content:"";position:absolute;inset:26px;background:var(--card);border-radius:50%}
+.donut .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1}
+.donut .center .big{font-size:22px;font-weight:900}
+.donut .center .sm{font-size:10.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.legend{display:flex;flex-direction:column;gap:10px;flex:1;min-width:140px}
+.legend .li{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700}
+.legend .sw{width:14px;height:14px;border-radius:4px;flex-shrink:0}
+.legend .li .pct{margin-left:auto;color:var(--muted);font-weight:800}
+/* cities */
+.cities{display:flex;flex-direction:column;gap:9px}
+.city-row{display:grid;grid-template-columns:110px 1fr 80px;align-items:center;gap:10px;font-size:12.5px}
+.city-row .cn{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.city-row .track{height:10px;background:#e8efe9;border-radius:999px;overflow:hidden}
+.city-row .fill{height:100%;background:linear-gradient(90deg,var(--accent),#12b981);border-radius:999px;width:0;transition:width .9s ease}
+.city-row .cv{font-weight:800;text-align:right;color:var(--muted);font-size:11.5px}
+/* pencairan card */
+.pencairan{background:linear-gradient(135deg,#fff7f2,#ffefe6);border:1px solid rgba(212,114,74,.25);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow);margin-bottom:22px}
+.pencairan h3{margin:0 0 10px;font-size:15px;font-weight:800;color:#9a4a26}
+.pencairan .items{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.pencairan .it .l{font-size:11.5px;font-weight:700;color:#b06a47;text-transform:uppercase;letter-spacing:.05em}
+.pencairan .it .v{font-size:17px;font-weight:900;color:#7a3416;margin-top:2px}
+/* table */
+.table-panel{background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:22px}
+.table-head{padding:16px 18px 10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.table-head h3{margin:0;font-size:15px;font-weight:800}
+.table-head .cnt{font-size:12px;color:var(--muted);font-weight:700}
+.table-scroll{max-height:420px;overflow-y:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{position:sticky;top:0;background:#f0f6f2;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em;padding:10px 14px;text-align:left;z-index:2;border-bottom:1px solid var(--border)}
+tbody td{padding:10px 14px;border-bottom:1px solid rgba(15,36,27,.06)}
+tbody tr:nth-child(even){background:#fafdfb}
+tbody tr:hover{background:var(--accent-soft)}
+td.nom{font-weight:800;color:var(--accent);white-space:nowrap;text-align:right}
+td.met{white-space:nowrap}
+.tag{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:800}
+.tag.tf{background:var(--accent-soft);color:var(--accent)}
+.tag.cs{background:var(--accent2-soft);color:var(--accent2)}
+.empty{padding:24px;text-align:center;color:var(--muted)}
+/* footer */
+.footer{text-align:center;font-size:12.5px;color:var(--muted);line-height:1.7;padding:0 10px}
+.footer a{color:var(--accent);font-weight:800;text-decoration:none}
+.src-link{display:inline-flex;align-items:center;gap:6px;margin-top:6px}
+#status{font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <h1>Laporan Infaq Renovasi Masjid Nurul Hikmah</h1>
+    <p>Laporan transparansi perolehan &amp; penyaluran dana infaq — diperbarui otomatis</p>
+    <div class="hero-meta">
+      <span class="pill"><span class="dot"></span><span id="status">Memuat data…</span></span>
+      <span class="pill" id="periodPill">Periode: –</span>
+    </div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="label">Total Perolehan Infaq</div><div class="value" id="kpiTotal">Rp 0</div><div class="sub" id="kpiTrans">– transaksi donasi</div></div>
+    <div class="kpi orange"><div class="label">Total Disalurkan</div><div class="value" id="kpiOut">Rp 0</div><div class="sub" id="kpiOutSub">–</div></div>
+    <div class="kpi"><div class="label">Saldo Rekening Infaq</div><div class="value" id="kpiBalance">Rp 0</div><div class="sub">Tersedia untuk renovasi</div></div>
+    <div class="kpi"><div class="label">Donatur</div><div class="value" id="kpiDonors">–</div><div class="sub" id="kpiAnonim">– donatur anonim</div></div>
+  </div>
+
+  <div class="progress-card">
+    <div class="top"><span class="t">Progress Penyaluran Dana Renovasi</span><span class="pct" id="outPct">0%</span></div>
+    <div class="bar-track"><div class="bar-fill" id="outBar"></div></div>
+    <div class="note" id="outNote">Dana yang telah dicairkan untuk pekerjaan renovasi.</div>
+  </div>
+
+  <div class="charts">
+    <div class="panel">
+      <h3>Tren Perolehan per Bulan</h3>
+      <div class="bars" id="monthBars"></div>
+    </div>
+    <div class="panel">
+      <h3>Metode Pembayaran</h3>
+      <div class="donut-wrap">
+        <div class="donut" id="donut"><div class="center"><div class="big" id="donutBig">0</div><div class="sm">Transaksi</div></div></div>
+        <div class="legend" id="legend"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="charts" style="grid-template-columns:1fr 1fr">
+    <div class="panel">
+      <h3>Top Wilayah Donatur (berdasarkan nominal)</h3>
+      <div class="cities" id="cities"></div>
+    </div>
+    <div class="pencairan" style="margin:0">
+      <h3>Penyaluran Dana Terbaru</h3>
+      <div class="items">
+        <div class="it"><div class="l">Keterangan</div><div class="v" id="pcKet">–</div></div>
+        <div class="it"><div class="l">Tanggal Cair</div><div class="v" id="pcTgl">–</div></div>
+        <div class="it"><div class="l">Jumlah</div><div class="v" id="pcJum">Rp 0</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-panel">
+    <div class="table-head">
+      <h3>Riwayat Donasi Terkini</h3>
+      <span class="cnt" id="tableCnt">–</span>
+    </div>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Tanggal</th><th>Nama / Instansi</th><th>Wilayah</th><th>Metode</th><th style="text-align:right">Nominal</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">
+    Data bersumber langsung dari data keuangan panitia dan dimuat otomatis (live).
+    <span class="src-link"></a></span><br>
+    Untuk menjaga privasi donatur, nomor kontak &amp; bukti transaksi tidak ditampilkan di laporan publik ini.
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var SHEET_ID='121xudObLmW5Egxs8INmVLg2tG0qPmYYRBVsD7c8jN9s';
+  var GID_DETAIL='743165966', GID_OUT='234314531';
+  var SNAPSHOT={"generated": "2026-10-07", "detail": [{"t": "2025-05-16", "nama": "Siti khotimah", "kota": "Depok", "nominal": 500000.0, "metode": "Transfer"}, {"t": "2025-05-23", "nama": "Agus setiyono", "kota": "Cibinong Bogor", "nominal": 500000.0, "metode": "Transfer"}, {"t": "2025-05-23", "nama": "Rini S", "kota": "Bogor", "nominal": 500000.0, "metode": "Transfer"}, {"t": "2025-05-23", "nama": "Muh shochib", "kota": "Karawang", "nominal": 1000000.0, "metode": "Transfer"}, {"t": "2025-05-26", "nama": "Hamba Allah", "kota": "Indonesia", "nominal": 2000000.0, "metode": "Transfer"}, {"t": "2025-05-28", "nama": "Ali", "kota": "Bekasi", "nominal": 50000.0, "metode": "Transfer"}, {"t": "2025-05-29", "nama": "Hamba Allah", "kota": "Indonesia", "nominal": 20000000.0, "metode": "Cash"}, {"t": "2025-06-02", "nama": "Achmad Badarudin", "kota": "Jakarta", "nominal": 1000000.0, "metode": "Transfer"}, {"t": "2025-06-03", "nama": "Fatih AM", "kota": "Indonesia", "nominal": 1000100.0, "metode": "Transfer"}, {"t": "2025-06-04", "nama": "Ibu Siti Chalimah", "kota": "Karawang", "nominal": 500000.0, "metode": "Transfer"}, {"t": "2025-06-05", "nama": "Hj. Rasemi", "kota": "Bekasi", "nominal": 1000000.0, "metode": "Transfer"}, {"t": "2025-06-11", "nama": "Warsiyah", "kota": "Jakarta", "nominal": 25000000.0, "metode": "Transfer"}, {"t": "2025-06-12", "nama": "Hamba Allah", "kota": "Indonesia", "nominal": 500000.0, "metode": "Transfer"}, {"t": "2025-06-12", "nama": "Hamba Allah", "kota": "", "nominal": 50000.0, "metode": "Transfer"}, {"t": "2025-06-12", "nama": "Hamba Allah", "kota": "Nadri", "nominal": 500000.0, "metode": "Transfer"}, {"t": "2025-07-10", "nama": "FA Mujib", "kota": "Jakarta", "nominal": 100000.0, "metode": "Transfer"}, {"t": "2025-07-13", "nama": "Oman Rohman", "kota": "Kp Dukuh Jkt", "nominal": 100001.0, "metode": "Transfer"}, {"t": "2025-07-31", "nama": "Chamim", "kota": "Depok", "nominal": 200000.0, "metode": "Transfer"}, {"t": "2025-08-02", "nama": "Khoeroni", "kota": "Bekasi", "nominal": 1000000.0, "metode": "Transfer"}, {"t": "2025-08-10", "nama": "Alm. Bpk. Milatu Syamsi", "kota": "Nadri", "nominal": 200000.0, "metode": "Transfer"}, {"t": "2025-08-11", "nama": "Kotak infak", "kota": "Krendetan", "nominal": 300000.0, "metode": "Cash"}, {"t": "2025-08-11", "nama": "Kotak infak", "kota": "Krendetan", "nominal": 700000.0, "metode": "Cash"}, {"t": "2025-08-11", "nama": "Hamba Allah", "kota": "", "nominal": 150000.0, "metode": "Transfer"}, {"t": "2025-08-11", "nama": "Hamba Allah", "kota": "", "nominal": 500000.0, "metode": "Transfer"}, {"t": "2025-09-03", "nama": "Chamim", "kota": "Depok", "nominal": 200000.0, "metode": "Transfer"}, {"t": "2025-09-03", "nama": "Formuna", "kota": "Indonesia", "nominal": 1000000.0, "metode": "Transfer"}, {"t": "2025-10-10", "nama": "Hamba Allah", "kota": "Indonesia", "nominal": 15000000.0, "metode": "Transfer"}, {"t": "2025-11-04", "nama": "Hamba Allah", "kota": "Dki", "nominal": 20000000.0, "metode": "Transfer"}, {"t": "2025-11-07", "nama": "Chamim", "kota": "Depok", "nominal": 200000.0, "metode": "Transfer"}, {"t": "2025-11-08", "nama": "Kotak infaq", "kota": "Nadri", "nominal": 700000.0, "metode": "Cash"}, {"t": "2025-11-19", "nama": "Hamba Allah", "kota": "", "nominal": 5000000.0, "metode": "Transfer"}, {"t": "2025-11-21", "nama": "Hamba Allah", "kota": "Jabodetabek", "nominal": 10000000.0, "metode": "Transfer"}, {"t": "2025-12-19", "nama": "Hamba Allah", "kota": "", "nominal": 8000000.0, "metode": "Transfer"}, {"t": "2025-12-19", "nama": "Hamba Allah", "kota": "", "nominal": 2000000.0, "metode": "Transfer"}, {"t": "2025-12-24", "nama": "FA Mujib", "kota": "Jakarta", "nominal": 1000001.0, "metode": "Transfer"}, {"t": "2026-01-11", "nama": "Hamba Allah", "kota": "Indonesia", "nominal": 15000000.0, "metode": "Transfer"}, {"t": "2026-01-11", "nama": "Kotak Infaq", "kota": "Nadri", "nominal": 3200000.0, "metode": "Cash"}, {"t": "2026-01-23", "nama": "Hamba Allah", "kota": "Jakarta", "nominal": 5000000.0, "metode": "Transfer"}, {"t": "2026-08-28", "nama": "Hamba Allah", "kota": "Jakarta", "nominal": 10000000.0, "metode": "Transfer"}, {"t": "2026-08-28", "nama": "Hamba Allah", "kota": "Jogja", "nominal": 5000000.0, "metode": "Transfer"}, {"t": "2026-08-28", "nama": "Hamba Allah", "kota": "Indonesia", "nominal": 20000000.0, "metode": "Transfer"}, {"t": "2026-08-28", "nama": "Hamba Allah", "kota": "Indonesia", "nominal": 10000000.0, "metode": "Transfer"}, {"t": "2026-08-28", "nama": "Kotak infaq", "kota": "Nadri", "nominal": 1000000.0, "metode": "Cash"}, {"t": "2026-09-14", "nama": "print rek", "kota": "", "nominal": 7926883.0, "metode": "Transfer"}], "pencairan": {"perolehan": 197576985, "tgl": "14-09-2026", "jumlah": 70000000, "ket": "Pencairan Termin 1", "saldo": 127576985}};
+  var MONTHS=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+
+  function fmtRp(n){return 'Rp '+Math.round(n).toLocaleString('id-ID');}
+  function fmtShort(n){if(n>=1e9)return (n/1e9).toFixed(1).replace('.',',')+' M';if(n>=1e6)return (n/1e6).toFixed(0)+' jt';if(n>=1e3)return (n/1e3).toFixed(0)+' rb';return ''+Math.round(n);}
+
+  function parseCSV(text){
+    var rows=[], cur=[], field='', inQ=false;
+    for(var i=0;i<text.length;i++){
+      var c=text[i];
+      if(inQ){
+        if(c==='"'){if(text[i+1]==='"'){field+='"';i++;}else inQ=false;}
+        else field+=c;
+      }else{
+        if(c==='"')inQ=true;
+        else if(c===','){cur.push(field);field='';}
+        else if(c==='\n'){cur.push(field);rows.push(cur);cur=[];field='';}
+        else if(c==='\r'){}
+        else field+=c;
+      }
+    }
+    if(field!==''||cur.length){cur.push(field);rows.push(cur);}
+    return rows.filter(function(r){return r.length>1 && r.join('').trim()!=='';});
+  }
+  function parseNom(s){if(!s)return 0;var n=String(s).replace(/[Rp\s,]/g,'');var v=parseFloat(n);return isNaN(v)?0:v;}
+  function parseDate(s){
+    if(!s)return null;
+    var m=/(\d+)\/(\d+)\/(\d{4})/.exec(s);
+    if(!m)return null;
+    return new Date(+m[3], +m[1]-1, +m[2]);
+  }
+
+  function detailFromRows(grid){
+    var hdr=grid[0]; var idx={};
+    hdr.forEach(function(h,i){idx[h.trim().toLowerCase()]=i;});
+    var out=[];
+    for(var i=1;i<grid.length;i++){
+      var r=grid[i];
+      var dt=parseDate(r[idx['timestamp']]||'');
+      out.push({
+        t: dt? dt.toISOString().slice(0,10) : '',
+        nama: (r[idx['nama / instansi']]||'').trim(),
+        kota: (r[idx['kota / wilayah']]||'').trim().replace(/\b\w/g,function(c){return c.toUpperCase();}),
+        nominal: parseNom(r[idx['nominal infaq']]||''),
+        metode: (r[idx['metode pembayaran']]||'').trim()||'-'
+      });
+    }
+    return out;
+  }
+  function pencairanFromRows(grid){
+    if(grid.length<2)return SNAPSHOT.pencairan;
+    var r=grid[1];
+    return {perolehan:parseNom(r[0]), tgl:(r[1]||'').trim(), jumlah:parseNom(r[2]), ket:(r[3]||'').trim(), saldo:parseNom(r[4])};
+  }
+
+  function compute(detail, pc){
+    var total=0, methods={}, cities={}, months={}, names={}, anon=0, dmin=null, dmax=null;
+    detail.forEach(function(r){
+      total+=r.nominal;
+      methods[r.metode]=(methods[r.metode]||0)+r.nominal;
+      var ck=r.kota||'Tidak dicantumkan'; cities[ck]=(cities[ck]||0)+r.nominal;
+      if(r.t){var mk=r.t.slice(0,7); months[mk]=(months[mk]||0)+r.nominal;}
+      if(r.nama){names[r.nama]=1; if(/hamba allah/i.test(r.nama))anon++;}
+      if(r.t){var d=new Date(r.t); if(!dmin||d<dmin)dmin=d; if(!dmax||d>dmax)dmax=d;}
+    });
+    return {total:total, count:detail.length, methods:methods, cities:cities, months:months,
+      donors:Object.keys(names).length, anon:anon, dmin:dmin, dmax:dmax, pc:pc};
+  }
+
+  function render(st){
+    var pc=st.pc;
+    document.getElementById('kpiTotal').textContent=fmtRp(st.total);
+    document.getElementById('kpiTrans').textContent=st.count+' transaksi donasi';
+    document.getElementById('kpiOut').textContent=fmtRp(pc.jumlah);
+    document.getElementById('kpiOutSub').textContent=pc.ket+' · '+pc.tgl;
+    document.getElementById('kpiBalance').textContent=fmtRp(pc.saldo);
+    document.getElementById('kpiDonors').textContent=st.donors+' orang';
+    document.getElementById('kpiAnonim').textContent=st.anon+' di antaranya donatur anonim (Hamba Allah)';
+    var pct=st.total>0? Math.min(100, pc.jumlah/st.total*100):0;
+    document.getElementById('outPct').textContent=pct.toFixed(1).replace('.',',')+'%';
+    setTimeout(function(){document.getElementById('outBar').style.width=pct+'%';},100);
+    document.getElementById('outNote').textContent='Dari total perolehan '+fmtRp(st.total)+', sebesar '+fmtRp(pc.jumlah)+' ('+pct.toFixed(1).replace('.',',')+'%) telah dicairkan. Sisa '+fmtRp(pc.saldo)+' menjadi saldo.';
+    document.getElementById('pcKet').textContent=pc.ket||'-';
+    document.getElementById('pcTgl').textContent=pc.tgl||'-';
+    document.getElementById('pcJum').textContent=fmtRp(pc.jumlah);
+    if(st.dmin&&st.dmax){
+      document.getElementById('periodPill').textContent='Periode: '+st.dmin.getDate()+' '+MONTHS[st.dmin.getMonth()]+' '+st.dmin.getFullYear()+' – '+st.dmax.getDate()+' '+MONTHS[st.dmax.getMonth()]+' '+st.dmax.getFullYear();
+    }
+    // monthly bars
+    var mb=document.getElementById('monthBars'); mb.innerHTML='';
+    var keys=Object.keys(st.months).sort();
+    var max=0; keys.forEach(function(k){if(st.months[k]>max)max=st.months[k];});
+    var peakK=keys.reduce(function(a,b){return st.months[a]>=st.months[b]?a:b;},keys[0]);
+    keys.forEach(function(k){
+      var v=st.months[k]; var h=max>0? Math.max(3, v/max*100):3;
+      var col=document.createElement('div'); col.className='bar-col';
+      var y=parseInt(k.slice(0,4)), mo=parseInt(k.slice(5,7))-1;
+      col.innerHTML='<div class="val">'+fmtShort(v)+'</div><div class="bar'+(k===peakK?' peak':'')+'" data-h="'+h+'"></div><div class="mlabel">'+MONTHS[mo]+' '+String(y).slice(2)+'</div>';
+      mb.appendChild(col);
+    });
+    setTimeout(function(){document.querySelectorAll('#monthBars .bar').forEach(function(b){b.style.height=b.getAttribute('data-h')+'%';});},150);
+    // donut
+    var methKeys=Object.keys(st.methods).sort(function(a,b){return st.methods[b]-st.methods[a];});
+    var acc=0, parts=[];
+    methKeys.forEach(function(k){
+      var p=st.total>0? st.methods[k]/st.total*100:0;
+      parts.push((k==='Transfer'?'var(--accent)':'var(--accent2)')+' '+acc+'% '+(acc+p)+'%');
+      acc+=p;
+    });
+    document.getElementById('donut').style.background='conic-gradient('+parts.join(', ')+')';
+    document.getElementById('donutBig').textContent=st.count;
+    var lg=document.getElementById('legend'); lg.innerHTML='';
+    methKeys.forEach(function(k){
+      var p=st.total>0? st.methods[k]/st.total*100:0;
+      var li=document.createElement('div'); li.className='li';
+      li.innerHTML='<span class="sw" style="background:'+(k==='Transfer'?'var(--accent)':'var(--accent2)')+'"></span>'+k+'<span class="pct">'+p.toFixed(1).replace('.',',')+'%</span>';
+      lg.appendChild(li);
+    });
+    // cities
+    var ci=document.getElementById('cities'); ci.innerHTML='';
+    var cKeys=Object.keys(st.cities).sort(function(a,b){return st.cities[b]-st.cities[a];}).slice(0,7);
+    var cmax=st.cities[cKeys[0]]||1;
+    cKeys.forEach(function(k){
+      var w=Math.max(2, st.cities[k]/cmax*100);
+      var row=document.createElement('div'); row.className='city-row';
+      row.innerHTML='<span class="cn" title="'+k+'">'+k+'</span><span class="track"><span class="fill" data-w="'+w+'"></span></span><span class="cv">'+fmtShort(st.cities[k])+'</span>';
+      ci.appendChild(row);
+    });
+    setTimeout(function(){document.querySelectorAll('#cities .fill').forEach(function(f){f.style.width=f.getAttribute('data-w')+'%';});},200);
+    // table
+    var tb=document.getElementById('tbody'); tb.innerHTML='';
+    var sorted=detail.slice().sort(function(a,b){return (b.t||'').localeCompare(a.t||'');});
+    sorted.forEach(function(r){
+      var tr=document.createElement('tr');
+      var tgl=r.t? (new Date(r.t+'T00:00:00').getDate())+' '+MONTHS[new Date(r.t+'T00:00:00').getMonth()]+' '+r.t.slice(0,4) : '-';
+      var tag=r.metode==='Cash'?'<span class="tag cs">Cash</span>':'<span class="tag tf">Transfer</span>';
+      tr.innerHTML='<td>'+tgl+'</td><td>'+escapeHtml(r.nama||'-')+'</td><td>'+escapeHtml(r.kota||'-')+'</td><td class="met">'+tag+'</td><td class="nom">'+fmtRp(r.nominal)+'</td>';
+      tb.appendChild(tr);
+    });
+    document.getElementById('tableCnt').textContent=st.count+' transaksi · terurut terbaru';
+  }
+  function escapeHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+  // 1) render from snapshot immediately
+  var detail=SNAPSHOT.detail.slice();
+  var pc=SNAPSHOT.pencairan;
+  render(compute(detail, pc));
+  document.getElementById('status').textContent='Data per '+SNAPSHOT.generated+' · menyegarkan…';
+
+  // 2) try live fetch
+  var done=0, liveDetail=null, livePc=null, failed=false;
+  function finish(){
+    if(done<2)return;
+    if(!failed && liveDetail && livePc){
+      detail=liveDetail; pc=livePc;
+      render(compute(detail, pc));
+      document.getElementById('status').textContent='Live · diperbarui '+new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
+    }else{
+      document.getElementById('status').textContent='Data per '+SNAPSHOT.generated+' (offline snapshot)';
+    }
+  }
+  fetch('https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?tqx=out:csv&gid='+GID_DETAIL)
+    .then(function(r){if(!r.ok)throw 0;return r.text();})
+    .then(function(t){liveDetail=detailFromRows(parseCSV(t));})
+    .catch(function(){failed=true;})
+    .finally(function(){done++;finish();});
+  fetch('https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?tqx=out:csv&gid='+GID_OUT)
+    .then(function(r){if(!r.ok)throw 0;return r.text();})
+    .then(function(t){livePc=pencairanFromRows(parseCSV(t));})
+    .catch(function(){failed=true;})
+    .finally(function(){done++;finish();});
+})();
+</script>
+</body>
+</html>
