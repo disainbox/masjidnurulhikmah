@@ -560,7 +560,7 @@ function renderNav(active){
 /* ===== POST CARD ===== */
 function postCard(p){
   var cover = p.cover
-    ? '<div class="post-cover"><img src="'+p.cover+'" alt="'+esc(p.title)+'" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=\\\'ph\\\'>'+ICON.dome+'</div>\'"></div>'
+    ? '<div class="post-cover"><span class="ph" style="display:none">'+ICON.dome+'</span><img src="'+p.cover+'" alt="'+esc(p.title)+'" loading="lazy" onerror="this.style.display=\'none\';this.previousElementSibling.style.display=\'inline\'"></div>'
     : '<div class="post-cover"><span class="ph">'+ICON.dome+'</span></div>';
   return '<article class="post-card fade-in"><a href="#/blog/'+esc(p.slug)+'">'+cover+
     '<div class="post-body">'+
@@ -699,7 +699,7 @@ var views = {
       }).join('')+'</div>'+
     '</div></section>'+
     '<section class="block" style="padding-top:0"><div class="wrap">'+
-      '<div class="sec-head"><div><span class="eyebrow">Tahapan Pekerjaan</span><h2>Timeline Renovasi</h2><div class="tl-auto-note" style="margin-top:8px"><span class="dot"></span>Menampilkan progress alur kerja</div></div></div>'+
+      '<div class="sec-head"><div><span class="eyebrow">Tahapan Pekerjaan</span><h2>Timeline Renovasi</h2><div class="tl-auto-note" style="margin-top:8px"><span class="dot"></span>Menampilkan kerangka rencana kerja</div></div></div>'+
       '<div class="timeline">'+phases.map(function(ph){
         var link = ph.post ? '<br><a class="tl-link" href="#/blog/'+esc(ph.post.slug)+'">Baca laporan '+ICON.arrow+'</a>' : '';
         var cls = 'tl-item '+ph.status+(ph.milestone?' milestone':'');
