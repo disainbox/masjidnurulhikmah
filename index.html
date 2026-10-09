@@ -699,7 +699,7 @@ var views = {
       }).join('')+'</div>'+
     '</div></section>'+
     '<section class="block" style="padding-top:0"><div class="wrap">'+
-      '<div class="sec-head"><div><span class="eyebrow">Tahapan Pekerjaan</span><h2>Timeline Renovasi</h2><div class="tl-auto-note" style="margin-top:8px"><span class="dot"></span>Diperbarui otomatis dari postingan kategori Renovasi</div></div></div>'+
+      '<div class="sec-head"><div><span class="eyebrow">Tahapan Pekerjaan</span><h2>Timeline Renovasi</h2><div class="tl-auto-note" style="margin-top:8px"><span class="dot"></span>Menampilkan progress alur kerja</div></div></div>'+
       '<div class="timeline">'+phases.map(function(ph){
         var link = ph.post ? '<br><a class="tl-link" href="#/blog/'+esc(ph.post.slug)+'">Baca laporan '+ICON.arrow+'</a>' : '';
         var cls = 'tl-item '+ph.status+(ph.milestone?' milestone':'');
