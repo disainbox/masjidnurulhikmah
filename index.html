@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Masjid Jami' Nurul Hikmah — Dusun Nadri, Desa Krendetan</title>
+<title>Masjid Jami' Nurul Hikmah — Dusun Nadri, Purworejo</title>
 <meta name="description" content="Website resmi Masjid Jami' Nurul Hikmah Dusun Nadri, Desa Krendetan, Bagelen, Purworejo. Informasi renovasi, laporan keuangan, donasi, dan kegiatan.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -160,6 +160,11 @@ section.block{padding:64px 0}
 .tl-item.done::before{background:var(--green);border-color:var(--green)}
 .tl-item.active::before{animation:tlpulse 1.8s infinite}
 @keyframes tlpulse{0%,100%{box-shadow:0 0 0 4px var(--gold-soft)}50%{box-shadow:0 0 0 8px rgba(193,154,63,.08)}}
+.tl-item.milestone::before{width:10px;height:10px;left:-28px;border-width:2px;background:var(--bg);box-shadow:0 0 0 3px var(--gold-soft)}
+.tl-item .tl-link{display:inline-block;margin-top:6px;font-size:12.5px;font-weight:700;color:var(--green)}
+.tl-item .tl-link:hover{text-decoration:underline}
+.tl-auto-note{font-size:12px;color:var(--muted);font-weight:600;display:inline-flex;align-items:center;gap:6px}
+.tl-auto-note .dot{width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;animation:tlpulse 1.8s infinite}
 .tl-date{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
 .tl-item h3{font-size:19px;margin:4px 0 6px}
 .tl-item p{font-size:13.5px;color:var(--muted);max-width:60ch}
@@ -241,7 +246,7 @@ footer p{font-size:13px;line-height:1.7}
       <span class="brand-mark" aria-hidden="true">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-2.2 2-3.5 3.4-3.5 5.2A3.5 3.5 0 0 0 12 11.7a3.5 3.5 0 0 0 3.5-3.5C15.5 6.4 14.2 5 12 3z"/><path d="M4 21v-6.5a8 8 0 0 1 16 0V21"/><path d="M2 21h20"/><path d="M9.5 21v-2.5a2.5 2.5 0 0 1 5 0V21"/><path d="M18.5 8.5a2.6 2.6 0 1 1-3.2-3.9"/></svg>
       </span>
-      <span class="brand-name">Masjid Jami' Nurul Hikmah<small>Dusun Nadri, Desa Krendetan</small></span>
+      <span class="brand-name">Masjid Jami' Nurul Hikmah<small>Dusun Nadri · Desa Krendetan</small></span>
     </a>
     <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -333,11 +338,30 @@ var SEED = {
   },
   posts: [
     { id:'p1', slug:'target-donasi-tercapai-71-persen', title:'Alhamdulillah, Donasi Renovasi Mencapai 71%', cat:'Renovasi', date:'2026-10-08', excerpt:'Per 8 Oktober 2026 total infaq terkumpul Rp 197.576.985 dari target Rp 276.468.000. Terima kasih kepada seluruh donatur di dalam dan luar negeri.', cover:'', content:'<p>Assalamu\'alaikum warahmatullahi wabarakatuh.</p><p>Alhamdulillah, berkat limpahan rahmat Allah SWT dan kebaikan hati seluruh donatur, hingga <b>8 Oktober 2026</b> dana infaq renovasi Masjid Jami\' Nurul Hikmah telah mencapai <b>Rp 197.576.985</b> dari target <b>Rp 276.468.000</b> (±71%).</p><p>Angka ini bersifat sementara dan terus diperbarui sistem setelah verifikasi bukti transaksi. Rincian perolehan dan penyaluran dapat dilihat di halaman <a href="#/donatur">Laporan Infaq</a> dan <a href="#/keuangan">Laporan Keuangan Publik</a>.</p><blockquote>“Siapa yang membangun masjid karena Allah, maka Allah akan membangunkan baginya rumah di surga.” (HR. Bukhari &amp; Muslim)</blockquote><p>Semoga Allah melipatgandakan pahala setiap donatur, keluarga, dan harta yang dikeluarkan di jalan-Nya. Jazakumullahu khairan.</p>' },
-    { id:'p2', slug:'pencairan-termin-1', title:'Pencairan Dana Termin 1 Sebesar Rp 70 Juta', cat:'Renovasi', date:'2026-09-15', excerpt:'Pada 14 September 2026 panitia mencairkan dana termin pertama untuk pembelian material atap dan upah tukang tahap awal.', cover:'', content:'<p>Pada tanggal <b>14 September 2026</b>, panitia renovasi telah melakukan pencairan dana <b>Termin 1 sebesar Rp 70.000.000</b>.</p><h3>Rencana penggunaan dana Termin 1</h3><ul><li>Pembelian material atap baru (genteng, rangka, kayu)</li><li>Upah tukang dan kenek tahap pembongkaran</li><li>Biaya konsumsi pekerja</li><li>Transportasi material ke lokasi</li></ul><p>Sisa saldo rekening infaq setelah pencairan: <b>Rp 127.576.985</b>. Seluruh pencairan dicatat dan dilaporkan secara transparan di halaman <a href="#/keuangan">Laporan Keuangan Publik</a>.</p><p>Doakan agar pekerjaan renovasi berjalan lancar, berkah, dan sesuai rencana.</p>' },
+    { id:'p2', slug:'pencairan-termin-1', title:'Pencairan Dana Termin 1 Sebesar Rp 70 Juta', cat:'Renovasi', date:'2026-09-15', phase:2, phaseStatus:'active', phaseDate:'14 Sep 2026', excerpt:'Pada 14 September 2026 panitia mencairkan dana termin pertama untuk pembelian material atap dan upah tukang tahap awal.', cover:'', content:'<p>Pada tanggal <b>14 September 2026</b>, panitia renovasi telah melakukan pencairan dana <b>Termin 1 sebesar Rp 70.000.000</b>.</p><h3>Rencana penggunaan dana Termin 1</h3><ul><li>Pembelian material atap baru (genteng, rangka, kayu)</li><li>Upah tukang dan kenek tahap pembongkaran</li><li>Biaya konsumsi pekerja</li><li>Transportasi material ke lokasi</li></ul><p>Sisa saldo rekening infaq setelah pencairan: <b>Rp 127.576.985</b>. Seluruh pencairan dicatat dan dilaporkan secara transparan di halaman <a href="#/keuangan">Laporan Keuangan Publik</a>.</p><p>Doakan agar pekerjaan renovasi berjalan lancar, berkah, dan sesuai rencana.</p>' },
     { id:'p3', slug:'keutamaan-amal-jariyah', title:'Keutamaan Membangun & Memakmurkan Masjid', cat:'Artikel', date:'2026-09-01', excerpt:'Sedekah jariyah adalah amalan yang pahalanya terus mengalir meski kita telah tiada. Membangun masjid adalah salah satu bentuknya yang utama.', cover:'', content:'<p class="arabic" style="font-size:22px;color:var(--green);text-align:center;margin:10px 0">وَمَن يَبْنِ مَسْجِدًا لِّلَّهِ يَبْنِ اللَّهُ لَهُ بَيْتًا فِي الْجَنَّةِ</p><p style="text-align:center;font-style:italic;color:var(--muted);font-size:13px;margin-bottom:20px">“Siapa yang membangun masjid karena Allah, Allah akan membangunkan baginya rumah di surga.” (HR. Bukhari &amp; Muslim)</p><p>Masjid adalah rumah Allah. Setiap batu bata, setiap lembar genteng, dan setiap rupiah yang menyertainya — jika diniatkan karena Allah — akan menjadi <b>amal jariyah</b> yang pahalanya tidak terputus.</p><h3>Mengapa renovasi masjid termasuk amal jariyah?</h3><ul><li>Selama masjid digunakan untuk shalat, mengaji, dan menuntut ilmu — pahala terus mengalir kepada yang membiayainya.</li><li>Masjid yang nyaman menarik lebih banyak jamaah, sehingga kebaikan yang terjadi di dalamnya terus bertambah.</li><li>Generasi setelah kita pun akan merasakan manfaatnya.</li></ul><p>Mari jadikan kesempatan renovasi Masjid Jami\' Nurul Hikmah sebagai tabungan akhirat kita. <a href="#/donatur">Klik di sini untuk cara berdonasi.</a></p>' },
     { id:'p4', slug:'panduan-konfirmasi-donasi', title:'Panduan Konfirmasi Donasi & Bukti Transfer', cat:'Pengumuman', date:'2026-08-30', excerpt:'Agar donasi Anda tercatat dengan benar dalam laporan publik, ikuti langkah konfirmasi yang benar setelah melakukan transfer.', cover:'', content:'<p>Agar donasi Anda tercatat dengan benar dan muncul dalam <a href="#/donatur">laporan publik</a>, mohon lakukan konfirmasi setelah transfer.</p><h3>Langkah konfirmasi</h3><ul><li>Transfer ke rekening <b>Bank BRI 6849-01-020766-53-9</b> a.n. Panitia Renovasi Masjid Jami Nurul Hikmah.</li><li>Simpan <b>bukti transfer</b> (screenshot / struk).</li><li>Konfirmasi dengan mengisi form Konfirmasi Donasi</b>.</li></ul><p>Konfirmasi wajib menyertakan bukti transaksi. Tanpa bukti, donasi tidak dapat diverifikasi dan tidak akan masuk laporan. Untuk menjaga privasi, nomor kontak dan bukti tidak ditampilkan di laporan publik.</p>' }
   ]
 };
+/* ============================================================
+   MASTER FASE RENOVASI — kerangka statis tahapan pekerjaan.
+   Status & tanggal setiap fase DITENTUKAN OTOMATIS dari postingan
+   kategori "Renovasi" (lihat buildTimeline()). Cukup tambahkan
+   field opsional pada postingan:
+     phase        : nomor urut fase (1..6)  -> fase ini ditandai selesai
+     phaseStatus  : 'done' | 'active' | 'plan'  (override status)
+     phaseDate    : label tanggal tampil (mis. '14 Sep 2026')
+   Postingan kategori Renovasi TANPA field "phase" otomatis muncul
+   sebagai "milestone" tambahan di timeline, urut kronologis.
+   ============================================================ */
+var RENOVASI_PHASES = [
+  {order:1, def:'done', title:'Perencanaan & Penggalangan Dana', desc:'Penyusunan RAB, proposal, dan pembukaan rekening infaq publik. Target terkumpul Rp 276.468.000.', dateLabel:'2025 – Sekarang'},
+  {order:2, title:'Pencairan Termin 1 & Pembelian Material', desc:'Dana Rp 70.000.000 dicairkan untuk material atap, upah tukang tahap awal, dan konsumsi pekerja.'},
+  {order:3, title:'Pembongkaran Atap Lama & Pemasangan Atap Baru', desc:'Atap serambi yang bocor dan rapuh dibongkar total, diganti rangka & genteng baru yang kokoh.'},
+  {order:4, title:'Peninggian Dinding & Pemasangan Plafon Gypsum', desc:'Dinding ditinggikan menutup celah dengan atap; plafon gypsum baru dipasang mengikuti struktur atap untuk sirkulasi udara yang lebih baik.'},
+  {order:5, title:'Pengecatan & Aksesoris', desc:'Pengecatan ulang seluruh dinding, pemasangan lampu, kipas angin (fan), dan sistem audio.'},
+  {order:6, title:'Finishing & Serah Terima', desc:'Pembersihan, penataan, dan serah terima masjid kepada jamaah. Alhamdulillah.'}
+];
 seedIfEmpty();
 
 /* REMOTE data.json (GitHub Pages / hosting publik) — sumber data utama jika berhasil di-fetch.
@@ -429,6 +453,70 @@ function rupiah(n){ return 'Rp ' + Math.round(Number(n)||0).toLocaleString('id-I
 function fmtDate(s){ if(!s) return ''; var d=new Date(s+'T00:00:00'); if(isNaN(d)) return s; var m=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des']; return d.getDate()+' '+m[d.getMonth()]+' '+d.getFullYear(); }
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function toast(msg){ var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(function(){t.classList.remove('show');},2200); }
+function dateNum(d){ return parseInt(String(d||'').replace(/\D/g,'').slice(0,8),10)||0; }
+/* ===== TIMELINE RENOVASI OTOMATIS DARI POSTINGAN =====
+   - Postingan kategori "Renovasi" dgn field phase (1..6) menandai fase:
+     tanpa phaseStatus -> otomatis "Selesai"; fase berikutnya -> "Berjalan".
+   - Postingan Renovasi tanpa phase -> milestone tambahan, urut kronologis.
+   - Setiap item yang bersumber postingan diberi tautan "Baca laporan". */
+function buildTimeline(){
+  var renoPosts = getPosts().filter(function(p){ return (p.cat||'')==='Renovasi'; });
+  var byPhase = {}, milestones = [];
+  renoPosts.forEach(function(p){ // getPosts sudah urut tanggal terbaru dulu
+    var o = p.phase!=null ? Number(p.phase) : NaN;
+    if(!isNaN(o) && o>=1 && o<=RENOVASI_PHASES.length){ if(!byPhase[o]) byPhase[o]=p; }
+    else milestones.push(p);
+  });
+  milestones.sort(function(a,b){ return (a.date||'').localeCompare(b.date||''); }); // asc
+  var phases = RENOVASI_PHASES.map(function(ph){
+    var post = byPhase[ph.order] || null;
+    return {
+      order: ph.order, def: ph.def||'plan', title: ph.title,
+      desc: post ? (post.excerpt||ph.desc) : ph.desc,
+      post: post,
+      explicit: post ? (post.phaseStatus||'') : '',
+      dateLabel: post ? (post.phaseDate || fmtDate(post.date)) : (ph.dateLabel||'Rencana'),
+      sortKey: ph.order
+    };
+  });
+  // tentukan fase "Berjalan"
+  var maxPosted = 0;
+  phases.forEach(function(ph){ if(ph.post) maxPosted = Math.max(maxPosted, ph.order); });
+  var activeOrder = null;
+  phases.forEach(function(ph){ if(ph.explicit==='active') activeOrder = ph.order; });
+  if(activeOrder==null){
+    if(maxPosted>0) activeOrder = Math.min(maxPosted+1, phases.length);
+    else { var fnd = phases.find(function(ph){ return ph.def!=='done'; }); activeOrder = fnd ? fnd.order : phases.length+1; }
+  } else if(maxPosted > activeOrder){
+    activeOrder = Math.min(maxPosted+1, phases.length); // pin "active" usang -> geser maju
+  }
+  // tetapkan status (eksplisit menang; pin active usang diturunkan jadi done)
+  phases.forEach(function(ph){
+    if(ph.explicit==='done'||ph.explicit==='plan') ph.status = ph.explicit;
+    else if(ph.explicit==='active') ph.status = (ph.order >= activeOrder) ? 'active' : 'done';
+    else if(ph.post) ph.status = 'done';
+    else if(ph.order < activeOrder) ph.status = 'done';
+    else if(ph.order === activeOrder) ph.status = 'active';
+    else ph.status = 'plan';
+  });
+  // jangkar tanggal untuk menyisipkan milestone secara kronologis
+  var anchors = phases.filter(function(ph){ return ph.post && ph.post.date; })
+    .map(function(ph){ return {order:ph.order, dn:dateNum(ph.post.date)}; })
+    .sort(function(a,b){ return a.dn-b.dn; });
+  var counter = {};
+  milestones.forEach(function(p){
+    var dn = dateNum(p.date), afterOrder = 0;
+    for(var i=0;i<anchors.length;i++){ if(anchors[i].dn <= dn) afterOrder = anchors[i].order; }
+    counter[afterOrder] = (counter[afterOrder]||0)+1;
+    phases.push({
+      sortKey: afterOrder + 0.01*counter[afterOrder],
+      title: p.title, desc: p.excerpt||'', dateLabel: fmtDate(p.date),
+      status:'done', post:p, milestone:true, order: afterOrder
+    });
+  });
+  phases.sort(function(a,b){ return a.sortKey - b.sortKey; });
+  return phases;
+}
 
 /* ===== ICONS (inline SVG) ===== */
 var ICON = {
@@ -583,7 +671,7 @@ var views = {
     var html = '<header class="page-head pattern-bg"><div class="wrap page-head-in">'+
       '<span class="eyebrow">Pertanggungjawaban</span>'+
       '<h1>Laporan Keuangan Publik</h1>'+
-      '<p>Laporan pemasukan &amp; pengeluaran dana renovasi secara live — dilengkapi grafik bulanan, rincian kategori, dan riwayat transaksi.</p>'+
+      '<p>Laporan pemasukan &amp; pengeluaran dana renovasi — dilengkapi grafik bulanan, rincian kategori, dan riwayat transaksi.</p>'+
     '</div></header>'+
     '<section class="block"><div class="wrap">'+
       '<iframe class="embed-frame" src="laporan-keuangan.html" title="Laporan Keuangan Publik" style="height:1500px"></iframe>'+
@@ -592,14 +680,7 @@ var views = {
   },
 
   renovasi: function(){
-    var phases = [
-      {date:'2025 – Sekarang', title:'Perencanaan & Penggalangan Dana', desc:'Penyusunan RAB, proposal, dan pembukaan rekening infaq publik. Target terkumpul Rp 276.468.000.', status:'done'},
-      {date:'14 Sep 2026', title:'Pencairan Termin 1 & Pembelian Material', desc:'Dana Rp 70.000.000 dicairkan untuk material atap, upah tukang tahap awal, dan konsumsi pekerja.', status:'active'},
-      {date:'Rencana', title:'Pembongkaran Atap Lama & Pemasangan Atap Baru', desc:'Atap serambi yang bocor dan rapuh dibongkar total, diganti rangka & genteng baru yang kokoh.', status:'plan'},
-      {date:'Rencana', title:'Peninggian Dinding & Pemasangan Plafon Gypsum', desc:'Dinding ditinggikan menutup celah dengan atap; plafon gypsum baru dipasang mengikuti struktur atap untuk sirkulasi udara yang lebih baik.', status:'plan'},
-      {date:'Rencana', title:'Pengecatan & Aksesoris', desc:'Pengecatan ulang seluruh dinding, pemasangan lampu, kipas angin (fan), dan sistem audio.', status:'plan'},
-      {date:'Rencana', title:'Finishing & Serah Terima', desc:'Pembersihan, penataan, dan serah terima masjid kepada jamaah. Alhamdulillah.', status:'plan'}
-    ];
+    var phases = buildTimeline(); // otomatis dari postingan kategori Renovasi + master fase
     var items = [
       {t:'Atap Baru', d:'Pembongkaran atap lama yang bocor dan penggantian dengan rangka & genteng baru yang kokoh.'},
       {t:'Dinding Ditinggikan', d:'Menutup celah antara dinding dan atap untuk menjaga kebersihan, kenyamanan, dan keamanan.'},
@@ -618,9 +699,11 @@ var views = {
       }).join('')+'</div>'+
     '</div></section>'+
     '<section class="block" style="padding-top:0"><div class="wrap">'+
-      '<div class="sec-head"><div><span class="eyebrow">Tahapan Pekerjaan</span><h2>Timeline Renovasi</h2></div></div>'+
+      '<div class="sec-head"><div><span class="eyebrow">Tahapan Pekerjaan</span><h2>Timeline Renovasi</h2><div class="tl-auto-note" style="margin-top:8px"><span class="dot"></span>Diperbarui otomatis dari postingan kategori Renovasi</div></div></div>'+
       '<div class="timeline">'+phases.map(function(ph){
-        return '<div class="tl-item '+ph.status+'"><div class="tl-date">'+ph.date+' <span class="tl-badge '+ph.status+'">'+(ph.status==='done'?'Selesai':ph.status==='active'?'Berjalan':'Rencana')+'</span></div><h3>'+ph.title+'</h3><p>'+ph.desc+'</p></div>';
+        var link = ph.post ? '<br><a class="tl-link" href="#/blog/'+esc(ph.post.slug)+'">Baca laporan '+ICON.arrow+'</a>' : '';
+        var cls = 'tl-item '+ph.status+(ph.milestone?' milestone':'');
+        return '<div class="'+cls+'"><div class="tl-date">'+esc(ph.dateLabel)+' <span class="tl-badge '+ph.status+'">'+(ph.status==='done'?'Selesai':ph.status==='active'?'Berjalan':'Rencana')+'</span></div><h3>'+esc(ph.title)+'</h3><p>'+esc(ph.desc||'')+link+'</p></div>';
       }).join('')+'</div>'+
       '<div style="text-align:center;margin-top:36px"><a href="#/donatur" class="btn btn-green">Dukung Lewat Infaq '+ICON.arrow+'</a></div>'+
     '</div></section>';
