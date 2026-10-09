@@ -418,7 +418,7 @@ function liveHero(){
       if(cair!=null){ setText('kpiCair', rupiah(cair)); setText('kpiCairKet', ket); }
       if(saldo!=null) setText('kpiSaldo', rupiah(saldo));
       else if(total>0 && cair!=null) setText('kpiSaldo', rupiah(total-cair));
-      el.textContent='● LIVE dari Google Sheets'; el.style.color='var(--gold)';
+      el.textContent='● LIVE ●'; el.style.color='var(--gold)';
     })
     .catch(function(){ el.textContent='· angka diperbarui berkala'; el.style.color='var(--muted)'; });
 }
