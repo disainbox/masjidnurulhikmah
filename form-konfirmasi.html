@@ -1,271 +1,575 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Form Konfirmasi Donasi — Masjid Nurul Hikmah</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-(function(){
-  var s = document.createElement('style');
-  s.textContent = [
-    ':root{',
-    '--green:#0c6b47;--green-dark:#084d32;--green-deep:#063a26;',
-    '--gold:#d4af37;--gold-light:#e8c96a;--gold-dark:#a8861f;--gold-soft:rgba(212,175,55,.16);',
-    '--bg:#f7f4ea;--card:#ffffff;--text:#2b2a24;--muted:#7a766b;--border:rgba(12,107,71,.14);',
-    '}',
-    '*{box-sizing:border-box}',
-    'body{font-family:"Public Sans",system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;margin:0}',
-    '.font-display{font-family:"Playfair Display",serif}',
-    /* header ornament */
-    '.gold-line{height:3px;background:linear-gradient(90deg,transparent,var(--gold) 20%,var(--gold-light) 50%,var(--gold) 80%,transparent)}',
-    /* inputs */
-    '.field{width:100%;min-height:48px;padding:12px 16px;border:1.5px solid var(--border);border-radius:12px;font-size:15px;font-family:inherit;color:var(--text);background:#fff;outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none;appearance:none}',
-    '.field:focus{border-color:var(--gold);box-shadow:0 0 0 4px var(--gold-soft)}',
-    '.field:disabled{background:#f1efe6;color:var(--muted);cursor:not-allowed}',
-    'textarea.field{resize:vertical;min-height:88px}',
-    'select.field{background-image:url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23a8861f\' stroke-width=\'2.5\'><path d=\'M6 9l6 6 6-6\'/></svg>");background-repeat:no-repeat;background-position:right 14px center;padding-right:42px}',
-    /* custom checkbox */
-    '.chk{display:flex;align-items:flex-start;gap:12px;cursor:pointer;padding:14px 16px;border:1.5px solid var(--border);border-radius:12px;background:#fff;transition:border-color .2s,background .2s;user-select:none}',
-    '.chk:hover{border-color:var(--gold)}',
-    '.chk input{position:absolute;opacity:0;pointer-events:none}',
-    '.chk-box{flex:0 0 auto;width:24px;height:24px;border:2px solid var(--border);border-radius:7px;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .2s;background:#fff}',
-    '.chk input:checked + .chk-box{background:var(--gold);border-color:var(--gold-dark)}',
-    '.chk-box svg{opacity:0;transform:scale(.5);transition:all .18s}',
-    '.chk input:checked + .chk-box svg{opacity:1;transform:scale(1)}',
-    '.chk:has(input:checked){border-color:var(--gold);background:var(--gold-soft)}',
-    /* file upload */
-    '.file-zone{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:22px 16px;border:2px dashed var(--gold-dark);border-radius:14px;background:var(--gold-soft);cursor:pointer;transition:all .2s;text-align:center;min-height:96px}',
-    '.file-zone:hover{background:rgba(212,175,55,.24);border-color:var(--gold)}',
-    '.file-zone input{display:none}',
-    /* button */
-    '.btn{width:100%;min-height:52px;padding:14px 24px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:var(--green-deep);border:none;border-radius:12px;font-weight:700;font-size:16px;font-family:inherit;cursor:pointer;transition:transform .15s,box-shadow .2s,filter .2s;box-shadow:0 4px 14px rgba(168,134,31,.35)}',
-    '.btn:hover{filter:brightness(1.06);transform:translateY(-1px)}',
-    '.btn:active{transform:translateY(0)}',
-    '.btn:disabled{opacity:.65;cursor:not-allowed;transform:none}',
-    /* messages */
-    '.msg{margin-top:16px;padding:14px 16px;border-radius:12px;font-weight:500;font-size:14px;display:none;line-height:1.5}',
-    '.msg.success{display:block;background:#eef7ef;color:#14532d;border:1px solid #bbf7d0}',
-    '.msg.error{display:block;background:#fdf2f0;color:#9a3412;border:1px solid #fed7aa}',
-    /* reveal */
-    '@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}',
-    '.reveal{animation:fadeUp .5s ease both}',
-    '.d1{animation-delay:.08s}.d2{animation-delay:.16s}.d3{animation-delay:.24s}',
-    /* label */
-    '.lbl{display:block;font-weight:600;font-size:14px;margin-bottom:7px;color:var(--text)}',
-    '.req{color:var(--gold-dark);font-weight:700}',
-    /* preview */
-    '.preview{margin-top:12px;display:none}',
-    '.preview img{max-width:100%;max-height:220px;border-radius:10px;border:1.5px solid var(--border)}',
-    /* back link */
-    '.back-link{display:inline-flex;align-items:center;gap:6px;margin-top:20px;color:var(--green);font-weight:600;font-size:14px;text-decoration:none;transition:gap .2s}',
-    '.back-link:hover{gap:10px}',
-    /* nominal prefix */
-    '.rp-wrap{position:relative}',
-    '.rp-prefix{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-weight:700;color:var(--gold-dark);font-size:15px;pointer-events:none}',
-    '.rp-wrap .field{padding-left:44px}',
-    /* pattern bg on header */
-    '.hdr-pattern{background-image:radial-gradient(circle at 1px 1px,rgba(212,175,55,.22) 1px,transparent 0);background-size:22px 22px}'
-  ].join('');
-  document.head.appendChild(s);
-})();
-</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Konfirmasi Donasi — Masjid Nurul Hikmah</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       1. DESIGN TOKENS
+       ============================================================ */
+    :root {
+      --green:       #0c6b47;
+      --green-dark:  #084d32;
+      --green-deep:  #063a26;
+
+      --gold:        #d4af37;
+      --gold-light:  #e8c96a;
+      --gold-dark:   #a8861f;
+      --gold-soft:   rgba(212, 175, 55, .16);
+
+      --bg:          #f7f4ea;
+      --card:        #ffffff;
+      --text:        #2b2a24;
+      --muted:       #7a766b;
+      --border:      rgba(12, 107, 71, .14);
+    }
+
+    /* ============================================================
+       2. RESET & BASE
+       ============================================================ */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body { margin: 0; padding: 0; }
+
+    body {
+      font-family: "Public Sans", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .font-display { font-family: "Playfair Display", serif; }
+
+    /* ============================================================
+       3. HEADER
+       ============================================================ */
+    .site-header {
+      position: relative;
+      overflow: hidden;
+      padding: 56px 20px 84px;
+      text-align: center;
+      background:
+        radial-gradient(circle at 1px 1px, rgba(212, 175, 55, .22) 1px, transparent 0),
+        linear-gradient(140deg, #0c6b47 0%, #085236 55%, #063a26 100%);
+      background-size: 22px 22px, cover;
+    }
+
+    .gold-line {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold) 20%, var(--gold-light) 50%, var(--gold) 80%, transparent);
+    }
+
+    .logo-badge {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      box-shadow: 0 6px 20px rgba(212, 175, 55, .4);
+    }
+
+    .header-kicker {
+      color: var(--gold-light);
+      font-size: 12px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .header-title {
+      color: #fff;
+      font-size: clamp(26px, 6vw, 38px);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .header-sub {
+      color: rgba(255, 255, 255, .78);
+      font-size: 14px;
+    }
+
+    .divider-star {
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .divider-star .line {
+      display: inline-block;
+      height: 1px;
+      width: 44px;
+    }
+    .divider-star .line.left  { background: linear-gradient(90deg, transparent, var(--gold)); }
+    .divider-star .line.right { background: linear-gradient(90deg, var(--gold), transparent); }
+
+    /* ============================================================
+       4. MAIN CARD
+       ============================================================ */
+    .main-wrap {
+      max-width: 540px;
+      margin: -52px auto 0;
+      padding: 0 16px 48px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .form-card {
+      background: var(--card);
+      border-radius: 20px;
+      padding: clamp(20px, 5vw, 32px);
+      box-shadow: 0 12px 40px rgba(6, 58, 38, .14);
+      border-top: 4px solid var(--gold);
+    }
+
+    #formKonfirmasi { display: grid; gap: 18px; }
+
+    /* ============================================================
+       5. FORM FIELDS
+       ============================================================ */
+    .lbl {
+      display: block;
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 7px;
+      color: var(--text);
+    }
+
+    .req { color: var(--gold-dark); font-weight: 700; }
+    .opt { color: var(--muted); font-weight: 400; }
+
+    .field {
+      width: 100%;
+      min-height: 48px;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      font-size: 15px;
+      font-family: inherit;
+      color: var(--text);
+      background: #fff;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .field:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 4px var(--gold-soft);
+    }
+    .field:disabled {
+      background: #f1efe6;
+      color: var(--muted);
+      cursor: not-allowed;
+    }
+
+    textarea.field { resize: vertical; min-height: 88px; }
+
+    select.field {
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23a8861f' stroke-width='2.5'><path d='M6 9l6 6 6-6'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 42px;
+    }
+
+    .rp-wrap { position: relative; }
+    .rp-prefix {
+      position: absolute;
+      left: 16px; top: 50%;
+      transform: translateY(-50%);
+      font-weight: 700;
+      color: var(--gold-dark);
+      font-size: 15px;
+      pointer-events: none;
+    }
+    .rp-wrap .field { padding-left: 44px; }
+
+    /* ============================================================
+       6. CHECKBOX (Anonim)
+       ============================================================ */
+    .chk {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      padding: 14px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      transition: border-color .2s, background .2s;
+      user-select: none;
+    }
+    .chk:hover { border-color: var(--gold); }
+    .chk input { position: absolute; opacity: 0; pointer-events: none; }
+
+    .chk-box {
+      flex: 0 0 auto;
+      width: 24px; height: 24px;
+      border: 2px solid var(--border);
+      border-radius: 7px;
+      margin-top: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s;
+      background: #fff;
+    }
+    .chk input:checked + .chk-box { background: var(--gold); border-color: var(--gold-dark); }
+    .chk-box svg { opacity: 0; transform: scale(.5); transition: all .18s; }
+    .chk input:checked + .chk-box svg { opacity: 1; transform: scale(1); }
+    .chk:has(input:checked) { border-color: var(--gold); background: var(--gold-soft); }
+
+    .chk-label { font-size: 14px; font-weight: 500; line-height: 1.5; color: var(--text); }
+
+    /* ============================================================
+       7. FILE UPLOAD
+       ============================================================ */
+    .file-zone {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 22px 16px;
+      border: 2px dashed var(--gold-dark);
+      border-radius: 14px;
+      background: var(--gold-soft);
+      cursor: pointer;
+      transition: all .2s;
+      text-align: center;
+      min-height: 96px;
+    }
+    .file-zone:hover { background: rgba(212, 175, 55, .24); border-color: var(--gold); }
+    .file-zone input { display: none; }
+    .file-zone .title { font-size: 14px; font-weight: 600; color: var(--gold-dark); }
+    .file-zone .hint  { font-size: 12px; color: var(--muted); }
+
+    .preview { margin-top: 12px; display: none; }
+    .preview img {
+      max-width: 100%;
+      max-height: 220px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border);
+    }
+
+    /* ============================================================
+       8. BUTTON & MESSAGE
+       ============================================================ */
+    .btn {
+      width: 100%;
+      min-height: 52px;
+      padding: 14px 24px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: var(--green-deep);
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 16px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: transform .15s, box-shadow .2s, filter .2s;
+      box-shadow: 0 4px 14px rgba(168, 134, 31, .35);
+    }
+    .btn:hover  { filter: brightness(1.06); transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .btn:disabled { opacity: .65; cursor: not-allowed; transform: none; }
+
+    .msg {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-weight: 500;
+      font-size: 14px;
+      display: none;
+      line-height: 1.5;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .msg svg { flex: 0 0 auto; margin-top: 2px; }
+    .msg.success { display: flex; background: #eef7ef; color: #14532d; border: 1px solid #bbf7d0; }
+    .msg.error   { display: flex; background: #fdf2f0; color: #9a3412; border: 1px solid #fed7aa; }
+
+    /* ============================================================
+       9. FOOTER LINK
+       ============================================================ */
+    .back-wrap { text-align: center; }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 20px;
+      color: var(--green);
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      transition: gap .2s;
+    }
+    .back-link:hover { gap: 10px; }
+
+    /* ============================================================
+       10. ANIMATIONS
+       ============================================================ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal    { animation: fadeUp .5s ease both; }
+    .reveal.d1 { animation-delay: .08s; }
+    .reveal.d2 { animation-delay: .16s; }
+    .reveal.d3 { animation-delay: .24s; }
+  </style>
 </head>
+
 <body>
 
-<!-- HEADER HIJAU -->
-<header class="hdr-pattern relative overflow-hidden" style="background:linear-gradient(140deg,#0c6b47 0%,#085236 55%,#063a26 100%);padding:56px 20px 84px;text-align:center">
-  <div class="gold-line" style="position:absolute;top:0;left:0;right:0"></div>
-  <!-- decorative gold circle with mosque icon -->
-  <div class="reveal mx-auto mb-5 flex items-center justify-center" style="width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,#e8c96a,#d4af37);box-shadow:0 6px 20px rgba(212,175,55,.4)">
-    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#063a26" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12 2c1.5 2 3 3.2 3 5a3 3 0 1 1-6 0c0-1.8 1.5-3 3-5z"/>
-      <path d="M4 21v-7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v7"/>
-      <path d="M2 21h20"/>
-      <path d="M9 21v-4a3 3 0 0 1 6 0v4"/>
-      <path d="M12 8v3"/>
-    </svg>
-  </div>
-  <p class="reveal d1" style="color:var(--gold-light);font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;margin-bottom:10px">Masjid Jami' Nurul Hikmah</p>
-  <h1 class="reveal d1 font-display" style="color:#fff;font-size:clamp(26px,6vw,38px);font-weight:700;line-height:1.2;margin:0 0 10px">Konfirmasi Donasi</h1>
-  <p class="reveal d2" style="color:rgba(255,255,255,.78);font-size:14px;margin:0">Dusun Nadri, Krendetan — Semoga Allah menerima amal Anda</p>
-  <!-- gold ornament divider -->
-  <div class="reveal d2 mx-auto mt-6 flex items-center justify-center gap-3">
-    <span style="height:1px;width:44px;background:linear-gradient(90deg,transparent,var(--gold))"></span>
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="#d4af37"><path d="M12 2l2.4 7.6H22l-6.2 4.5 2.4 7.6L12 17.2 5.8 21.7l2.4-7.6L2 9.6h7.6z"/></svg>
-    <span style="height:1px;width:44px;background:linear-gradient(90deg,var(--gold),transparent)"></span>
-  </div>
-</header>
+  <!-- ================= HEADER ================= -->
+  <header class="site-header">
+    <div class="gold-line"></div>
 
-<!-- FORM CARD (overlaps header) -->
-<main style="max-width:540px;margin:-52px auto 0;padding:0 16px 48px;position:relative;z-index:2">
-  <div class="reveal d3" style="background:var(--card);border-radius:20px;padding:clamp(20px,5vw,32px);box-shadow:0 12px 40px rgba(6,58,38,.14);border-top:4px solid var(--gold)">
+    <div class="logo-badge reveal">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#063a26" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 2c1.5 2 3 3.2 3 5a3 3 0 1 1-6 0c0-1.8 1.5-3 3-5z"/>
+        <path d="M4 21v-7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v7"/>
+        <path d="M2 21h20"/>
+        <path d="M9 21v-4a3 3 0 0 1 6 0v4"/>
+        <path d="M12 8v3"/>
+      </svg>
+    </div>
 
-    <form id="formKonfirmasi" style="display:grid;gap:18px">
+    <p class="header-kicker reveal d1">Masjid Jami' Nurul Hikmah</p>
+    <h1 class="header-title font-display reveal d1">Konfirmasi Donasi</h1>
+    <p class="header-sub reveal d2">Dusun Nadri, Krendetan — Semoga Allah menerima amal Anda</p>
 
-      <!-- Anonim -->
-      <label class="chk" for="anonim">
-        <input type="checkbox" id="anonim">
-        <span class="chk-box">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#063a26" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-        </span>
-        <span style="font-size:14px;font-weight:500;line-height:1.5;color:var(--text)">Berinfaq secara anonim (<em>Hamba Allah</em>)</span>
-      </label>
+    <div class="divider-star reveal d2" aria-hidden="true">
+      <span class="line left"></span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="#d4af37"><path d="M12 2l2.4 7.6H22l-6.2 4.5 2.4 7.6L12 17.2 5.8 21.7l2.4-7.6L2 9.6h7.6z"/></svg>
+      <span class="line right"></span>
+    </div>
+  </header>
 
-      <!-- Nama -->
-      <div>
-        <label class="lbl" for="namaField">Nama / Atas Nama</label>
-        <input type="text" id="namaField" class="field" placeholder="Contoh: Siti Aisyah">
-      </div>
+  <!-- ================= FORM CARD ================= -->
+  <main class="main-wrap">
+    <div class="form-card reveal d3">
+      <form id="formKonfirmasi" novalidate>
 
-      <!-- Wilayah -->
-      <div>
-        <label class="lbl" for="wilayah">Wilayah / Asal</label>
-        <input type="text" id="wilayah" class="field" placeholder="Contoh: Dusun Nadri, Purworejo">
-      </div>
-
-      <!-- Nominal -->
-      <div>
-        <label class="lbl" for="nominal">Nominal Donasi <span class="req">*</span></label>
-        <div class="rp-wrap">
-          <span class="rp-prefix">Rp</span>
-          <input type="number" id="nominal" class="field" min="100" placeholder="Contoh: 500.000" required inputmode="numeric">
-        </div>
-      </div>
-
-      <!-- Metode -->
-      <div>
-        <label class="lbl" for="metode">Metode Pembayaran</label>
-        <select id="metode" class="field">
-          <option value="Transfer BRI">Transfer Bank BRI</option>
-          <option value="Transfer Bank Lain">Transfer Bank Lain</option>
-          <option value="Tunai / Kotak Infaq">Tunai / Kotak Infaq</option>
-          <option value="Lainnya">Lainnya</option>
-        </select>
-      </div>
-
-      <!-- Doa -->
-      <div>
-        <label class="lbl" for="keterangan">Doa / Pesan <span style="color:var(--muted);font-weight:400">(opsional)</span></label>
-        <textarea id="keterangan" class="field" rows="2" placeholder="Semoga berkah untuk keluarga"></textarea>
-      </div>
-
-      <!-- Bukti -->
-      <div>
-        <label class="lbl" for="buktiFile">Unggah Bukti Transaksi <span class="req">*</span></label>
-        <label class="file-zone" for="buktiFile">
-          <input type="file" id="buktiFile" accept="image/*" required>
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a8861f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="17 8 12 3 7 8"/>
-            <line x1="12" y1="3" x2="12" y2="15"/>
-          </svg>
-          <span style="font-size:14px;font-weight:600;color:var(--gold-dark)">Klik untuk unggah gambar bukti</span>
-          <span style="font-size:12px;color:var(--muted)">Format JPG / PNG, maksimal 5 MB</span>
+        <label class="chk" for="anonim">
+          <input type="checkbox" id="anonim">
+          <span class="chk-box">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#063a26" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+          </span>
+          <span class="chk-label">Berinfaq secara anonim (<em>Hamba Allah</em>)</span>
         </label>
-        <div class="preview" id="previewBukti">
-          <img id="imgPreview" alt="Pratinjau bukti transaksi">
+
+        <div>
+          <label class="lbl" for="namaField">Nama / Atas Nama</label>
+          <input type="text" id="namaField" class="field" placeholder="Contoh: Siti Aisyah" autocomplete="name">
         </div>
-      </div>
 
-      <!-- Submit -->
-      <button type="submit" id="btnKirim" class="btn">Kirim Konfirmasi</button>
+        <div>
+          <label class="lbl" for="wilayah">Wilayah / Asal</label>
+          <input type="text" id="wilayah" class="field" placeholder="Contoh: Dusun Nadri, Purworejo">
+        </div>
 
-      <div id="pesanForm" class="msg"></div>
-    </form>
-  </div>
+        <div>
+          <label class="lbl" for="nominal">Nominal Donasi <span class="req">*</span></label>
+          <div class="rp-wrap">
+            <span class="rp-prefix" aria-hidden="true">Rp</span>
+            <input type="number" id="nominal" class="field" min="100" placeholder="Contoh: 500000" required inputmode="numeric">
+          </div>
+        </div>
 
-  <div style="text-align:center">
-    <a href="#donatur" class="back-link">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-      Kembali ke Laporan Donatur
-    </a>
-  </div>
-</main>
+        <div>
+          <label class="lbl" for="metode">Metode Pembayaran</label>
+          <select id="metode" class="field">
+            <option value="Transfer BRI">Transfer Bank BRI</option>
+            <option value="Transfer Bank Lain">Transfer Bank Lain</option>
+            <option value="Tunai / Kotak Infaq">Tunai / Kotak Infaq</option>
+            <option value="Lainnya">Lainnya</option>
+          </select>
+        </div>
 
-<script>
-(function(){
-  var buktiFile = document.getElementById('buktiFile');
-  var previewBukti = document.getElementById('previewBukti');
-  var imgPreview = document.getElementById('imgPreview');
-  var buktiBase64 = '';
+        <div>
+          <label class="lbl" for="keterangan">Doa / Pesan <span class="opt">(opsional)</span></label>
+          <textarea id="keterangan" class="field" rows="2" placeholder="Semoga berkah untuk keluarga"></textarea>
+        </div>
 
-  // Anonim toggle
-  document.getElementById('anonim').addEventListener('change', function(){
-    var namaField = document.getElementById('namaField');
-    namaField.disabled = this.checked;
-    if (this.checked) namaField.value = '';
-  });
+        <div>
+          <label class="lbl" for="buktiFile">Unggah Bukti Transaksi <span class="req">*</span></label>
+          <label class="file-zone" for="buktiFile">
+            <input type="file" id="buktiFile" accept="image/*" required>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a8861f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            <span class="title">Klik untuk unggah gambar bukti</span>
+            <span class="hint">Format JPG / PNG, maksimal 5 MB</span>
+          </label>
+          <div class="preview" id="previewBukti">
+            <img id="imgPreview" alt="Pratinjau bukti transaksi">
+          </div>
+        </div>
 
-  // Preview gambar
-  buktiFile.addEventListener('change', function(e){
-    var file = e.target.files[0];
-    if (!file) { buktiBase64 = ''; previewBukti.style.display = 'none'; return; }
-    var reader = new FileReader();
-    reader.onload = function(ev){
-      buktiBase64 = ev.target.result;
-      imgPreview.src = buktiBase64;
-      previewBukti.style.display = 'block';
-    };
-    reader.readAsDataURL(file);
-  });
+        <button type="submit" id="btnKirim" class="btn">Kirim Konfirmasi</button>
 
-  // Kirim data
-  document.getElementById('formKonfirmasi').addEventListener('submit', function(e){
-    e.preventDefault();
-    var btn = document.getElementById('btnKirim');
-    var pesan = document.getElementById('pesanForm');
-    var isAnonim = document.getElementById('anonim').checked;
-    var nama = isAnonim ? 'Hamba Allah' : (document.getElementById('namaField').value.trim() || 'Hamba Allah');
-    var wilayah = document.getElementById('wilayah').value.trim() || '-';
-    var nominal = parseInt(document.getElementById('nominal').value, 10);
-    var metode = document.getElementById('metode').value;
-    var keterangan = document.getElementById('keterangan').value.trim();
+        <div id="pesanForm" class="msg" role="status" aria-live="polite"></div>
+      </form>
+    </div>
 
-    // Validasi
-    if (!nominal || nominal < 100) {
-      pesan.className = 'msg error';
-      pesan.textContent = 'Isi nominal donasi dengan benar (minimal Rp 100).';
-      return;
-    }
-    if (!buktiBase64) {
-      pesan.className = 'msg error';
-      pesan.textContent = 'Unggah bukti transaksi terlebih dahulu.';
-      return;
-    }
+    <div class="back-wrap">
+      <a href="https://disainbox.github.io/masjidnurulhikmah/#/donatur" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Kembali ke Laporan Donatur
+      </a>
+    </div>
+  </main>
 
-    btn.disabled = true;
-    btn.textContent = 'Mengirim...';
-    pesan.style.display = 'none';
+  <script>
+  (function () {
+    'use strict';
 
+    /* ---------- Konstanta ---------- */
+    var MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB, sesuai keterangan di UI
     var URL_WEB_APP = 'https://script.google.com/macros/s/AKfycbx-NV_eO9OCvlxA0DNUxkL2uyr9vu_9Un3Dz2NyE-E-OykhVmgYX3m_Vh9kGQC6Pmf9Dw/exec';
 
-    fetch(URL_WEB_APP, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nama: nama, wilayah: wilayah, nominal: nominal, metode: metode, keterangan: keterangan, buktiGambar: buktiBase64 })
-    })
-    .then(function(){
-      pesan.className = 'msg success';
-      pesan.innerHTML = '<strong>Terima kasih!</strong> Konfirmasi donasi berhasil dicatat. Semoga Allah membalas kebaikan Anda dengan balasan yang berlipat ganda.';
-      document.getElementById('formKonfirmasi').reset();
-      previewBukti.style.display = 'none';
-      buktiBase64 = '';
-    })
-    .catch(function(err){
-      pesan.className = 'msg error';
-      pesan.textContent = 'Gagal mengirim. Coba lagi atau hubungi panitia. ' + (err && err.message ? err.message : '');
-    })
-    .finally(function(){
-      btn.disabled = false;
-      btn.textContent = 'Kirim Konfirmasi';
+    /* ---------- Elemen ---------- */
+    var form        = document.getElementById('formKonfirmasi');
+    var anonim      = document.getElementById('anonim');
+    var namaField   = document.getElementById('namaField');
+    var wilayah     = document.getElementById('wilayah');
+    var nominal     = document.getElementById('nominal');
+    var metode      = document.getElementById('metode');
+    var keterangan  = document.getElementById('keterangan');
+    var buktiFile   = document.getElementById('buktiFile');
+    var previewBukti= document.getElementById('previewBukti');
+    var imgPreview  = document.getElementById('imgPreview');
+    var btnKirim    = document.getElementById('btnKirim');
+    var pesanForm   = document.getElementById('pesanForm');
+
+    var buktiBase64 = '';
+
+    /* ---------- Ikon pesan (inline SVG, tanpa emoji) ---------- */
+    var ICON_CHECK = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>';
+    var ICON_ALERT = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="13"/><line x1="12" y1="16.5" x2="12" y2="16.5"/></svg>';
+
+    /* ---------- Bantuan: tampilkan pesan ---------- */
+    function showMessage(type, html) {
+      pesanForm.className = 'msg ' + type;
+      pesanForm.innerHTML = (type === 'success' ? ICON_CHECK : ICON_ALERT) + '<span>' + html + '</span>';
+      pesanForm.style.display = 'flex';
+    }
+
+    /* ---------- Checkbox anonim -> disable field nama ---------- */
+    anonim.addEventListener('change', function () {
+      namaField.disabled = this.checked;
+      if (this.checked) namaField.value = '';
     });
-  });
-})();
-</script>
+
+    /* ---------- Pratinjau gambar bukti ---------- */
+    buktiFile.addEventListener('change', function (e) {
+      var file = e.target.files[0];
+      if (!file) {
+        buktiBase64 = '';
+        previewBukti.style.display = 'none';
+        return;
+      }
+      var reader = new FileReader();
+      reader.onload = function (ev) {
+        buktiBase64 = ev.target.result;
+        imgPreview.src = buktiBase64;
+        previewBukti.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    });
+
+    /* ---------- Submit form ---------- */
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var isAnonim   = anonim.checked;
+      var nama       = isAnonim ? 'Hamba Allah' : (namaField.value.trim() || 'Hamba Allah');
+      var asal       = wilayah.value.trim() || '-';
+      var nilai      = parseInt(nominal.value, 10);
+      var bayar      = metode.value;
+      var doa        = keterangan.value.trim();
+      var file       = buktiFile.files[0];
+
+      // Validasi nominal
+      if (!nilai || nilai < 100) {
+        showMessage('error', 'Isi nominal donasi dengan benar (minimal Rp 100).');
+        return;
+      }
+
+      // Validasi file bukti
+      if (!file) {
+        showMessage('error', 'Unggah bukti transaksi terlebih dahulu.');
+        return;
+      }
+      if (!/^image\//.test(file.type)) {
+        showMessage('error', 'File bukti harus berupa gambar (JPG / PNG).');
+        return;
+      }
+      if (file.size > MAX_FILE_SIZE) {
+        showMessage('error', 'Ukuran file melebihi 5 MB. Silakan perkecil gambarnya.');
+        return;
+      }
+      if (!buktiBase64) {
+        showMessage('error', 'Bukti transaksi belum siap. Coba unggah ulang.');
+        return;
+      }
+
+      // Kirim
+      btnKirim.disabled = true;
+      btnKirim.textContent = 'Mengirim...';
+      pesanForm.style.display = 'none';
+
+      // Catatan: mode 'no-cors' hanya mengizinkan Content-Type safelist
+      // (text/plain termasuk di dalamnya). Google Apps Script tetap membaca
+      // body JSON mentah melalui e.postData.contents.
+      fetch(URL_WEB_APP, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          nama: nama,
+          wilayah: asal,
+          nominal: nilai,
+          metode: bayar,
+          keterangan: doa,
+          buktiGambar: buktiBase64
+        })
+      })
+        .then(function () {
+          showMessage('success', '<strong>Terima kasih!</strong> Konfirmasi donasi berhasil dicatat. Semoga Allah membalas kebaikan Anda.');
+          form.reset();
+          // form.reset() tidak mengembalikan state disabled, jadi atur ulang manual
+          namaField.disabled = false;
+          anonim.checked = false;
+          previewBukti.style.display = 'none';
+          buktiBase64 = '';
+        })
+        .catch(function (err) {
+          showMessage('error', 'Gagal mengirim. Coba lagi atau hubungi panitia. ' + (err && err.message ? err.message : ''));
+        })
+        .finally(function () {
+          btnKirim.disabled = false;
+          btnKirim.textContent = 'Kirim Konfirmasi';
+        });
+    });
+  })();
+  </script>
 </body>
 </html>
