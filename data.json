@@ -89,7 +89,8 @@
     {
       "slug": "informasi",
       "title": "informasi",
-      "content": ""
+      "content": "",
+      "id": "pmv1vhrq1n2h8"
     }
   ],
   "settings": {
@@ -107,5 +108,5 @@
     "kontakTelp": "0815-7887-9961",
     "kontakEmail": "renovasinurulhikmahnadri@gmail.com"
   },
-  "publishedAt": "2026-10-10T04:04:18.496Z"
+  "publishedAt": "2026-10-10T04:07:09.046Z"
 }
