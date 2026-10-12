@@ -91,6 +91,68 @@ td.num.out{color:var(--accent2)}
 .footer a{color:var(--accent);font-weight:800;text-decoration:none}
 .loading{display:inline-block;width:14px;height:14px;border:2.5px solid var(--accent-soft);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle;margin-right:.4rem}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+
+/* === RESPONSIVE LAYOUT PATCH: mempertahankan konten dan identitas visual === */
+html { -webkit-text-size-adjust: 100%; }
+body { min-width: 0; }
+.wrap { width: 100%; min-width: 0; }
+.hero, .panel, .progress-card, .table-panel, .kpi { min-width: 0; }
+.hero .info { min-width: 0; overflow-wrap: anywhere; }
+.hero p, .footer, .progress-card .note { overflow-wrap: anywhere; }
+.kpis { grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+.charts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.panel { min-width: 0; }
+.canvas-wrap { min-width: 0; width: 100%; }
+.canvas-wrap canvas { display: block; max-width: 100%; }
+.table-scroll { width: 100%; max-width: 100%; overflow: auto; -webkit-overflow-scrolling: touch; }
+table { min-width: 680px; }
+
+@media (max-width: 760px) {
+  .wrap { padding: 18px 14px 36px; }
+  .hero { padding: 24px 20px; gap: 14px; }
+  .hero .info { flex: 1 1 calc(100% - 66px); }
+  .hero p { font-size: 14px; }
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .kpi { padding: 16px 14px 14px; }
+  .kpi .value { overflow-wrap: anywhere; font-size: clamp(18px, 4vw, 24px); }
+  .charts { grid-template-columns: minmax(0, 1fr); }
+  .panel { padding: 16px; }
+  .panel h3 { overflow-wrap: anywhere; }
+  .progress-card { padding: 16px; }
+  .table-head { padding: 14px 16px 10px; }
+  .status { align-items: flex-start; flex-wrap: wrap; }
+  .refresh { margin-left: auto; flex-shrink: 0; }
+}
+
+@media (max-width: 480px) {
+  .wrap { padding: 12px 10px 28px; }
+  .hero { border-radius: 14px; padding: 20px 16px; gap: 12px; }
+  .hero .logo { width: 44px; height: 44px; border-radius: 12px; }
+  .hero .logo svg { width: 23px; height: 23px; }
+  .hero h1 { font-size: clamp(19px, 5.5vw, 24px); }
+  .hero p { font-size: 12.5px; line-height: 1.5; }
+  .hero-meta { gap: 6px; }
+  .pill { max-width: 100%; padding: 5px 9px; font-size: 11px; }
+  .kpis { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .kpi { padding: 15px 16px 14px; }
+  .kpi .value { font-size: clamp(21px, 6vw, 26px); }
+  .progress-card, .panel { padding: 14px; }
+  .progress-card .top { align-items: flex-start; }
+  .progress-card .top .t { font-size: 14px; }
+  .canvas-wrap { height: 230px; }
+  .table-head { align-items: flex-start; flex-direction: column; }
+  .footer { padding: 18px 6px; font-size: 12px; }
+}
+
+@media (max-width: 360px) {
+  .wrap { padding-right: 8px; padding-left: 8px; }
+  .hero { padding: 16px 12px; }
+  .hero .info { flex-basis: calc(100% - 56px); }
+  .panel h3 { font-size: 14px; }
+  .canvas-wrap { height: 210px; }
+}
+
 </style>
 </head>
 <body>
@@ -106,7 +168,7 @@ td.num.out{color:var(--accent2)}
       </svg>
     </div>
     <div class="info">
-      <h1>Laporan Penggunaan Dana</h1>
+      <h1>Laporan Keuangan</h1>
       <p>Laporan Pertanggungjawaban Keuangan Renovasi &mdash; Pemasukan & Pengeluaran</p>
       <div class="hero-meta">
         <span class="pill"><span class="dot"></span><span id="status">Memuat data…</span></span>
