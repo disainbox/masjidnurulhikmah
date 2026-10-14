@@ -85,7 +85,14 @@
     "Artikel",
     "Pengumuman"
   ],
-  "pages": [],
+  "pages": [
+    {
+      "id": "pmv7s004nlvlj",
+      "slug": "informasi",
+      "title": "informasi",
+      "content": ""
+    }
+  ],
   "settings": {
     "heroTitle": "Bantu Renovasi Masjid Jami' Nurul Hikmah",
     "heroSub": "Karena setiap tetes keringat dan rupiah Anda, akan menjadi pahala yang tak terputus (amal jariyah).",
@@ -101,5 +108,5 @@
     "kontakTelp": "0815-7887-9961",
     "kontakEmail": "renovasinurulhikmahnadri@gmail.com"
   },
-  "publishedAt": "2026-10-14T07:08:10.520Z"
+  "publishedAt": "2026-10-14T07:16:15.004Z"
 }
