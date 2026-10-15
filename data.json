@@ -117,20 +117,7 @@
       "publishedAt": "2026-10-15T06:24:25.740Z"
     }
   ],
-  "videos": [
-    {
-      "id": "vmv94auxm0gs5",
-      "title": "Suasana gotong royong bongkar atap",
-      "date": "2026-09-19",
-      "cat": "",
-      "desc": "",
-      "uploadedAt": "2026-10-15T05:48:03.228Z",
-      "filename": "vmv94auxm0gs5.mp4",
-      "url": "https://disainbox.github.io/masjidnurulhikmah/videos/vmv94auxm0gs5.mp4",
-      "size": 3570522,
-      "type": "video/mp4"
-    }
-  ],
+  "videos": [],
   "cats": [
     "Renovasi",
     "Kegiatan",
@@ -153,5 +140,5 @@
     "kontakTelp": "0815-7887-9961",
     "kontakEmail": "renovasinurulhikmahnadri@gmail.com"
   },
-  "publishedAt": "2026-10-15T06:24:25.751Z"
+  "publishedAt": "2026-10-15T06:25:00.205Z"
 }
