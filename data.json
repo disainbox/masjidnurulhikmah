@@ -104,6 +104,17 @@
       "phase": 3,
       "phaseStatus": "active",
       "publishedAt": "2026-10-14T09:13:32.536Z"
+    },
+    {
+      "id": "pmv9dpqnryrck",
+      "title": "Test diag",
+      "slug": "test-diag",
+      "cat": "Renovasi",
+      "date": "2026-10-15",
+      "excerpt": "",
+      "cover": "https://disainbox.github.io/masjidnurulhikmah/fotos/pmv9dpqnryrck.jpg",
+      "content": "",
+      "publishedAt": "2026-10-15T10:12:08.573Z"
     }
   ],
   "videos": [
@@ -142,5 +153,5 @@
     "kontakTelp": "0815-7887-9961",
     "kontakEmail": "renovasinurulhikmahnadri@gmail.com"
   },
-  "publishedAt": "2026-10-15T10:11:26.066Z"
+  "publishedAt": "2026-10-15T10:12:08.581Z"
 }
