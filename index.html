@@ -435,20 +435,21 @@ function getPages(){ return REMOTE ? (REMOTE.pages||[]) : read(LS.pages, []); }
 function getVideos(){ return REMOTE ? (REMOTE.videos||[]) : []; }
 function getSettings(){ return REMOTE ? (REMOTE.settings||SEED.settings) : read(LS.settings, SEED.settings); }
 function loadRemote(){
-  return fetch('data.json?ts='+Date.now(), {cache:'no-store'}).then(function(r){
-    if(!r.ok) throw new Error('http '+r.status);
-    return r.json();
-  }).then(function(d){
+  var ctrl = (typeof AbortController!=='undefined') ? new AbortController() : null;
+  var t = setTimeout(function(){ if(ctrl) ctrl.abort(); }, 45000);
+  var p = ctrl ? fetch('data.json?ts='+Date.now(), {cache:'no-store', signal:ctrl.signal}) : fetch('data.json?ts='+Date.now(), {cache:'no-store'});
+  return p.then(function(r){ clearTimeout(t); if(!r.ok) throw new Error('http '+r.status); return r.json(); }).then(function(d){
     if(d && d.posts){
       REMOTE = d;
-      try{ // cache ke localStorage untuk offline
-        localStorage.setItem(LS.posts, JSON.stringify(d.posts));
+      try{ // cache ke localStorage untuk offline — cover base64 dibuang agar muat (<5MB)
+        var lp = d.posts.map(function(x){ var o={}; for(var k in x) o[k]=x[k]; if(o.cover && String(o.cover).length>1000) o.cover=''; return o; });
+        localStorage.setItem(LS.posts, JSON.stringify(lp));
         if(d.cats) localStorage.setItem(LS.cats, JSON.stringify(d.cats));
         if(d.pages) localStorage.setItem(LS.pages, JSON.stringify(d.pages));
         if(d.settings) localStorage.setItem(LS.settings, JSON.stringify(d.settings));
       }catch(e){}
     }
-  }).catch(function(){ REMOTE = null; });
+  }).catch(function(){ /* gagal/lambat: tetap gunakan REMOTE lama atau cache localStorage — jangan dikosongkan */ });
 }
 /* ===== LIVE: angka infaq hero dari Google Sheets (sumber sama dgn laporan infaq) ===== */
 var SHEET_ID = '121xudObLmW5Egxs8INmVLg2tG0qPmYYRBVsD7c8jN9s';
