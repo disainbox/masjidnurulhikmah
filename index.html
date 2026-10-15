@@ -285,6 +285,16 @@ footer p{font-size:13px;line-height:1.7}
 .vid-card .vc-title{font-weight:700;font-size:14px;margin-bottom:3px;color:var(--ink)}
 .vid-card .vc-meta{font-size:12px;color:var(--muted)}
 .vid-card .vc-desc{font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.5}
+.vid-thumb-wrap{position:relative}
+.vid-play-btn{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(6,46,35,.28);color:#fff;transition:.2s;pointer-events:none}
+.vid-card:hover .vid-play-btn{background:rgba(6,46,35,.12)}
+.vid-play-btn svg{width:58px;height:58px;filter:drop-shadow(0 4px 14px rgba(0,0,0,.55));transition:transform .2s}
+.vid-card:hover .vid-play-btn svg{transform:scale(1.1)}
+.lb-video{max-width:100%;max-height:100%;border-radius:10px;box-shadow:0 30px 80px rgba(0,0,0,.55);background:#000;display:none;transition:opacity .2s;outline:none}
+.lb-video.swap{opacity:0}
+.lb-stage.is-video .lb-img{display:none}
+.lb-stage.is-video .lb-video{display:block}
+.lb-stage.is-video .lb-hint{display:none}
 
 </style>
 </head>
@@ -609,7 +619,8 @@ var ICON = {
   zoom:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg>',
   chevL:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>',
   chevR:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>',
-  closeX:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>'
+  closeX:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>',
+  play:'<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.14v13.72c0 .79.87 1.27 1.54.84l10.79-6.86a1 1 0 0 0 0-1.68L9.54 4.3A1 1 0 0 0 8 5.14z"/></svg>',
 };
 
 /* ===== NAV ===== */
@@ -925,11 +936,14 @@ var views = {
         '<div class="gal-stat"><div class="gs-l">Total Video</div><div class="gs-v">'+videos.length+'</div></div>'+
         '<span class="gal-note"><span class="dot"></span>Diperbarui otomatis dari data.json</span>'+
       '</div>';
-      html += '<div class="vid-grid">';
+      html += '<div class="vid-grid" id="vidGrid">';
       videos.forEach(function(v,i){
         var delay = (i%6)*50;
-        html += '<div class="vid-card fade-in" style="animation-delay:'+delay+'ms">'+
-          '<video controls preload="metadata" playsinline src="'+esc(v.url)+'#t=0.1" poster=""></video>'+
+        html += '<div class="vid-card fade-in vid-thumb" data-vid="'+i+'" tabindex="0" role="button" aria-label="Putar video: '+esc(v.title||'')+'" style="animation-delay:'+delay+'ms;cursor:pointer">'+
+          '<div class="vid-thumb-wrap">'+
+            '<video muted playsinline preload="metadata" src="'+esc(v.url)+'#t=0.1"></video>'+
+            '<div class="vid-play-btn">'+ICON.play+'</div>'+
+          '</div>'+
           '<div class="vc-body">'+
             '<div class="vc-title">'+esc(v.title||'(tanpa judul)')+'</div>'+
             '<div class="vc-meta">'+fmtDate(v.date)+(v.cat?' · '+esc(v.cat):'')+(v.size?' · '+Math.round(v.size/1024/1024*10)/10+' MB':'')+'</div>'+
@@ -942,6 +956,12 @@ var views = {
     html += '</div></section>';
     document.getElementById('app').innerHTML = html;
     window.scrollTo(0,0);
+    if(videos.length){
+      var vItems = videos.map(function(v){ return {type:'video', src:v.url, caption:(v.title||'(tanpa judul)'), sub:fmtDate(v.date)+(v.cat?' · '+esc(v.cat):'')+(v.size?' · '+Math.round(v.size/1024/1024*10)/10+' MB':'')}; });
+      var vg = document.getElementById('vidGrid');
+      vg.addEventListener('click', function(e){ var c=e.target.closest('[data-vid]'); if(c){ openLightbox(Number(c.dataset.vid), vItems); } });
+      vg.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ var c=e.target.closest('[data-vid]'); if(c){ e.preventDefault(); openLightbox(Number(c.dataset.vid), vItems); } } });
+    }
   },
 
 };
@@ -954,7 +974,7 @@ function ensureLightbox(){
   el.className = 'lb';
   el.setAttribute('role','dialog');
   el.setAttribute('aria-modal','true');
-  el.setAttribute('aria-label','Tampilan penuh foto');
+  el.setAttribute('aria-label','Tampilan penuh');
   el.innerHTML =
     '<div class="lb-top">'+
       '<span class="lb-counter" id="lbCounter"></span>'+
@@ -963,8 +983,9 @@ function ensureLightbox(){
     '<div class="lb-stage" id="lbStage">'+
       '<button class="lb-nav prev" id="lbPrev" type="button" aria-label="Foto sebelumnya">'+ICON.chevL+'</button>'+
       '<img class="lb-img" id="lbImg" alt="">'+
+      '<video class="lb-video" id="lbVideo" controls playsinline></video>'+
       '<button class="lb-nav next" id="lbNext" type="button" aria-label="Foto berikutnya">'+ICON.chevR+'</button>'+
-      '<span class="lb-hint">Geser ke kiri / kanan untuk berpindah foto</span>'+
+      '<span class="lb-hint">Geser ke kiri / kanan untuk berpindah</span>'+
     '</div>'+
     '<div class="lb-caption" id="lbCap"></div>';
   document.body.appendChild(el);
@@ -998,13 +1019,30 @@ function openLightbox(i, photos){
 }
 function renderLightbox(){
   var ph = LB.photos[LB.idx]; if(!ph) return;
+  var stage = document.getElementById('lbStage');
   var img = document.getElementById('lbImg');
-  img.classList.add('swap');
-  setTimeout(function(){
-    img.src = ph.src;
-    img.alt = ph.caption || '';
-    img.classList.remove('swap');
-  }, 120);
+  var vid = document.getElementById('lbVideo');
+  try{ vid.pause(); }catch(e){}
+  if(ph.type==='video'){
+    stage.classList.add('is-video');
+    vid.classList.add('swap');
+    setTimeout(function(){
+      vid.src = ph.src;
+      vid.load();
+      vid.classList.remove('swap');
+      var p = vid.play();
+      if(p && p.catch) p.catch(function(){});
+    }, 120);
+  } else {
+    stage.classList.remove('is-video');
+    vid.removeAttribute('src'); vid.load();
+    img.classList.add('swap');
+    setTimeout(function(){
+      img.src = ph.src;
+      img.alt = ph.caption || '';
+      img.classList.remove('swap');
+    }, 120);
+  }
   document.getElementById('lbCounter').textContent = (LB.idx+1)+' / '+LB.photos.length;
   document.getElementById('lbCap').innerHTML =
     '<div class="lc-t">'+esc(ph.caption||'')+'</div>'+
@@ -1020,6 +1058,8 @@ function navLightbox(dir){
 }
 function closeLightbox(){
   if(LB.el) LB.el.classList.remove('open');
+  var vid = document.getElementById('lbVideo');
+  if(vid){ try{ vid.pause(); }catch(e){} vid.removeAttribute('src'); vid.load(); }
   document.body.style.overflow = '';
 }
 document.addEventListener('keydown', function(e){
