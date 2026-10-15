@@ -915,11 +915,11 @@ var views = {
     var videos = getVideos().slice().sort(function(a,b){return (b.date||'').localeCompare(a.date||'');});
     var html = '<header class="page-head pattern-bg"><div class="wrap page-head-in">'+
       '<span class="eyebrow">Dokumentasi Kegiatan</span><h1>Galeri Video</h1>'+
-      '<p>Kumpulan video kegiatan, ceramah, dan momen di Masjid Jami\' Nurul Hikmah. Video diunggah melalui Panel Admin dan disimpan di repository GitHub.</p>'+
+      '<p>Kumpulan video kegiatan dan momen di Masjid Jami\' Nurul Hikmah.</p>'+
     '</div></header>'+
     '<section class="block"><div class="wrap">';
     if(!videos.length){
-      html += '<div style="text-align:center;padding:60px 20px;color:var(--muted)">Belum ada video. Video pertama akan muncul di sini setelah diunggah melalui Panel Admin.</div>';
+      html += '<div style="text-align:center;padding:60px 20px;color:var(--muted)">Belum ada video. Video akan muncul di sini.</div>';
     } else {
       html += '<div class="gal-stats">'+
         '<div class="gal-stat"><div class="gs-l">Total Video</div><div class="gs-v">'+videos.length+'</div></div>'+
