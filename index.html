@@ -327,7 +327,7 @@ footer p{font-size:13px;line-height:1.7}
         <a href="#/renovasi">Progress Renovasi</a>
         <a href="#/profil">Profil Masjid</a>
         <a href="#/blog">Blog &amp; Kegiatan</a>
-        <a href="#/galeri">Galeri Foto</a>
+        <a href="#/galeri">Foto</a>
       </div>
       <div>
         <h4>Laporan &amp; Donasi</h4>
@@ -632,7 +632,7 @@ function renderNav(active){
   custom.forEach(function(pg){
     html += '<a href="#/halaman/'+esc(pg.slug)+'" class="'+(active==='page-'+pg.slug?'active':'')+'">'+esc(pg.title)+'</a>';
   });
-  html += '<a href="#/galeri" class="'+(active==='galeri'?'active':'')+'">Galeri</a>';
+  html += '<a href="#/galeri" class="'+(active==='galeri'?'active':'')+'">Foto</a>';
   html += '<a href="#/video" class="'+(active==='video'?'active':'')+'">Video</a>';
   html += '<a href="#/donatur" class="nav-cta">Infaq Sekarang</a>';
   nl.innerHTML = html;
