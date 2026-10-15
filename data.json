@@ -104,17 +104,6 @@
       "phase": 3,
       "phaseStatus": "active",
       "publishedAt": "2026-10-14T09:13:32.536Z"
-    },
-    {
-      "id": "pmv9d8m3ts5ag",
-      "title": "Test 384",
-      "slug": "test-384",
-      "cat": "Renovasi",
-      "date": "2026-10-15",
-      "excerpt": "",
-      "cover": "https://disainbox.github.io/masjidnurulhikmah/fotos/pmv9d8m3ts5ag.jpg",
-      "content": "",
-      "publishedAt": "2026-10-15T09:58:45.466Z"
     }
   ],
   "videos": [
@@ -165,5 +154,5 @@
     "kontakTelp": "0815-7887-9961",
     "kontakEmail": "renovasinurulhikmahnadri@gmail.com"
   },
-  "publishedAt": "2026-10-15T09:59:28.146Z"
+  "publishedAt": "2026-10-15T10:11:13.046Z"
 }
