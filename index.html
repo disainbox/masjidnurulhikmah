@@ -863,7 +863,6 @@ var views = {
     if(photos.length){
       html += '<div class="gal-stats">'+
         '<div class="gal-stat"><div class="gs-l">Total Foto</div><div class="gs-v">'+photos.length+'</div></div>'+
-        '<span class="gal-note"><span class="dot"></span>Diperbarui otomatis dari postingan blog</span>'+
       '</div>';
       html += '<div class="gal-grid" id="galGrid">';
       photos.forEach(function(ph,i){
@@ -934,7 +933,6 @@ var views = {
     } else {
       html += '<div class="gal-stats">'+
         '<div class="gal-stat"><div class="gs-l">Total Video</div><div class="gs-v">'+videos.length+'</div></div>'+
-        '<span class="gal-note"><span class="dot"></span>Diperbarui otomatis dari data.json</span>'+
       '</div>';
       html += '<div class="vid-grid" id="vidGrid">';
       videos.forEach(function(v,i){
