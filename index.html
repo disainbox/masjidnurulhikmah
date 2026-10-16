@@ -145,11 +145,6 @@ section.block{padding:64px 0}
 .page-head .eyebrow{color:var(--gold-light)}
 .page-head .eyebrow::before{background:var(--gold-light)}
 
-/* header judul halaman Keuangan: menempel di bawah navbar, mengecil saat di-scroll */
-.page-head.stick{position:sticky;top:72px;z-index:40}
-.page-head.stick.cond{padding:10px 0 12px;box-shadow:0 8px 22px -10px rgba(8,61,46,.6)}
-.page-head.stick.cond .eyebrow,.page-head.stick.cond p{display:none}
-.page-head.stick.cond h1{font-size:20px;margin-top:0}
 /* ===== DONATUR / KEUANGAN embed ===== */
 .embed-frame{width:100%;border:0;border-radius:14px;box-shadow:var(--shadow);background:#fff;display:block}
 /* halaman laporan (embed): rapatkan jarak atas & tepi agar muat di layar */
@@ -520,27 +515,6 @@ function fetchCSV(gid){
     .then(parseCSV);
 }
 /* Rapatkan margin di dalam iframe laporan & sesuaikan tinggi iframe dengan isinya (hanya jika same-origin) */
-/* Header judul menempel di bawah navbar; setelah di-scroll sejauh selisih tinggi, ia mengecil (tanpa lonjakan konten) */
-function stickHead(h){
-  if(!h) return;
-  var cond=false, D=0;
-  function ukur(){
-    var nav=document.querySelector('.nav'); h.style.top=(nav?nav.offsetHeight:72)+'px';
-    h.classList.remove('cond'); h.style.marginBottom=''; var full=h.offsetHeight;
-    h.classList.add('cond'); var kecil=h.offsetHeight;
-    h.classList.toggle('cond',cond); h.style.marginBottom=cond?(full-kecil)+'px':'';
-    D=full-kecil;
-  }
-  function upd(){
-    if(!h.isConnected){ window.removeEventListener('scroll',upd); window.removeEventListener('resize',onR); return; }
-    var want=(window.pageYOffset||0)>=D;
-    if(want!==cond){ cond=want; h.classList.toggle('cond',cond); h.style.marginBottom=cond?D+'px':''; }
-  }
-  function onR(){ ukur(); upd(); }
-  ukur(); upd();
-  window.addEventListener('scroll',upd,{passive:true});
-  window.addEventListener('resize',onR);
-}
 function embedFit(f){
   try{
     var d=f.contentDocument; if(!d||!d.body) return;
@@ -560,29 +534,6 @@ function embedFit(f){
     var w=d.querySelector('.wrap');
     if(window.ResizeObserver){ new ResizeObserver(fit).observe(w||d.body); } else { setInterval(fit,1000); }
 
-    /* Sub header di dalam laporan menempel di bawah navbar + header judul saat halaman di-scroll.
-       Iframe setinggi isinya (tidak scroll sendiri), jadi posisi sub header digeser mengikuti scroll halaman utama. */
-    var sh=d.querySelector('.subhead');
-    if(sh){
-      sh.style.zIndex='20';
-      var cur=0, pr=0;
-      function pin(){
-        pr=0;
-        if(!f.isConnected){ window.removeEventListener('scroll',pinSoon); window.removeEventListener('resize',pinSoon); return; }
-        var nav=document.querySelector('.nav'), navH=nav?nav.offsetHeight:72;
-        var hd=document.querySelector('.page-head.stick');
-        var top=Math.max(navH, hd?hd.getBoundingClientRect().bottom:navH);   // sisi bawah header yang menempel
-        var base=sh.getBoundingClientRect().top-cur;                 // posisi asli sub header di dalam iframe
-        var t=top+8-f.getBoundingClientRect().top-base;              // seberapa jauh harus turun agar menempel
-        var batas=f.clientHeight-base-sh.offsetHeight;               // jangan melewati dasar iframe
-        t=Math.max(0,Math.min(t,Math.max(0,batas)));
-        if(Math.abs(t-cur)>=0.5){ cur=t; sh.style.transform=t?'translateY('+t+'px)':''; sh.style.willChange=t?'transform':''; sh.style.boxShadow=t?'0 10px 24px -10px rgba(8,61,46,.55)':''; }
-      }
-      function pinSoon(){ if(!pr) pr=requestAnimationFrame(pin); }
-      window.addEventListener('scroll',pinSoon,{passive:true});
-      window.addEventListener('resize',pinSoon);
-      pinSoon();
-    }
   }catch(e){ /* cross-origin / file:// — tinggi tetap */ }
 }
 window.embedFit=embedFit;   // dipanggil dari atribut onload iframe (di luar IIFE)
@@ -954,7 +905,7 @@ var views = {
   },
 
   keuangan: function(){
-    var html = '<header class="page-head stick pattern-bg"><div class="wrap page-head-in">'+
+    var html = '<header class="page-head pattern-bg"><div class="wrap page-head-in">'+
       '<span class="eyebrow">Pertanggungjawaban</span>'+
       '<h1>Laporan Keuangan Publik</h1>'+
       '<p>Laporan pemasukan &amp; pengeluaran dana renovasi — dilengkapi grafik bulanan, rincian kategori, dan riwayat transaksi.</p>'+
@@ -965,7 +916,6 @@ var views = {
     var app = document.getElementById('app');
     if(app.querySelector('iframe[src="laporan-keuangan.html"]')) return;   // sudah tampil: jangan buat ulang iframe
     app.innerHTML = html;
-    stickHead(app.querySelector('.page-head.stick'));
   },
 
   renovasi: function(){
