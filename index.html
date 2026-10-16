@@ -538,7 +538,7 @@ function embedFit(f){
        Iframe setinggi isinya (tidak scroll sendiri), jadi posisi sub header digeser mengikuti scroll halaman utama. */
     var sh=d.querySelector('.subhead');
     if(sh){
-      sh.style.willChange='transform'; sh.style.zIndex='20';
+      sh.style.zIndex='20';
       var cur=0, pr=0;
       function pin(){
         pr=0;
@@ -548,7 +548,7 @@ function embedFit(f){
         var t=navH+8-f.getBoundingClientRect().top-base;             // seberapa jauh harus turun agar menempel
         var batas=f.clientHeight-base-sh.offsetHeight;               // jangan melewati dasar iframe
         t=Math.max(0,Math.min(t,Math.max(0,batas)));
-        if(Math.abs(t-cur)>=0.5){ cur=t; sh.style.transform=t?'translateY('+t+'px)':''; sh.style.boxShadow=t?'0 10px 24px -10px rgba(8,61,46,.55)':''; }
+        if(Math.abs(t-cur)>=0.5){ cur=t; sh.style.transform=t?'translateY('+t+'px)':''; sh.style.willChange=t?'transform':''; sh.style.boxShadow=t?'0 10px 24px -10px rgba(8,61,46,.55)':''; }
       }
       function pinSoon(){ if(!pr) pr=requestAnimationFrame(pin); }
       window.addEventListener('scroll',pinSoon,{passive:true});
