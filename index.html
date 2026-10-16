@@ -20,6 +20,7 @@
   --arabic:'Amiri',serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
+html{scrollbar-gutter:stable}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
@@ -520,9 +521,40 @@ function embedFit(f){
     var st=d.createElement('style');
     st.textContent='.wrap{max-width:1480px!important;padding:10px 12px 28px!important}@media(max-width:600px){.wrap{padding:8px 8px 22px!important}}';
     d.head.appendChild(st);
-    function fit(){ var h=Math.max(d.documentElement.scrollHeight,d.body.scrollHeight); if(h>200) f.style.height=h+'px'; }
+    var raf=0, last=0;
+    function ukur(){ var w=d.querySelector('.wrap'); return Math.ceil(w? w.getBoundingClientRect().height : d.body.scrollHeight); }
+    function fit(){
+      if(raf) return;
+      raf=requestAnimationFrame(function(){
+        raf=0; var h=ukur();
+        if(h>200 && Math.abs(h-last)>3){ last=h; f.style.height=h+'px'; }   // abaikan perubahan kecil agar tidak bergetar
+      });
+    }
     fit();
-    if(window.ResizeObserver){ new ResizeObserver(fit).observe(d.body); } else { setInterval(fit,1000); }
+    var w=d.querySelector('.wrap');
+    if(window.ResizeObserver){ new ResizeObserver(fit).observe(w||d.body); } else { setInterval(fit,1000); }
+
+    /* Sub header menempel di bawah navbar saat halaman di-scroll.
+       Iframe setinggi isinya (tidak scroll sendiri), jadi posisi sub header digeser mengikuti scroll halaman utama. */
+    var sh=d.querySelector('.subhead');
+    if(sh){
+      sh.style.willChange='transform'; sh.style.zIndex='20';
+      var cur=0, pr=0;
+      function pin(){
+        pr=0;
+        if(!f.isConnected){ window.removeEventListener('scroll',pinSoon); window.removeEventListener('resize',pinSoon); return; }
+        var nav=document.querySelector('.nav'), navH=nav?nav.offsetHeight:72;
+        var base=sh.getBoundingClientRect().top-cur;                 // posisi asli sub header di dalam iframe
+        var t=navH+8-f.getBoundingClientRect().top-base;             // seberapa jauh harus turun agar menempel
+        var batas=f.clientHeight-base-sh.offsetHeight;               // jangan melewati dasar iframe
+        t=Math.max(0,Math.min(t,Math.max(0,batas)));
+        if(Math.abs(t-cur)>=0.5){ cur=t; sh.style.transform=t?'translateY('+t+'px)':''; sh.style.boxShadow=t?'0 10px 24px -10px rgba(8,61,46,.55)':''; }
+      }
+      function pinSoon(){ if(!pr) pr=requestAnimationFrame(pin); }
+      window.addEventListener('scroll',pinSoon,{passive:true});
+      window.addEventListener('resize',pinSoon);
+      pinSoon();
+    }
   }catch(e){ /* cross-origin / file:// — tinggi tetap */ }
 }
 function parseNom(s){ if(!s) return 0; var v=parseFloat(String(s).replace(/[Rp\s,]/g,'')); return isNaN(v)?0:v; }
