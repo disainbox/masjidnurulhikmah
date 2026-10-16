@@ -534,9 +534,32 @@ function embedFit(f){
     var w=d.querySelector('.wrap');
     if(window.ResizeObserver){ new ResizeObserver(fit).observe(w||d.body); } else { setInterval(fit,1000); }
 
-    /* Sub header ikut ter-scroll bersama halaman (tidak menempel). */
-    var sh=d.querySelector('.subhead');
-    if(sh){ sh.style.position='static'; sh.style.transform=''; sh.style.top='auto'; }
+    /* Header/judul di dalam iframe harus ikut ter-scroll (tidak menempel).
+       Cari elemen sticky/fixed berbentuk bar header, lalu jadikan static. Dijalankan ulang saat isi iframe berubah. */
+    var iw=f.contentWindow;
+    function lepas(){
+      try{
+        var all=d.body.querySelectorAll('*');
+        for(var i=0;i<all.length;i++){
+          var el=all[i], cs=iw.getComputedStyle(el), pos=cs.position;
+          var bar=false;
+          if(pos==='sticky') bar=true;
+          else if(pos==='fixed'){ var r=el.getBoundingClientRect(); bar=(r.height<260 && r.width>=iw.innerWidth*0.8 && r.top<=4); }
+          if(bar || el.classList.contains('subhead')){
+            el.style.setProperty('position','static','important');
+            el.style.setProperty('top','auto','important');
+            el.style.setProperty('transform','none','important');
+            el.style.setProperty('box-shadow','none','important');
+            el.style.removeProperty('will-change');
+          }
+        }
+      }catch(e){}
+    }
+    lepas();
+    if(window.MutationObserver){
+      var mt=0;
+      new MutationObserver(function(){ clearTimeout(mt); mt=setTimeout(lepas,80); }).observe(d.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class','style']});
+    } else { setInterval(lepas,1000); }
   }catch(e){ /* cross-origin / file:// — tinggi tetap */ }
 }
 function parseNom(s){ if(!s) return 0; var v=parseFloat(String(s).replace(/[Rp\s,]/g,'')); return isNaN(v)?0:v; }
