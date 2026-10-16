@@ -933,7 +933,9 @@ var views = {
     '<section class="block embed"><div class="wrap">'+
       '<iframe class="embed-frame" src="laporan-keuangan.html" title="Laporan Keuangan Publik" style="height:1500px" onload="embedFit(this)"></iframe>'+
     '</div></section>';
-    document.getElementById('app').innerHTML = html;
+    var app = document.getElementById('app');
+    if(app.querySelector('iframe[src="laporan-keuangan.html"]')) return;   // sudah tampil: jangan buat ulang iframe
+    app.innerHTML = html;
   },
 
   renovasi: function(){
@@ -1311,7 +1313,8 @@ document.getElementById('burger').addEventListener('click', function(){
 window.addEventListener('hashchange', function(){ closeLightbox(); route(); });
 // Live update: if admin edits in another tab, re-render current view
 window.addEventListener('storage', function(e){
-  if(e.key && e.key.indexOf('mnh_')===0){ route(); }
+  // hanya kunci data situs; abaikan cache milik iframe laporan (mnh_laporan_*) agar iframe tidak dimuat ulang terus
+  if(['mnh_posts','mnh_categories','mnh_pages','mnh_settings'].indexOf(e.key)>-1){ route(); }
 });
 document.getElementById('year').textContent = new Date().getFullYear();
 route(); // render segera dari data lokal
