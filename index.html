@@ -145,12 +145,50 @@ section.block{padding:64px 0}
 .page-head .eyebrow::before{background:var(--gold-light)}
 
 /* ===== DONATUR / KEUANGAN embed ===== */
-.embed-frame{width:100%;border:0;border-radius:16px;box-shadow:var(--shadow);background:#fff;display:block}
+.embed-frame{width:100%;border:0;border-radius:14px;box-shadow:var(--shadow);background:#fff;display:block}
+/* halaman laporan (embed): rapatkan jarak atas & tepi agar muat di layar */
+.page-head.compact{padding:28px 0 30px}
+.page-head.compact p{margin-top:6px}
+section.block.embed{padding:14px 0 28px}
+section.block.embed .wrap{max-width:1480px;padding:0 12px}
+section.block.embed .donate-info{gap:12px;margin-bottom:14px}
+section.block.embed .di-card{padding:16px 18px}
+@media(max-width:600px){.page-head.compact{padding:22px 0 24px}section.block.embed{padding:10px 0 20px}section.block.embed .wrap{padding:0 8px}}
 .donate-info{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-bottom:28px}
 .di-card{background:var(--card);border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow)}
 .di-card h4{font-family:var(--serif);font-size:17px;margin-bottom:6px;color:var(--green-dark)}
 .di-card p{font-size:13.5px;color:var(--muted)}
 .di-card .big{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--green);letter-spacing:.03em}
+
+
+/* ===== FORM KONFIRMASI INFAQ (halaman tersembunyi, hanya dari tombol di Laporan Donatur) ===== */
+.kf-wrap{max-width:560px;margin:0 auto}
+.kf-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:28px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.kf-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--gold-light),var(--gold))}
+.kf-card h2{font-size:24px;color:var(--green);margin-bottom:4px}
+.kf-sub{color:var(--muted);font-size:13.5px;margin-bottom:22px}
+.kf-form{display:grid;gap:16px}
+.kf-group{display:grid;gap:6px}
+.kf-group label{font-weight:700;font-size:13.5px;color:var(--ink-soft)}
+.kf-group .req{color:#c0392b}
+.kf-group input[type=text],.kf-group input[type=number],.kf-group select,.kf-group textarea{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:10px;font:inherit;font-size:15px;color:var(--ink);background:#fff;outline:none;transition:.2s}
+.kf-group input:focus,.kf-group select:focus,.kf-group textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-soft)}
+.kf-group input:disabled{background:var(--bg2);color:var(--muted)}
+.kf-group textarea{resize:none}
+.kf-group input[type=file]{font-size:13.5px;padding:8px;border:1px dashed rgba(193,154,63,.6);border-radius:10px;background:var(--bg2);width:100%}
+.kf-check{display:flex;align-items:center;gap:10px}
+.kf-check input{width:18px;height:18px;accent-color:var(--green)}
+.kf-check label{margin:0;font-weight:600}
+.kf-preview{display:none;margin-top:6px}
+.kf-preview img{max-width:200px;max-height:220px;border-radius:10px;border:1px solid var(--border)}
+.kf-btn{width:100%;padding:14px 24px;background:var(--gold);color:#fff;border:none;border-radius:999px;font:inherit;font-weight:700;font-size:15.5px;cursor:pointer;transition:.2s;box-shadow:0 10px 24px -8px rgba(193,154,63,.7)}
+.kf-btn:hover{background:#d4ab4a;transform:translateY(-1px)}
+.kf-btn:disabled{opacity:.7;cursor:not-allowed;transform:none}
+.kf-msg{display:none;padding:14px;border-radius:10px;font-weight:600;font-size:14px}
+.kf-msg.success{background:#f0fdf4;color:#166534;border:1px solid #bbf7d0}
+.kf-msg.error{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca}
+.kf-back{margin-top:18px;text-align:center}
+@media(max-width:600px){.kf-card{padding:22px 18px;border-radius:14px}.kf-card h2{font-size:21px}}
 
 /* ===== RENOVASI TIMELINE ===== */
 .timeline{position:relative;max-width:760px;margin:0 auto;padding-left:36px}
@@ -475,6 +513,18 @@ function fetchCSV(gid){
     .then(function(r){ if(!r.ok) throw new Error('http '+r.status); return r.text(); })
     .then(parseCSV);
 }
+/* Rapatkan margin di dalam iframe laporan & sesuaikan tinggi iframe dengan isinya (hanya jika same-origin) */
+function embedFit(f){
+  try{
+    var d=f.contentDocument; if(!d||!d.body) return;
+    var st=d.createElement('style');
+    st.textContent='.wrap{max-width:1480px!important;padding:10px 12px 28px!important}@media(max-width:600px){.wrap{padding:8px 8px 22px!important}}';
+    d.head.appendChild(st);
+    function fit(){ var h=Math.max(d.documentElement.scrollHeight,d.body.scrollHeight); if(h>200) f.style.height=h+'px'; }
+    fit();
+    if(window.ResizeObserver){ new ResizeObserver(fit).observe(d.body); } else { setInterval(fit,1000); }
+  }catch(e){ /* cross-origin / file:// — tinggi tetap */ }
+}
 function parseNom(s){ if(!s) return 0; var v=parseFloat(String(s).replace(/[Rp\s,]/g,'')); return isNaN(v)?0:v; }
 function cekCSV(r){
   if(!r.ok) throw new Error('HTTP '+r.status);
@@ -787,37 +837,69 @@ var views = {
 
   donatur: function(){
     var s = getSettings();
-    var html = '<header class="page-head pattern-bg"><div class="wrap page-head-in">'+
+    var html = '<header class="page-head compact pattern-bg"><div class="wrap page-head-in">'+
       '<span class="eyebrow">Transparansi Donasi</span>'+
       '<h1>Laporan Infaq &amp; Donatur</h1>'+
       '<p>Setiap rupiah donatur kami catat dan laporkan secara terbuka. Berikut perolehan, penyaluran, dan riwayat donasi renovasi Masjid Jami\' Nurul Hikmah — diperbarui otomatis.</p>'+
     '</div></header>'+
-    '<section class="block"><div class="wrap">'+
+    '<section class="block embed"><div class="wrap">'+
       '<div class="donate-info">'+
         '<div class="di-card"><h4>'+esc(s.bank)+'</h4><div class="big">'+esc(s.rekening)+'</div><p>a.n. '+esc(s.an)+'</p></div>'+
         '<div class="di-card" style="text-align:left">'+
   '<h4 style="margin-top:0;margin-bottom:8px">Konfirmasi Donasi</h4>'+
   '<p style="margin-bottom:14px;font-size:14px;color:var(--muted)">Sudah transfer? Klik tombol di bawah untuk mengisi form konfirmasi.</p>'+
-  '<a href="form-konfirmasi.html" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:13px 26px;background:var(--gold);color:#fff;border-radius:999px;font-weight:700;font-size:14.5px;text-decoration:none;box-shadow:0 10px 24px -8px rgba(193,154,63,.7);transition:.2s" onmouseover="this.style.background=\'#d4ab4a\';this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.background=\'var(--gold)\';this.style.transform=\'translateY(0)\'">'+
+  '<a href="#/konfirmasi" style="display:inline-flex;align-items:center;gap:8px;padding:13px 26px;background:var(--gold);color:#fff;border-radius:999px;font-weight:700;font-size:14.5px;text-decoration:none;box-shadow:0 10px 24px -8px rgba(193,154,63,.7);transition:.2s" onmouseover="this.style.background=\'#d4ab4a\';this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.background=\'var(--gold)\';this.style.transform=\'translateY(0)\'">'+
     'Konfirmasi Donasi'+
     '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'+
   '</a>'+
 '</div>'+
         '<div class="di-card"><h4>Kerahasiaan</h4><p>Nomor kontak &amp; bukti transaksi tidak ditampilkan di laporan publik ini untuk menjaga privasi donatur.</p></div>'+
       '</div>'+
-      '<iframe class="embed-frame" id="infaqFrame" src="laporan-infaq.html" title="Laporan Infaq" style="height:2100px"></iframe>'+
+      '<iframe class="embed-frame" id="infaqFrame" src="laporan-infaq.html" title="Laporan Infaq" style="height:2100px" onload="embedFit(this)"></iframe>'+
     '</div></section>';
     document.getElementById('app').innerHTML = html;
   },
 
+  konfirmasi: function(){
+    var html = '<header class="page-head compact pattern-bg"><div class="wrap page-head-in">'+
+      '<span class="eyebrow">Konfirmasi Infaq</span>'+
+      '<h1>Konfirmasi Donasi</h1>'+
+      '<p>Sudah berinfaq? Isi form berikut dan unggah bukti transaksi agar donasi Anda tercatat di laporan.</p>'+
+    '</div></header>'+
+    '<section class="block embed"><div class="wrap"><div class="kf-wrap">'+
+      '<div class="kf-card">'+
+        '<h2>Form Konfirmasi</h2>'+
+        '<p class="kf-sub">Masjid Jami\' Nurul Hikmah — Dusun Nadri, Krendetan</p>'+
+        '<form id="kfForm" class="kf-form">'+
+          '<div class="kf-group kf-check"><input type="checkbox" id="kfAnonim"><label for="kfAnonim">Berinfaq secara anonim ("Hamba Allah")</label></div>'+
+          '<div class="kf-group"><label for="kfNama">Nama / Atas Nama</label><input type="text" id="kfNama" placeholder="Contoh: Siti Aisyah" autocomplete="name"></div>'+
+          '<div class="kf-group"><label for="kfWilayah">Wilayah / Asal</label><input type="text" id="kfWilayah" placeholder="Contoh: Dusun Nadri, Purworejo"></div>'+
+          '<div class="kf-group"><label for="kfNominal">Nominal Donasi (Rp) <span class="req">*</span></label><input type="number" id="kfNominal" min="100" inputmode="numeric" placeholder="Contoh: 500000" required></div>'+
+          '<div class="kf-group"><label for="kfMetode">Metode Pembayaran</label><select id="kfMetode">'+
+            '<option value="Transfer BRI">Transfer Bank BRI</option><option value="Transfer Bank Lain">Transfer Bank Lain</option>'+
+            '<option value="Tunai / Kotak Infaq">Tunai / Kotak Infaq</option><option value="Lainnya">Lainnya</option></select></div>'+
+          '<div class="kf-group"><label for="kfKet">Doa / Pesan (opsional)</label><textarea id="kfKet" rows="2" placeholder="Semoga berkah untuk keluarga"></textarea></div>'+
+          '<div class="kf-group"><label for="kfBukti">Unggah Bukti Transaksi <span class="req">*</span></label>'+
+            '<input type="file" id="kfBukti" accept="image/*" required>'+
+            '<div class="kf-preview" id="kfPreview"><img id="kfImg" alt="Pratinjau bukti"></div></div>'+
+          '<button type="submit" id="kfKirim" class="kf-btn">Kirim Konfirmasi</button>'+
+          '<div id="kfPesan" class="kf-msg"></div>'+
+        '</form>'+
+      '</div>'+
+      '<div class="kf-back"><a href="#/donatur" class="back-link">'+ICON.arrow.replace('<svg','<svg style="transform:rotate(180deg)"')+' Kembali ke Laporan Donatur</a></div>'+
+    '</div></div></section>';
+    document.getElementById('app').innerHTML = html;
+    bindKonfirmasi();
+  },
+
   keuangan: function(){
-    var html = '<header class="page-head pattern-bg"><div class="wrap page-head-in">'+
+    var html = '<header class="page-head compact pattern-bg"><div class="wrap page-head-in">'+
       '<span class="eyebrow">Pertanggungjawaban</span>'+
       '<h1>Laporan Keuangan Publik</h1>'+
       '<p>Laporan pemasukan &amp; pengeluaran dana renovasi — dilengkapi grafik bulanan, rincian kategori, dan riwayat transaksi.</p>'+
     '</div></header>'+
-    '<section class="block"><div class="wrap">'+
-      '<iframe class="embed-frame" src="laporan-keuangan.html" title="Laporan Keuangan Publik" style="height:1500px"></iframe>'+
+    '<section class="block embed"><div class="wrap">'+
+      '<iframe class="embed-frame" src="laporan-keuangan.html" title="Laporan Keuangan Publik" style="height:1500px" onload="embedFit(this)"></iframe>'+
     '</div></section>';
     document.getElementById('app').innerHTML = html;
   },
@@ -1118,6 +1200,50 @@ document.addEventListener('keydown', function(e){
   else if(e.key==='ArrowRight') navLightbox(1);
 });
 /* ===== ROUTER ===== */
+
+/* ===== Logika form konfirmasi infaq ===== */
+function bindKonfirmasi(){
+  var $ = function(id){ return document.getElementById(id); };
+  var bukti = '';
+  $('kfAnonim').addEventListener('change', function(){
+    $('kfNama').disabled = this.checked;
+    if(this.checked) $('kfNama').value = '';
+  });
+  $('kfBukti').addEventListener('change', function(e){
+    var f = e.target.files[0];
+    if(!f){ bukti=''; $('kfPreview').style.display='none'; return; }
+    var rd = new FileReader();
+    rd.onload = function(ev){ bukti = ev.target.result; $('kfImg').src = bukti; $('kfPreview').style.display='block'; };
+    rd.readAsDataURL(f);
+  });
+  function tampil(cls, html){ var m=$('kfPesan'); m.className='kf-msg '+cls; m.innerHTML=html; m.style.display='block'; }
+  $('kfForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var btn = $('kfKirim');
+    var anon = $('kfAnonim').checked;
+    var nama = anon ? 'Hamba Allah' : ($('kfNama').value.trim() || 'Hamba Allah');
+    var wilayah = $('kfWilayah').value.trim() || '-';
+    var nominal = parseInt($('kfNominal').value, 10);
+    var metode = $('kfMetode').value;
+    var keterangan = $('kfKet').value.trim();
+    if(!nominal || nominal < 100){ tampil('error','⚠️ Isi nominal dengan benar.'); return; }
+    if(!bukti){ tampil('error','⚠️ Unggah bukti transaksi terlebih dahulu.'); return; }
+    btn.disabled = true; btn.textContent = 'Mengirim...'; $('kfPesan').style.display='none';
+    var URL_WEB_APP = 'https://script.google.com/macros/s/AKfycbx-NV_eO9OCvlxA0DNUxkL2uyr9vu_9Un3Dz2NyE-E-OykhVmgYX3m_Vh9kGQC6Pmf9Dw/exec';
+    fetch(URL_WEB_APP, {
+      method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({nama:nama, wilayah:wilayah, nominal:nominal, metode:metode, keterangan:keterangan, buktiGambar:bukti})
+    }).then(function(){
+      tampil('success','✅ <strong>Terima kasih!</strong> Konfirmasi donasi berhasil dicatat. Semoga Allah membalas kebaikan Anda.');
+      $('kfForm').reset(); $('kfNama').disabled=false; $('kfPreview').style.display='none'; bukti='';
+    }).catch(function(err){
+      tampil('error','❌ Gagal mengirim. Coba lagi atau hubungi panitia. '+(err&&err.message?err.message:''));
+    }).then(function(){
+      btn.disabled=false; btn.textContent='Kirim Konfirmasi';
+    });
+  });
+}
+
 function route(){
   var hash = location.hash.replace(/^#\/?/, '');
   var parts = hash.split('?');
@@ -1132,6 +1258,7 @@ function route(){
 
   if(segs.length===0){ active='home'; renderNav('home'); views.home(); }
   else if(segs[0]==='donatur'){ active='donatur'; renderNav('donatur'); views.donatur(); }
+  else if(segs[0]==='konfirmasi'){ active='donatur'; renderNav('donatur'); views.konfirmasi(); }
   else if(segs[0]==='keuangan'){ active='keuangan'; renderNav('keuangan'); views.keuangan(); }
   else if(segs[0]==='renovasi'){ active='renovasi'; renderNav('renovasi'); views.renovasi(); }
   else if(segs[0]==='profil'){ active='profil'; renderNav('profil'); views.profil(); }
