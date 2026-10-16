@@ -389,9 +389,9 @@ var SEED = {
     heroArabic: 'وَمَن يَحْفَظْهُ يَحْفَظْهُ اللَّهُ',
     target: 276468000,
     terkumpul: 197576985,
-    pencairan: 70000000,
-    saldo: 127576985,
-    pencairanKet: 'Pencairan Termin 1 · 14-09-2026',
+    pencairan: 95000000,
+    saldo: 102576985,
+    pencairanKet: '2 kali pencairan (Termin 1 + Termin 2)',
     bank: 'Bank BRI',
     an: 'Panitia Renovasi Masjid Jami Nurul Hikmah',
     rekening: '6849-01-020766-53-9',
@@ -475,27 +475,77 @@ function fetchCSV(gid){
     .then(function(r){ if(!r.ok) throw new Error('http '+r.status); return r.text(); })
     .then(parseCSV);
 }
+function parseNom(s){ if(!s) return 0; var v=parseFloat(String(s).replace(/[Rp\s,]/g,'')); return isNaN(v)?0:v; }
+function cekCSV(r){
+  if(!r.ok) throw new Error('HTTP '+r.status);
+  return r.text().then(function(t){ if(/^\s*<(!doctype|html)/i.test(t)) throw new Error('HTML'); return t; });
+}
+function toGrid(table){
+  var cols=table.cols||[], header=cols.map(function(c){return c.label||'';});
+  var rows=(table.rows||[]).map(function(r){
+    return cols.map(function(c,i){
+      var cell=r.c&&r.c[i];
+      if(!cell||cell.v==null) return '';
+      if(c.type==='number') return String(cell.v);
+      return cell.f!=null?String(cell.f):String(cell.v);
+    });
+  });
+  return header.some(Boolean)?[header].concat(rows):rows;
+}
+function jsonpGrid(gid){ // cadangan bila fetch diblokir (CORS/file://) — tidak kena aturan CORS
+  return new Promise(function(resolve,reject){
+    var cb='__gv'+Date.now().toString(36)+Math.floor(Math.random()*1e6), sc=document.createElement('script'), timer;
+    function bersih(){ clearTimeout(timer); try{delete window[cb];}catch(e){window[cb]=undefined;} if(sc.parentNode) sc.parentNode.removeChild(sc); }
+    window[cb]=function(r){ bersih(); if(!r||r.status!=='ok'||!r.table){ reject(new Error('GVIZ')); return; } try{ resolve(toGrid(r.table)); }catch(e){ reject(e); } };
+    sc.onerror=function(){ bersih(); reject(new TypeError('JSONP gagal')); };
+    timer=setTimeout(function(){ bersih(); reject(new TypeError('JSONP timeout')); },15000);
+    sc.src='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?gid='+gid+'&headers=1&tqx=out:json;responseHandler:'+cb+'&_='+Date.now();
+    (document.head||document.documentElement).appendChild(sc);
+  });
+}
+function getGrid(gid){
+  return fetch('https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?tqx=out:csv&gid='+gid+'&_='+Date.now(),{cache:'no-store'})
+    .then(cekCSV).then(parseCSV)
+    .catch(function(e1){ console.warn('[infaq] fetch gagal, coba JSONP —',e1); return jsonpGrid(gid); });
+}
+/* Pencairan: sama persis dengan halaman Laporan Infaq (kolom: Perolehan | Tanggal | Jumlah | Keterangan | Saldo) */
+function pencairanFromGrid(grid){
+  if(!grid || grid.length<2) return [];
+  var h=grid[0].map(function(x){return (x||'').trim().toLowerCase();});
+  var iTgl=h.findIndex(function(x){return /tanggal|tgl/.test(x);}); if(iTgl<0) iTgl=1;
+  var iJum=h.findIndex(function(x,i){return i!==iTgl&&/jumlah|nominal/.test(x);}); if(iJum<0) iJum=2;
+  var iKet=h.findIndex(function(x,i){return i!==iTgl&&i!==iJum&&/keterangan|termin|ket/.test(x);}); if(iKet<0) iKet=3;
+  var out=[];
+  for(var i=1;i<grid.length;i++){
+    var jml=parseNom(grid[i][iJum]); if(!jml) continue;
+    out.push({jumlah:jml, tgl:(grid[i][iTgl]||'').trim(), ket:(grid[i][iKet]||'').trim()||('Pencairan ke-'+(out.length+1))});
+  }
+  return out;
+}
 function liveHero(){
   var el = document.getElementById('heroLive'); if(!el) return;
   el.textContent = '· memuat data live…'; el.style.color='var(--muted)';
   var s = getSettings(); var target = Number(s.target)||0;
   function setText(id,txt){ var e=document.getElementById(id); if(e) e.textContent=txt; }
-  Promise.all([fetchCSV(GID_DETAIL).catch(function(){return null;}), fetchCSV(GID_OUT).catch(function(){return null;})])
+  var errD=null, errO=null;
+  Promise.all([getGrid(GID_DETAIL).catch(function(e){errD=e;return null;}), getGrid(GID_OUT).catch(function(e){errO=e;return null;})])
     .then(function(res){
-      var detail=res[0], pcRows=res[1];
-      var total=0, n=0;
+      var detail=res[0], pc=pencairanFromGrid(res[1]);
+      console.log('[infaq] pencairan dari sheet:', pc);
+      var total=0;
       if(detail && detail.length>1){
-        var hdr=detail[0], nomIdx=-1;
-        for(var i=0;i<hdr.length;i++){ if(/nominal|infaq|jumlah/i.test(hdr[i])){ nomIdx=i; break; } }
+        var hdr=detail[0].map(function(x){return (x||'').trim().toLowerCase();}), nomIdx=hdr.indexOf('nominal infaq');
+        if(nomIdx<0){ for(var i=0;i<hdr.length;i++){ if(/nominal|infaq|jumlah/.test(hdr[i])){ nomIdx=i; break; } } }
         if(nomIdx<0) nomIdx=hdr.length-1;
-        for(var j=1;j<detail.length;j++){ var v=parseNominal(detail[j][nomIdx]); if(v>500){ total+=v; n++; } }
+        for(var j=1;j<detail.length;j++){ total+=parseNom(detail[j][nomIdx]); }
       }
-      var cair=null, saldo=null, ket='';
-      if(pcRows && pcRows.length>1){
-        var r1=pcRows[1];
-        cair=parseNominal(r1[2]); ket=(r1[3]||'')+(r1[1]?' · '+r1[1]:''); saldo=parseNominal(r1[4]);
+      var cair=null, ket='';
+      if(pc.length){
+        cair=pc.reduce(function(a,x){return a+x.jumlah;},0);
+        ket = pc.length===1 ? pc[0].ket+(pc[0].tgl?' · '+pc[0].tgl:'')
+                            : pc.length+' kali pencairan ('+pc.map(function(x){return x.ket.replace(/^Pencairan\s*/i,'');}).join(' + ')+')';
       }
-      if(total<=0 && cair==null) throw new Error('no data');
+      if(total<=0 && cair==null) throw (errO||errD||new Error('no data'));
       if(total>0){
         var pct=target>0?Math.min(100,total/target*100):0;
         setText('kpiTerkumpul', rupiah(total));
@@ -504,9 +554,9 @@ function liveHero(){
         var bar=document.getElementById('heroBar'); if(bar) bar.style.width=pct+'%';
       }
       if(cair!=null){ setText('kpiCair', rupiah(cair)); setText('kpiCairKet', ket); }
-      if(saldo!=null) setText('kpiSaldo', rupiah(saldo));
-      else if(total>0 && cair!=null) setText('kpiSaldo', rupiah(total-cair));
-      el.textContent='● LIVE ●'; el.style.color='var(--gold)';
+      if(total>0 && cair!=null) setText('kpiSaldo', rupiah(total-cair));
+      if(errO){ el.textContent='· data pencairan gagal dimuat'; el.style.color='#b45309'; }
+      else { el.textContent='● LIVE ●'; el.style.color='var(--gold)'; }
     })
     .catch(function(){ el.textContent='· angka diperbarui berkala'; el.style.color='var(--muted)'; });
 }
