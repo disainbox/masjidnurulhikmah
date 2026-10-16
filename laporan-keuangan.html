@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.js">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -39,12 +40,29 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:'Nunito',system
 .pill{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);padding:5px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.02em}
 .pill .dot{width:7px;height:7px;border-radius:50%;background:#7dffc8;animation:pulse 1.8s infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+/* ===== SUB HEADER: kontainer status live, pembaruan terakhir & periode ===== */
+.subhead{position:relative;overflow:hidden;color:#fff;border-radius:14px;padding:10px 16px;margin:0 0 14px;background:linear-gradient(150deg,#062e23 0%,#083d2e 65%,#0e5c45 100%);box-shadow:var(--shadow);display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap}
+.subhead::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.3;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%23c19a3f' stroke-width='.7' opacity='.35'%3E%3Cpath d='M36 4l8 12 14 2-10 10 2 14-14-8-14 8 2-14-10-10 14-2z'/%3E%3Ccircle cx='36' cy='36' r='5'/%3E%3C/g%3E%3C/svg%3E");background-size:72px 72px}
+.subhead>*{position:relative;z-index:1}
+.subhead .pill{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.26);color:#fff;padding:4px 12px;border-radius:999px;font-size:.72rem;font-weight:700;font-variant-numeric:tabular-nums}
+.subhead .pill .dot{width:7px;height:7px;border-radius:50%;background:#7dffc8;animation:pulse 1.8s infinite}
+@media(max-width:600px){.subhead{padding:9px 12px;border-radius:12px;margin-bottom:12px}}
+/* status live (Laporan Keuangan) di dalam sub header */
+.subhead .status{margin:0;min-height:0;flex:1;min-width:0;color:rgba(255,255,255,.9);font-size:.78rem;font-weight:700}
+.subhead .status.err{color:#ffd2c2}
+.subhead .live-dot{background:#7dffc8}
+.subhead .status.err .live-dot{background:#ffb199}
+.subhead .loading{border-color:rgba(255,255,255,.25);border-top-color:#7dffc8}
+.subhead .refresh{border-color:rgba(255,255,255,.35);color:#fff;padding:.2rem .6rem;margin-left:8px}
+.subhead .refresh:hover{border-color:#e0c074;color:#e0c074}
 .status{margin:.9rem 0;font-size:.88rem;color:var(--muted);display:flex;align-items:center;gap:.5rem;min-height:1.4em}
 .status.err{color:var(--danger);font-weight:600}
 .live-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex:0 0 auto;animation:pulse 1.8s infinite}
 .status.err .live-dot{background:var(--danger);animation:none}
-.status .stxt{min-width:0;overflow-wrap:anywhere}
-@media(max-width:600px){.status{flex-wrap:wrap;font-size:.8rem}}
+.status{min-height:2.1rem;flex-wrap:nowrap}
+.status .stxt{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
+.status.err .stxt{white-space:normal}
+@media(max-width:600px){.status{font-size:.8rem}}
 .refresh{background:none;border:1.5px solid var(--border);color:var(--muted);font-family:inherit;font-size:.78rem;font-weight:700;padding:.3rem .7rem;border-radius:8px;cursor:pointer;margin-left:auto;transition:all .2s}
 .refresh:hover{color:var(--accent);border-color:var(--accent)}
 
@@ -85,7 +103,7 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:'Nunito',system
 .table-head{padding:16px 18px 10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 .table-head h3{margin:0;font-size:0.9375rem;font-weight:800}
 .table-head .cnt{font-size:0.75rem;color:var(--muted);font-weight:700}
-.table-scroll{max-height:min(890px,80vh);overflow-y:auto;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.table-scroll{max-height:720px;overflow-y:auto;overflow-x:auto;-webkit-overflow-scrolling:touch}
 table{width:100%;border-collapse:collapse;font-size:0.8125rem}
 thead th{position:sticky;top:0;background:#f0f6f2;color:var(--muted);font-size:0.6875rem;text-transform:uppercase;letter-spacing:.06em;padding:10px 14px;text-align:left;z-index:2;border-bottom:1px solid var(--border)}
 tbody td{padding:10px 14px;border-bottom:1px solid rgba(15,36,27,.06);vertical-align:middle}
@@ -117,7 +135,7 @@ td.num.out{color:var(--accent2)}
   tbody td:nth-child(4)::before{content:"Keterangan: ";font-weight:600;color:var(--muted)}
   tbody td:nth-child(5){grid-area:num;font-size:0.875rem}
 }
-@media(max-height:480px) and (orientation:landscape){.table-scroll{max-height:70vh}}
+@media(max-height:480px) and (orientation:landscape){.table-scroll{max-height:420px}}
 @media print{.table-panel{box-shadow:none;break-inside:avoid}.table-scroll{max-height:none;overflow:visible}}
 
 /* === FOOTER === */
@@ -129,11 +147,13 @@ td.num.out{color:var(--accent2)}
 </head>
 <body>
 <div class="wrap">
-  <!-- STATUS BAR -->
-  <div class="status" id="loadStatus">
+  <header class="subhead">
+    <div class="status" id="loadStatus">
     <span class="loading"></span>Memuat data laporan...
     <button class="refresh" onclick="load(false)">Muat ulang</button>
   </div>
+    <span class="pill" id="periodPill">Periode: –</span>
+  </header>
 
   <!-- KPI CARDS -->
   <div class="kpis" id="metrics" style="display:none">
@@ -302,9 +322,11 @@ td.num.out{color:var(--accent2)}
     var b=aggBulanan(), k=aggKategori();
     $('eBulanan').style.display = b.labels.length ? 'none' : 'flex';
     $('eKategori').style.display = k.labels.length ? 'none' : 'flex';
-    if (chartB){ chartB.destroy(); chartB=null; }
-    if (chartK){ chartK.destroy(); chartK=null; }
-    if (b.labels.length){
+    if (chartB && !b.labels.length){ chartB.destroy(); chartB=null; }
+    if (chartK && !k.labels.length){ chartK.destroy(); chartK=null; }
+    if (b.labels.length && chartB){
+      chartB.data.labels=b.labels; chartB.data.datasets[0].data=b.masuk; chartB.data.datasets[1].data=b.keluar; chartB.update('none');
+    } else if (b.labels.length){
       chartB = new Chart($('cBulanan').getContext('2d'), {
         type:'bar',
         data:{ labels:b.labels, datasets:[
@@ -318,7 +340,9 @@ td.num.out{color:var(--accent2)}
         }
       });
     }
-    if (k.labels.length){
+    if (k.labels.length && chartK){
+      chartK.data.labels=k.labels; chartK.data.datasets[0].data=k.values; chartK.data.datasets[0].backgroundColor=PALETTE.slice(0,k.labels.length); chartK.update('none');
+    } else if (k.labels.length){
       chartK = new Chart($('cKategori').getContext('2d'), {
         type:'doughnut',
         data:{ labels:k.labels, datasets:[{data:k.values,backgroundColor:PALETTE.slice(0,k.labels.length),borderWidth:3,borderColor:'#fff'}] },
@@ -332,6 +356,7 @@ td.num.out{color:var(--accent2)}
   var BLN=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
   function fmtTgl(t){ var m=/^(\d{4})-(\d{1,2})-(\d{1,2})/.exec(t||''); return m? (+m[3])+' '+BLN[+m[2]-1]+' '+m[1] : (t||'-'); }
   function renderTable(){
+    var sc=document.querySelector('.table-scroll'), st=sc?sc.scrollTop:0;
     var tb=$('tbody'); tb.innerHTML='';
     var list=records.slice().sort(function(a,b){ if(a.tanggal!==b.tanggal)return a.tanggal<b.tanggal?1:-1; return (a.createdAt||0)<(b.createdAt||0)?1:-1; });
     $('tableEmpty').style.display = list.length ? 'none' : 'block';
@@ -347,10 +372,16 @@ td.num.out{color:var(--accent2)}
       frag.appendChild(tr);
     });
     tb.appendChild(frag);
+    if (sc) sc.scrollTop=st;
   }
 
+  function setPeriode(){
+    var d=records.map(function(r){return r.tanggal;}).filter(Boolean).sort(), el=$('periodPill');
+    if (el) el.textContent = d.length ? 'Periode: '+fmtTgl(d[0])+' – '+fmtTgl(d[d.length-1]) : 'Periode: –';
+  }
   function renderAll(){
     var s=rekap();
+    setPeriode();
     $('metrics').style.display='grid';
     $('masuk').textContent=rupiah(s.m);
     $('keluar').textContent=rupiah(s.k);
@@ -385,17 +416,23 @@ td.num.out{color:var(--accent2)}
     return rows.map(function(r){ return { id:r.id, tanggal:r.tanggal, jenis:r.jenis, kategori:r.kategori, keterangan:r.keterangan, jumlah:Number(r.jumlah)||0, pencatat:r.pencatat||'', createdAt:r.createdAt||0 }; });
   }
   function tampilkan(rows){
-    var sig=JSON.stringify(rows);
-    if (sig===lastSig) return Promise.resolve(false);   // data sama: tidak perlu render ulang
+    var sig=JSON.stringify(mapRows(rows).map(function(r){return [r.id,r.tanggal,r.jenis,r.kategori,r.keterangan,r.jumlah];}).sort(function(a,b){return String(a[0]||a.join()).localeCompare(String(b[0]||b.join()));}));
+    if (sig===lastSig){ console.log('[keuangan] refresh: data sama, tidak ada perubahan tampilan'); return Promise.resolve(false); }
+    console.log('[keuangan] refresh: data berubah, tampilan diperbarui ('+rows.length+' transaksi)');   // data sama: tidak perlu render ulang
     lastSig=sig; records=mapRows(rows);
     return loadChart().then(function(){ renderAll(); return true; });
   }
   function bacaCache(){ try{ var c=JSON.parse(localStorage.getItem(CACHE_KEY)||'null'); return c&&Array.isArray(c.rows)?c:null; }catch(e){ return null; } }
   function simpanCache(rows){ try{ localStorage.setItem(CACHE_KEY, JSON.stringify({t:Date.now(), rows:rows})); }catch(e){} }
 
-  var REFRESH_MS=60000, busy=false, lastOk=0;
+  var REFRESH_MS=60000, busy=false, lastOk=0, gagal=0;
   function fmtJam(d){ return d.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit',second:'2-digit'}); }
 
+  function setLive(text){
+    var bar=$('loadStatus'), t=bar && bar.querySelector('.stxt');
+    if (t && !bar.classList.contains('err') && !bar.querySelector('.loading')) t.textContent=text;   // ubah teks saja
+    else setStatus({text:text}, false);
+  }
   function load(silent){
     if (!MNH_URL){
       setStatus({text:'URL Google Apps Script belum dikonfigurasi. Hubungi admin.'}, true);
@@ -419,14 +456,16 @@ td.num.out{color:var(--accent2)}
         if (data && data.ok && Array.isArray(data.rows)){
           simpanCache(data.rows);
           return tampilkan(data.rows).then(function(){
-            lastOk = Date.now();
+            lastOk = Date.now(); gagal = 0;
             if (!window.Chart) setStatus({text:'Grafik gagal dimuat, tabel tetap tampil.'}, true);
-            else setStatus({text:'Live · diperbarui '+fmtJam(new Date())+' · '+data.rows.length+' transaksi · otomatis tiap 1 menit'}, false);
+            else setLive('Live · diperbarui '+fmtJam(new Date()));
           });
         }
         throw new Error(data && data.error ? data.error : 'respon tidak valid');
       })
       .catch(function(e){
+        gagal++;
+        if (adaTampilan && silent && gagal<3) return;   // gangguan sesaat: biarkan tampilan terakhir apa adanya
         if (adaTampilan) setStatus({text:'Gagal memperbarui · menampilkan data terakhir · mencoba lagi…'}, true);
         else setStatus({text:'Gagal terhubung ke server. Periksa koneksi atau URL Web App.'}, true);
       })

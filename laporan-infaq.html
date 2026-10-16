@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Laporan Infaq Renovasi Masjid Nurul Hikmah</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -27,6 +28,13 @@ img,svg{max-width:100%}
 .hero-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;position:relative;z-index:1}
 .pill{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);padding:5px 12px;border-radius:999px;font-size:0.75rem;font-weight:700;letter-spacing:.02em}
 .pill .dot{width:7px;height:7px;border-radius:50%;background:#7dffc8;animation:pulse 1.8s infinite}
+/* ===== SUB HEADER: kontainer status live, pembaruan terakhir & periode ===== */
+.subhead{position:relative;overflow:hidden;color:#fff;border-radius:14px;padding:10px 16px;margin:0 0 14px;background:linear-gradient(150deg,#062e23 0%,#083d2e 65%,#0e5c45 100%);box-shadow:var(--shadow);display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap}
+.subhead::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.3;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%23c19a3f' stroke-width='.7' opacity='.35'%3E%3Cpath d='M36 4l8 12 14 2-10 10 2 14-14-8-14 8 2-14-10-10 14-2z'/%3E%3Ccircle cx='36' cy='36' r='5'/%3E%3C/g%3E%3C/svg%3E");background-size:72px 72px}
+.subhead>*{position:relative;z-index:1}
+.subhead .pill{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.26);color:#fff;padding:4px 12px;border-radius:999px;font-size:.72rem;font-weight:700;font-variant-numeric:tabular-nums}
+.subhead .pill .dot{width:7px;height:7px;border-radius:50%;background:#7dffc8;animation:pulse 1.8s infinite}
+@media(max-width:600px){.subhead{padding:9px 12px;border-radius:12px;margin-bottom:12px}}
 .statusbar{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
 .statusbar .pill{background:var(--accent-soft);border-color:rgba(13,150,105,.25);color:var(--accent)}
 .statusbar .pill .dot{background:var(--accent)}
@@ -101,7 +109,7 @@ img,svg{max-width:100%}
 .table-head{padding:16px 18px 10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 .table-head h3{margin:0;font-size:0.9375rem;font-weight:800}
 .table-head .cnt{font-size:0.75rem;color:var(--muted);font-weight:700}
-.table-scroll{max-height:min(890px,80vh);overflow-y:auto;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.table-scroll{max-height:720px;overflow-y:auto;overflow-x:auto;-webkit-overflow-scrolling:touch}
 table{width:100%;border-collapse:collapse;font-size:0.8125rem}
 thead th{position:sticky;top:0;background:#f0f6f2;color:var(--muted);font-size:0.6875rem;text-transform:uppercase;letter-spacing:.06em;padding:10px 14px;text-align:left;z-index:2;border-bottom:1px solid var(--border)}
 tbody td{padding:10px 14px;border-bottom:1px solid rgba(15,36,27,.06)}
@@ -181,7 +189,7 @@ td.met{white-space:nowrap}
 }
 /* layar landscape pendek */
 @media(max-height:480px) and (orientation:landscape){
-  .table-scroll{max-height:70vh}
+  .table-scroll{max-height:420px}
 }
 /* hormati preferensi kurangi animasi */
 @media(prefers-reduced-motion:reduce){
@@ -251,10 +259,10 @@ td.met{white-space:nowrap}
 <body>
 <div class="wrap">
 
-  <div class="statusbar">
+  <header class="subhead">
     <span class="pill"><span class="dot"></span><span id="status">Memuat data…</span></span>
     <span class="pill" id="periodPill">Periode: –</span>
-  </div>
+  </header>
   </div>
 
   <div class="kpis">
@@ -488,6 +496,7 @@ td.met{white-space:nowrap}
     });
     setTimeout(function(){document.querySelectorAll('#cities .fill').forEach(function(f){f.style.width=f.getAttribute('data-w')+'%';});},200);
     // table
+    var tsc=document.querySelector('.table-scroll'), tsTop=tsc?tsc.scrollTop:0;
     var tb=document.getElementById('tbody'); tb.innerHTML='';
     var sorted=detail.slice().sort(function(a,b){return (b.t||'').localeCompare(a.t||'');});
     sorted.forEach(function(r){
@@ -498,6 +507,7 @@ td.met{white-space:nowrap}
       tb.appendChild(tr);
     });
     document.getElementById('tableCnt').textContent=st.count+' transaksi · terurut terbaru';
+    if(tsc) tsc.scrollTop=tsTop;
   }
   function escapeHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
@@ -576,6 +586,7 @@ td.met{white-space:nowrap}
       })
       .catch(function(){return p;});
   }
+  var gagal=0;
   function refresh(){
     Promise.all([getGrid(GID_DETAIL), getGrid(GID_OUT)]).then(function(res){
       var d=detailFromRows(res[0]), p=pencairanFromRows(res[1]);
@@ -587,10 +598,12 @@ td.met{white-space:nowrap}
         lastSig=sig; detail=d; pc=p;
         render(compute(detail, pc));
       }
-      hasLive=true;
-      document.getElementById('status').textContent='Live · diperbarui '+fmtJam(new Date())+' · otomatis tiap 1 menit';
+      hasLive=true; gagal=0;
+      document.getElementById('status').textContent='Live · diperbarui '+fmtJam(new Date());
     }).catch(function(e){
       console.warn('Laporan infaq: gagal memuat data live —',e);
+      gagal++;
+      if(hasLive && gagal<3) return;   // gangguan sesaat: biarkan tampilan terakhir apa adanya
       document.getElementById('status').textContent=hasLive
         ? 'Gagal memperbarui · menampilkan data terakhir · mencoba lagi…'
         : 'Data per '+SNAPSHOT.generated+' (offline snapshot) · '+alasan(e);
