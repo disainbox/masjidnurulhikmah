@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Laporan Keuangan Renovasi — Masjid Nurul Hikmah</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://script.google.com">
+<link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.js">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -37,6 +41,10 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:'Nunito',system
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
 .status{margin:.9rem 0;font-size:.88rem;color:var(--muted);display:flex;align-items:center;gap:.5rem;min-height:1.4em}
 .status.err{color:var(--danger);font-weight:600}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex:0 0 auto;animation:pulse 1.8s infinite}
+.status.err .live-dot{background:var(--danger);animation:none}
+.status .stxt{min-width:0;overflow-wrap:anywhere}
+@media(max-width:600px){.status{flex-wrap:wrap;font-size:.8rem}}
 .refresh{background:none;border:1.5px solid var(--border);color:var(--muted);font-family:inherit;font-size:.78rem;font-weight:700;padding:.3rem .7rem;border-radius:8px;cursor:pointer;margin-left:auto;transition:all .2s}
 .refresh:hover{color:var(--accent);border-color:var(--accent)}
 
@@ -121,29 +129,10 @@ td.num.out{color:var(--accent2)}
 </head>
 <body>
 <div class="wrap">
-  <!-- HEADER -->
-  <div class="hero">
-    <div class="logo" aria-hidden="true">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 2c-1.2 1.6-3 2.6-3 4.2A3.3 3.3 0 0 0 12 9.5a3.3 3.3 0 0 0 3-3.3C15 4.6 13.2 3.6 12 2z"/>
-        <path d="M4 21v-7a8 8 0 0 1 16 0v7"/>
-        <path d="M2 21h20"/>
-        <path d="M9 21v-3a3 3 0 0 1 6 0v3"/>
-      </svg>
-    </div>
-    <div class="info">
-      <h1>Laporan Keuangan</h1>
-      <p>Laporan Pertanggungjawaban Keuangan Renovasi &mdash; Pemasukan & Pengeluaran</p>
-      <div class="hero-meta">
-        <span class="pill"><span class="dot"></span><span id="status">Memuat data…</span></span>
-      </div>
-    </div>
-  </div>
-
   <!-- STATUS BAR -->
   <div class="status" id="loadStatus">
     <span class="loading"></span>Memuat data laporan...
-    <button class="refresh" onclick="load()">Muat ulang</button>
+    <button class="refresh" onclick="load(false)">Muat ulang</button>
   </div>
 
   <!-- KPI CARDS -->
@@ -256,15 +245,17 @@ td.num.out{color:var(--accent2)}
     s.className = 'status' + (isErr ? ' err' : '');
     if (text && text.loading){
       var sp=document.createElement('span'); sp.className='loading'; s.appendChild(sp);
+    } else {
+      var dt=document.createElement('span'); dt.className='live-dot'; s.appendChild(dt);
     }
-    var t = document.createElement('span');
+    var t = document.createElement('span'); t.className='stxt';
     t.textContent = (typeof text==='object' ? text.text : text) || '';
     s.appendChild(t);
     var btn = document.createElement('button'); btn.className='refresh'; btn.textContent='Muat ulang';
-    btn.addEventListener('click', function(){ load(); });
+    btn.addEventListener('click', function(){ load(false); });
     s.appendChild(btn);
     var statusText = isErr ? 'Terjadi kendala' : 'Live · diperbarui ' + new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
-    $('status').textContent = statusText;
+    if ($('status')) $('status').textContent = statusText;
   }
 
   function rekap(){
@@ -382,30 +373,69 @@ td.num.out{color:var(--accent2)}
     $('footer').textContent='Dimuat otomatis pada '+new Date().toLocaleString('id-ID')+'. Panitia Masjid Nurul Hikmah.';
   }
 
-  function load(){
+  var CHART_URL='https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.js', CACHE_KEY='mnh_keu_v1', chartP=null, lastSig='';
+  function loadChart(){
+    if (window.Chart) return Promise.resolve();
+    if (!chartP) chartP = new Promise(function(res){ inject(CHART_URL, false, function(){ res(); }); });
+    return chartP;
+  }
+  loadChart();                       // unduh Chart.js sekarang, bersamaan dengan data (tidak menunggu data lebih dulu)
+
+  function mapRows(rows){
+    return rows.map(function(r){ return { id:r.id, tanggal:r.tanggal, jenis:r.jenis, kategori:r.kategori, keterangan:r.keterangan, jumlah:Number(r.jumlah)||0, pencatat:r.pencatat||'', createdAt:r.createdAt||0 }; });
+  }
+  function tampilkan(rows){
+    var sig=JSON.stringify(rows);
+    if (sig===lastSig) return Promise.resolve(false);   // data sama: tidak perlu render ulang
+    lastSig=sig; records=mapRows(rows);
+    return loadChart().then(function(){ renderAll(); return true; });
+  }
+  function bacaCache(){ try{ var c=JSON.parse(localStorage.getItem(CACHE_KEY)||'null'); return c&&Array.isArray(c.rows)?c:null; }catch(e){ return null; } }
+  function simpanCache(rows){ try{ localStorage.setItem(CACHE_KEY, JSON.stringify({t:Date.now(), rows:rows})); }catch(e){} }
+
+  var REFRESH_MS=60000, busy=false, lastOk=0;
+  function fmtJam(d){ return d.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit',second:'2-digit'}); }
+
+  function load(silent){
     if (!MNH_URL){
       setStatus({text:'URL Google Apps Script belum dikonfigurasi. Hubungi admin.'}, true);
       return;
     }
-    setStatus({loading:true,text:'Memuat data laporan...'}, false);
-    var url = MNH_URL + (MNH_URL.indexOf('?')>-1?'&':'?') + 'action=list';
-    fetch(url)
+    if (busy) return;
+    busy = true;
+    // 1) tampilkan data tersimpan lebih dulu (instan), 2) segarkan dari server di belakang layar
+    var cache = lastSig ? null : bacaCache();
+    var adaTampilan = !!lastSig;
+    if (cache){
+      adaTampilan = true;
+      tampilkan(cache.rows).then(function(){ setStatus({loading:true,text:'Menampilkan data tersimpan · memperbarui…'}, false); });
+    } else if (!silent){
+      setStatus({loading:true,text:'Memuat data laporan...'}, false);   // refresh otomatis berjalan senyap, tanpa kedip
+    }
+    var url = MNH_URL + (MNH_URL.indexOf('?')>-1?'&':'?') + 'action=list&_=' + Date.now();
+    fetch(url, {cache:'no-store'})
       .then(function(r){ return r.json(); })
       .then(function(data){
         if (data && data.ok && Array.isArray(data.rows)){
-          records = data.rows.map(function(r){ return { id:r.id, tanggal:r.tanggal, jenis:r.jenis, kategori:r.kategori, keterangan:r.keterangan, jumlah:Number(r.jumlah)||0, pencatat:r.pencatat||'', createdAt:r.createdAt||0 }; });
-          setStatus({text:'Menampilkan '+records.length+' transaksi. '}, false);
-          if (window.Chart){ renderAll(); }
-          else { inject('https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.js', false, function(err){ if(err && !window.Chart){ setStatus({text:'Grafik gagal dimuat, tabel tetap tampil.'}, true); } renderAll(); }); }
-        } else {
-          setStatus({text:'Gagal membaca data: '+(data && data.error ? data.error : 'respon tidak valid')}, true);
+          simpanCache(data.rows);
+          return tampilkan(data.rows).then(function(){
+            lastOk = Date.now();
+            if (!window.Chart) setStatus({text:'Grafik gagal dimuat, tabel tetap tampil.'}, true);
+            else setStatus({text:'Live · diperbarui '+fmtJam(new Date())+' · '+data.rows.length+' transaksi · otomatis tiap 1 menit'}, false);
+          });
         }
+        throw new Error(data && data.error ? data.error : 'respon tidak valid');
       })
-      .catch(function(){
-        setStatus({text:'Gagal terhubung ke server. Periksa koneksi atau URL Web App.'}, true);
-      });
+      .catch(function(e){
+        if (adaTampilan) setStatus({text:'Gagal memperbarui · menampilkan data terakhir · mencoba lagi…'}, true);
+        else setStatus({text:'Gagal terhubung ke server. Periksa koneksi atau URL Web App.'}, true);
+      })
+      .then(function(){ busy = false; });
   }
-  load();
+  load(false);
+  // refresh otomatis tiap 1 menit (dijeda saat tab/halaman tidak terlihat)
+  setInterval(function(){ if (!document.hidden) load(true); }, REFRESH_MS);
+  document.addEventListener('visibilitychange', function(){ if (!document.hidden && Date.now()-lastOk > REFRESH_MS) load(true); });
 })();
 </script>
 </body>

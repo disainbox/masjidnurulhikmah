@@ -27,6 +27,9 @@ img,svg{max-width:100%}
 .hero-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;position:relative;z-index:1}
 .pill{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);padding:5px 12px;border-radius:999px;font-size:0.75rem;font-weight:700;letter-spacing:.02em}
 .pill .dot{width:7px;height:7px;border-radius:50%;background:#7dffc8;animation:pulse 1.8s infinite}
+.statusbar{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
+.statusbar .pill{background:var(--accent-soft);border-color:rgba(13,150,105,.25);color:var(--accent)}
+.statusbar .pill .dot{background:var(--accent)}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
 /* KPI CARDS */
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:22px}
@@ -248,13 +251,10 @@ td.met{white-space:nowrap}
 <body>
 <div class="wrap">
 
-  <div class="hero">
-    <h1>Laporan Infaq Renovasi Masjid Nurul Hikmah</h1>
-    <p>Laporan transparansi perolehan &amp; penyaluran dana infaq — diperbarui otomatis</p>
-    <div class="hero-meta">
-      <span class="pill"><span class="dot"></span><span id="status">Memuat data…</span></span>
-      <span class="pill" id="periodPill">Periode: –</span>
-    </div>
+  <div class="statusbar">
+    <span class="pill"><span class="dot"></span><span id="status">Memuat data…</span></span>
+    <span class="pill" id="periodPill">Periode: –</span>
+  </div>
   </div>
 
   <div class="kpis">
