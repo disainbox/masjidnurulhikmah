@@ -132,6 +132,7 @@ td.nom.out{color:var(--accent2)}
   tbody td:nth-child(3){grid-area:kat;font-size:.75rem;color:var(--muted);font-weight:700;overflow-wrap:anywhere}
   tbody td:nth-child(3)::before{content:"Kategori: ";font-weight:600;opacity:.8}
   tbody td:nth-child(4){grid-area:ket;font-weight:800;overflow-wrap:anywhere}
+  tbody td:nth-child(4)::before{content:"Keterangan: ";font-weight:600;font-size:.75rem;color:var(--muted);opacity:.9}
   tbody td:nth-child(5){grid-area:nom;font-size:.875rem}
 }
 @media(max-width:380px){
@@ -441,7 +442,7 @@ td.nom.out{color:var(--accent2)}
       td=document.createElement('td'); td.textContent=fmtTgl(r.tanggal); tr.appendChild(td);
       td=document.createElement('td'); td.className='met'; var sp=document.createElement('span'); sp.className='tag '+(masuk?'in':'out'); sp.textContent=r.jenis; td.appendChild(sp); tr.appendChild(td);
       td=document.createElement('td'); td.textContent=r.kategori; tr.appendChild(td);
-      td=document.createElement('td'); td.textContent=r.keterangan; tr.appendChild(td);
+      td=document.createElement('td'); td.textContent=r.keterangan||'-'; tr.appendChild(td);
       td=document.createElement('td'); td.className='nom '+(masuk?'in':'out'); td.textContent=(masuk?'+ ':'- ')+rupiah(r.jumlah); tr.appendChild(td);
       frag.appendChild(tr);
     });
