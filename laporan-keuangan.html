@@ -404,7 +404,7 @@ td.num.out{color:var(--accent2)}
     $('footer').textContent='Dimuat otomatis pada '+new Date().toLocaleString('id-ID')+'. Panitia Masjid Nurul Hikmah.';
   }
 
-  var CHART_URL='https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.js', CACHE_KEY='mnh_keu_v1', chartP=null, lastSig='';
+  var CHART_URL='https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.js', CACHE_KEY='mnh_keu_v1', chartP=null, lastSig='', lastNorm=null;
   function loadChart(){
     if (window.Chart) return Promise.resolve();
     if (!chartP) chartP = new Promise(function(res){ inject(CHART_URL, false, function(){ res(); }); });
@@ -416,10 +416,15 @@ td.num.out{color:var(--accent2)}
     return rows.map(function(r){ return { id:r.id, tanggal:r.tanggal, jenis:r.jenis, kategori:r.kategori, keterangan:r.keterangan, jumlah:Number(r.jumlah)||0, pencatat:r.pencatat||'', createdAt:r.createdAt||0 }; });
   }
   function tampilkan(rows){
-    var sig=JSON.stringify(mapRows(rows).map(function(r){return [r.id,r.tanggal,r.jenis,r.kategori,r.keterangan,r.jumlah];}).sort(function(a,b){return String(a[0]||a.join()).localeCompare(String(b[0]||b.join()));}));
-    if (sig===lastSig){ console.log('[keuangan] refresh: data sama, tidak ada perubahan tampilan'); return Promise.resolve(false); }
-    console.log('[keuangan] refresh: data berubah, tampilan diperbarui ('+rows.length+' transaksi)');   // data sama: tidak perlu render ulang
-    lastSig=sig; records=mapRows(rows);
+    // bandingkan hanya isi transaksi yang tampil (id/urutan/field lain diabaikan)
+    var norm=mapRows(rows).map(function(r){ return [r.tanggal,r.jenis,r.kategori,r.keterangan,r.jumlah].join('|'); }).sort();
+    var sig=norm.join('\n');
+    if (sig===lastSig){ return Promise.resolve(false); }   // data sama: tidak ada yang disentuh sama sekali
+    if (lastNorm){
+      var beda=norm.filter(function(x){ return lastNorm.indexOf(x)<0; }).slice(0,3);
+      console.log('[keuangan] data berubah ('+rows.length+' transaksi), contoh baris beda:', beda);
+    } else console.log('[keuangan] render awal ('+rows.length+' transaksi)');
+    lastNorm=norm; lastSig=sig; records=mapRows(rows);
     return loadChart().then(function(){ renderAll(); return true; });
   }
   function bacaCache(){ try{ var c=JSON.parse(localStorage.getItem(CACHE_KEY)||'null'); return c&&Array.isArray(c.rows)?c:null; }catch(e){ return null; } }
@@ -450,7 +455,7 @@ td.num.out{color:var(--accent2)}
       setStatus({loading:true,text:'Memuat data laporan...'}, false);   // refresh otomatis berjalan senyap, tanpa kedip
     }
     var url = MNH_URL + (MNH_URL.indexOf('?')>-1?'&':'?') + 'action=list&_=' + Date.now();
-    fetch(url, {cache:'no-store'})
+    fetch(url)
       .then(function(r){ return r.json(); })
       .then(function(data){
         if (data && data.ok && Array.isArray(data.rows)){
