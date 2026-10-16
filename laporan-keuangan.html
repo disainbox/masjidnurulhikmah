@@ -261,6 +261,10 @@ td.nom.out{color:var(--accent2)}
   var MONTHS = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
   var records = [];
   var chartB = null, chartK = null, resizeObs = null, rafId = 0;
+  var CACHE_KEY = 'mnh_laporan_keuangan_v1';
+  var CHART_SRC = 'https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.js';
+  var REFRESH_MS = 60000;
+  var lastSig = '', hasData = false, hasLive = false, busy = false, fails = 0, drawn = false, rendered = false;
 
   var $ = function(id){ return document.getElementById(id); };
   var rupiah = function(n){ return 'Rp ' + (Number(n)||0).toLocaleString('id-ID'); };
@@ -281,6 +285,9 @@ td.nom.out{color:var(--accent2)}
     if (!isStyle && cb){ el.onload = cb; el.onerror = function(){ cb(new Error('gagal memuat chart')); }; }
   }
 
+  function jam(){ return new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit',second:'2-digit'}); }
+  function setPill(t){ var e=$('status'); if(e) e.textContent=t; }
+
   function setStatus(text, isErr){
     var s = $('loadStatus');
     if (!s) return;
@@ -293,10 +300,18 @@ td.nom.out{color:var(--accent2)}
     t.textContent = (typeof text==='object' ? text.text : text) || '';
     s.appendChild(t);
     var btn = document.createElement('button'); btn.className='refresh'; btn.textContent='Muat ulang';
-    btn.addEventListener('click', function(){ load(); });
+    btn.addEventListener('click', function(){ load(true); });
     s.appendChild(btn);
-    var statusText = isErr ? 'Terjadi kendala' : 'Live · diperbarui ' + new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
-    $('status').textContent = statusText;
+  }
+
+  function saveCache(rows){
+    try{ localStorage.setItem(CACHE_KEY, JSON.stringify({t:Date.now(), rows:rows})); }catch(e){}
+  }
+  function readCache(){
+    try{
+      var c = JSON.parse(localStorage.getItem(CACHE_KEY)||'null');
+      return (c && Array.isArray(c.rows)) ? c : null;
+    }catch(e){ return null; }
   }
 
   function rekap(){
@@ -390,7 +405,7 @@ td.nom.out{color:var(--accent2)}
           {label:'Pemasukan',data:b.masuk,backgroundColor:'#0d9669',borderRadius:6,maxBarThickness:sb.bar},
           {label:'Pengeluaran',data:b.keluar,backgroundColor:'#d4724a',borderRadius:6,maxBarThickness:sb.bar}
         ]},
-        options:{ responsive:true, maintainAspectRatio:false,
+        options:{ responsive:true, maintainAspectRatio:false, animation:drawn?false:{duration:600},
           plugins:{ legend:{position:'bottom',labels:{font:{family:FONT,size:sb.font,weight:'600'},usePointStyle:true,pointStyle:'circle'}},
             tooltip:{callbacks:{label:function(c){return c.dataset.label+': '+rupiah(c.parsed.y);}}}},
           scales:{
@@ -404,15 +419,17 @@ td.nom.out{color:var(--accent2)}
       chartK = new Chart($('cKategori').getContext('2d'), {
         type:'doughnut',
         data:{ labels:k.labels, datasets:[{data:k.values,backgroundColor:PALETTE.slice(0,k.labels.length),borderWidth:3,borderColor:'#fff'}] },
-        options:{ responsive:true, maintainAspectRatio:false, cutout:sk.cutout,
+        options:{ responsive:true, maintainAspectRatio:false, animation:drawn?false:{duration:600}, cutout:sk.cutout,
           plugins:{ legend:{position:sk.legendRight?'right':'bottom',labels:{font:{family:FONT,size:sk.font,weight:'600'},usePointStyle:true,pointStyle:'circle',boxWidth:10,padding:sk.pad}},
             tooltip:{callbacks:{label:function(c){return c.label+': '+rupiah(c.parsed);}}}} }
       });
     }
+    drawn = true;
     observePanels();
   }
 
   function renderTable(){
+    var tsc=document.querySelector('.table-scroll'), tsTop=tsc?tsc.scrollTop:0;
     var tb=$('tbody'); tb.innerHTML='';
     var list=records.slice().sort(function(a,b){ if(a.tanggal!==b.tanggal)return a.tanggal<b.tanggal?1:-1; return (a.createdAt||0)<(b.createdAt||0)?1:-1; });
     $('tableEmpty').style.display = list.length ? 'none' : 'block';
@@ -429,6 +446,7 @@ td.nom.out{color:var(--accent2)}
       frag.appendChild(tr);
     });
     tb.appendChild(frag);
+    if (tsc) tsc.scrollTop=tsTop;
   }
 
   function renderAll(){
@@ -453,36 +471,84 @@ td.nom.out{color:var(--accent2)}
     }
     $('chartSection').style.display='grid';
     $('tableSection').style.display='block';
+    rendered = true;
     renderTable();
     renderCharts();
     $('footer').textContent='Dimuat otomatis pada '+new Date().toLocaleString('id-ID')+'. Panitia Masjid Nurul Hikmah.';
   }
 
-  function load(){
+  function normalize(rows){
+    return rows.map(function(r){ return { id:r.id, tanggal:r.tanggal, jenis:r.jenis, kategori:r.kategori, keterangan:r.keterangan, jumlah:Number(r.jumlah)||0, pencatat:r.pencatat||'', createdAt:r.createdAt||0 }; });
+  }
+
+  function apply(recs){
+    var sig = JSON.stringify(recs);
+    if (sig === lastSig) return false;       // data sama: tidak perlu render ulang
+    lastSig = sig; records = recs; hasData = true;
+    renderAll();
+    return true;
+  }
+
+  // manual=true  -> tampilkan indikator memuat (tombol "Muat ulang")
+  // manual=false -> pembaruan senyap di latar belakang
+  function load(manual){
+    manual = manual === true;
     if (!MNH_URL){
       setStatus({text:'URL Google Apps Script belum dikonfigurasi. Hubungi admin.'}, true);
       return;
     }
-    setStatus({loading:true,text:'Memuat data laporan...'}, false);
+    if (busy) return;
+    busy = true;
+    if (manual || !hasData) setStatus({loading:true,text:'Memuat data laporan...'}, false);
     var url = MNH_URL + (MNH_URL.indexOf('?')>-1?'&':'?') + 'action=list';
-    fetch(url)
+    var ctrl = ('AbortController' in window) ? new AbortController() : null;
+    var timer = setTimeout(function(){ if (ctrl) ctrl.abort(); }, 30000);
+    fetch(url, ctrl ? {signal:ctrl.signal} : undefined)
       .then(function(r){ return r.json(); })
       .then(function(data){
-        if (data && data.ok && Array.isArray(data.rows)){
-          records = data.rows.map(function(r){ return { id:r.id, tanggal:r.tanggal, jenis:r.jenis, kategori:r.kategori, keterangan:r.keterangan, jumlah:Number(r.jumlah)||0, pencatat:r.pencatat||'', createdAt:r.createdAt||0 }; });
-          setStatus({text:'Menampilkan '+records.length+' transaksi. '}, false);
-          if (window.Chart){ renderAll(); }
-          else { inject('https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.js', false, function(err){ if(err && !window.Chart){ setStatus({text:'Grafik gagal dimuat, tabel tetap tampil.'}, true); } renderAll(); }); }
-        } else {
-          setStatus({text:'Gagal membaca data: '+(data && data.error ? data.error : 'respon tidak valid')}, true);
-        }
+        if (!(data && data.ok && Array.isArray(data.rows))) throw new Error(data && data.error ? data.error : 'respon tidak valid');
+        var recs = normalize(data.rows);
+        saveCache(recs);
+        apply(recs);
+        hasLive = true; fails = 0;
+        setStatus({text:'Menampilkan '+records.length+' transaksi.'}, false);
+        setPill('Live · diperbarui '+jam());
       })
-      .catch(function(){
-        setStatus({text:'Gagal terhubung ke server. Periksa koneksi atau URL Web App.'}, true);
-      });
+      .catch(function(e){
+        fails++;
+        if (!hasData){
+          setStatus({text:'Gagal terhubung ke server. Periksa koneksi atau URL Web App.'}, true);
+          setPill('Terjadi kendala');
+        } else if (manual || fails >= 3){
+          setStatus({text:'Gagal memperbarui, menampilkan data terakhir. Mencoba lagi otomatis.'}, true);
+          setPill('Gagal memperbarui · data terakhir');
+        }
+        // gangguan sesaat saat refresh senyap: biarkan tampilan apa adanya
+      })
+      .then(function(){ clearTimeout(timer); busy = false; });
   }
-  window.load = load;
-  load();
+
+  // 1) muat Chart.js paralel dengan data (tidak menunggu data selesai)
+  if (!window.Chart){
+    inject(CHART_SRC, false, function(err){
+      if (err && !window.Chart){ if (hasData) setStatus({text:'Grafik gagal dimuat, tabel tetap tampil.'}, true); return; }
+      if (rendered) renderCharts();
+    });
+  }
+
+  // 2) tampilkan data tersimpan dari kunjungan sebelumnya segera
+  var cached = readCache();
+  if (cached){
+    apply(normalize(cached.rows));
+    setStatus({text:'Menampilkan '+records.length+' transaksi (data tersimpan). Memperbarui di latar belakang…'}, false);
+    setPill('Data tersimpan · menyegarkan…');
+  }
+
+  // 3) ambil data terbaru, lalu segarkan otomatis tiap 1 menit tanpa indikator
+  load(false);
+  setInterval(function(){ if (!document.hidden) load(false); }, REFRESH_MS);
+  document.addEventListener('visibilitychange', function(){ if (!document.hidden) load(false); });
+  window.load = function(){ load(true); };
 })();
 </script>
 </body>
