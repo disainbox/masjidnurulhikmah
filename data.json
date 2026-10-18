@@ -118,6 +118,19 @@
       "cover": "",
       "content": "<p>Pada tanggal <b>16 Oktober</b>&nbsp;<b>2026</b>, panitia renovasi telah melakukan pencairan dana <b>Termin 2 sebesar Rp 25.000.000</b>.</p><h3 style=\"font-family: &quot;EB Garamond&quot;, Georgia, serif; color: rgb(8, 61, 46);\">Rencana penggunaan dana Termin 2</h3><ul><li>Pembelian material</li><li>Upah tukang dan kenek tahap pembongkaran</li><li>Biaya konsumsi pekerja</li><li>Seluruh pencairan dicatat dan dilaporkan secara transparan di halaman <a href=\"#/keuangan\" style=\"color: rgb(14, 92, 69);\">Laporan Keuangan Publik</a>.</li></ul><p>Doakan agar pekerjaan renovasi berjalan lancar, berkah, dan sesuai rencana.</p>",
       "publishedAt": "2026-10-16T13:06:00.079Z"
+    },
+    {
+      "id": "pmvdgafwx568i",
+      "title": "Renovasi ruang pengimaman",
+      "slug": "renovasi-ruang-pengimaman",
+      "cat": "Renovasi",
+      "date": "2026-10-18",
+      "excerpt": "Ruang pengimaman sedang di renovasi agar nantinya terlihat lebih bagus dan lebih lapang.",
+      "cover": "https://disainbox.github.io/masjidnurulhikmah/fotos/pmvdgafwx568i.jpg",
+      "content": "",
+      "phase": 3,
+      "phaseStatus": "active",
+      "publishedAt": "2026-10-18T06:41:48.834Z"
     }
   ],
   "videos": [
@@ -168,5 +181,5 @@
     "kontakTelp": "0815-7887-9961",
     "kontakEmail": "renovasinurulhikmahnadri@gmail.com"
   },
-  "publishedAt": "2026-10-16T13:09:13.409Z"
+  "publishedAt": "2026-10-18T06:41:48.834Z"
 }
