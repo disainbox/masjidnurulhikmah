@@ -121,16 +121,16 @@
     },
     {
       "id": "pmvdgafwx568i",
-      "title": "Renovasi ruang pengimaman",
-      "slug": "renovasi-ruang-pengimaman",
+      "title": "Renovasi Mihrab",
+      "slug": "renovasi-mihrab",
       "cat": "Renovasi",
       "date": "2026-10-18",
-      "excerpt": "Ruang pengimaman sedang di renovasi agar nantinya terlihat lebih bagus dan lebih lapang.",
+      "excerpt": "Mihrab / ruang pengimaman sedang di renovasi agar nantinya terlihat lebih bagus dan lebih lapang.",
       "cover": "https://disainbox.github.io/masjidnurulhikmah/fotos/pmvdgafwx568i.jpg",
       "content": "",
       "phase": 3,
       "phaseStatus": "active",
-      "publishedAt": "2026-10-18T06:41:48.834Z"
+      "publishedAt": "2026-10-18T10:32:16.168Z"
     }
   ],
   "videos": [
@@ -181,5 +181,5 @@
     "kontakTelp": "0815-7887-9961",
     "kontakEmail": "renovasinurulhikmahnadri@gmail.com"
   },
-  "publishedAt": "2026-10-18T06:41:48.834Z"
+  "publishedAt": "2026-10-18T10:32:16.175Z"
 }
