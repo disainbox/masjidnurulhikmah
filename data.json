@@ -131,6 +131,19 @@
       "phase": 3,
       "phaseStatus": "active",
       "publishedAt": "2026-10-18T10:32:16.168Z"
+    },
+    {
+      "id": "pmviusb2zmmu6",
+      "title": "Pemasangan kayu Reng",
+      "slug": "pemasangan-kayu-reng",
+      "cat": "Renovasi",
+      "date": "2026-10-22",
+      "excerpt": "Pemasangan kayu Reng sedang di kerjakan, di butuhkan ketelitian agar pemasangan kayu bisa terpasang lurus dan rapi dan kayu tidak pecah saat dipaku.",
+      "cover": "https://disainbox.github.io/masjidnurulhikmah/fotos/pmviusb2zmmu6.jpg",
+      "content": "",
+      "phase": 3,
+      "phaseStatus": "active",
+      "publishedAt": "2026-10-22T01:26:59.642Z"
     }
   ],
   "videos": [
@@ -181,5 +194,5 @@
     "kontakTelp": "0815-7887-9961",
     "kontakEmail": "renovasinurulhikmahnadri@gmail.com"
   },
-  "publishedAt": "2026-10-18T10:42:31.059Z"
+  "publishedAt": "2026-10-22T01:26:59.642Z"
 }
