@@ -1227,8 +1227,20 @@ function bindKonfirmasi(){
     var f = e.target.files[0];
     if(!f){ bukti=''; $('kfPreview').style.display='none'; return; }
     var rd = new FileReader();
-    rd.onload = function(ev){ bukti = ev.target.result; $('kfImg').src = bukti; $('kfPreview').style.display='block'; };
-    rd.readAsDataURL(f);
+      rd.onload = function(ev){
+        var img = new Image();
+        img.onload = function(){
+          var maxW=1024, w=img.width, h=img.height;
+          if(w>maxW){ h=Math.round(h*maxW/w); w=maxW; }
+          var cv=document.createElement('canvas'); cv.width=w; cv.height=h;
+          cv.getContext('2d').drawImage(img,0,0,w,h);
+          bukti = cv.toDataURL('image/jpeg',0.7);
+          $('kfImg').src=bukti; $('kfPreview').style.display='block';
+        };
+        img.onerror=function(){ bukti=ev.target.result; $('kfImg').src=bukti; $('kfPreview').style.display='block'; };
+        img.src = ev.target.result;
+      };
+      rd.readAsDataURL(f);
   });
   function tampil(cls, html){ var m=$('kfPesan'); m.className='kf-msg '+cls; m.innerHTML=html; m.style.display='block'; }
   $('kfForm').addEventListener('submit', function(e){
@@ -1243,10 +1255,10 @@ function bindKonfirmasi(){
     if(!nominal || nominal < 100){ tampil('error','⚠️ Isi nominal dengan benar.'); return; }
     if(!bukti){ tampil('error','⚠️ Unggah bukti transaksi terlebih dahulu.'); return; }
     btn.disabled = true; btn.textContent = 'Mengirim...'; $('kfPesan').style.display='none';
-    var URL_WEB_APP = 'https://script.google.com/macros/s/AKfycbx-NV_eO9OCvlxA0DNUxkL2uyr9vu_9Un3Dz2NyE-E-OykhVmgYX3m_Vh9kGQC6Pmf9Dw/exec';
+    var URL_WEB_APP = 'https://script.google.com/macros/s/AKfycbz6CzA5MOAXSNJoWTxNq-vajRxxEYFpDnkUufEm56-XOLwOKTgo4SNik111zXvVgsVSSQ/exec';
     fetch(URL_WEB_APP, {
-      method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({nama:nama, wilayah:wilayah, nominal:nominal, metode:metode, keterangan:keterangan, buktiGambar:bukti})
+      method:'POST', mode:'no-cors', headers:{'Content-Type':'application/x-www-form-urlencoded;charset=utf-8'},
+      body: new URLSearchParams({data: JSON.stringify({nama:nama, wilayah:wilayah, nominal:nominal, metode:metode, keterangan:keterangan, buktiGambar:bukti})}).toString()
     }).then(function(){
       tampil('success','✅ <strong>Terima kasih!</strong> Konfirmasi donasi berhasil dicatat. Semoga Allah membalas kebaikan Anda.');
       $('kfForm').reset(); $('kfNama').disabled=false; $('kfPreview').style.display='none'; bukti='';
