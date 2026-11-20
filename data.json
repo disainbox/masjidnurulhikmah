@@ -144,6 +144,17 @@
       "phase": 3,
       "phaseStatus": "active",
       "publishedAt": "2026-10-22T01:26:59.642Z"
+    },
+    {
+      "id": "pmwp14s0kns6f",
+      "title": "Pencairan Dana Renovasi Termin 3",
+      "slug": "pencairan-dana-renovasi-termin-3",
+      "cat": "Renovasi",
+      "date": "2026-11-20",
+      "excerpt": "Dana untuk pemasangan plafon PVC.",
+      "cover": "",
+      "content": "<span style=\"font-size: 14px;\">Alhamdulillah pada hari ini, Jumat, 20 November 2026 sudah dicairkan Dana Renovasi Termin 3 dari rekening infaq. Dana akan digunakan untuk renovasi tahap berikutnya yaitu pemasangan plafon PVC sesuai dengan rencana kerja renovasi.</span>",
+      "publishedAt": "2026-11-20T13:49:14.047Z"
     }
   ],
   "videos": [
@@ -194,5 +205,5 @@
     "kontakTelp": "0815-7887-9961",
     "kontakEmail": "renovasinurulhikmahnadri@gmail.com"
   },
-  "publishedAt": "2026-10-22T01:26:59.642Z"
+  "publishedAt": "2026-11-20T13:49:14.051Z"
 }
