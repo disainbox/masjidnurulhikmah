@@ -66,8 +66,9 @@
       "cover": "https://disainbox.github.io/masjidnurulhikmah/fotos/pmv0y6sny6ffj.jpg",
       "content": "<p class=\"isSelectedEnd\">Renovasi Masjid Jami’ Nurul Hikmah yang berlokasi di Dusun Nadri, RT 02 RW 02, Desa Krendetan, Kecamatan Bagelen, Kabupaten Purworejo, resmi dimulai pada tanggal <strong>26 September 2026</strong>. Kegiatan diawali dengan pembongkaran atap masjid yang dilaksanakan secara gotong royong oleh warga dan masyarakat sekitar. Dengan penuh semangat kebersamaan, warga bahu-membahu melakukan pekerjaan awal sebagai langkah nyata dalam mewujudkan bangunan masjid yang lebih baik, nyaman, dan layak untuk digunakan sebagai tempat beribadah.</p><p>Dimulainya renovasi ini menjadi wujud kepedulian dan kebersamaan masyarakat dalam menjaga serta meningkatkan kualitas sarana ibadah bagi umat Islam di Dusun Nadri dan sekitarnya. Panitia renovasi berharap seluruh rangkaian pembangunan dapat berjalan lancar, aman, dan sesuai dengan rencana berkat dukungan para donatur, partisipasi warga, serta doa dari seluruh masyarakat. Semangat gotong royong yang ditunjukkan sejak hari pertama diharapkan terus terjaga hingga renovasi selesai, sehingga Masjid Jami’ Nurul Hikmah dapat semakin optimal dalam mendukung kegiatan ibadah, keagamaan, dan pembinaan generasi muda.</p>",
       "phase": 3,
-      "phaseStatus": "active",
-      "phaseDate": "26 Sep 20226"
+      "phaseStatus": "done",
+      "phaseDate": "26 Sep 20226",
+      "publishedAt": "2026-11-20T13:54:58.968Z"
     },
     {
       "id": "pmv3oja1wm4f4",
@@ -205,5 +206,5 @@
     "kontakTelp": "0815-7887-9961",
     "kontakEmail": "renovasinurulhikmahnadri@gmail.com"
   },
-  "publishedAt": "2026-11-20T13:54:41.730Z"
+  "publishedAt": "2026-11-20T13:54:58.968Z"
 }
