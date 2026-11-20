@@ -1255,7 +1255,7 @@ function bindKonfirmasi(){
     if(!nominal || nominal < 100){ tampil('error','⚠️ Isi nominal dengan benar.'); return; }
     if(!bukti){ tampil('error','⚠️ Unggah bukti transaksi terlebih dahulu.'); return; }
     btn.disabled = true; btn.textContent = 'Mengirim...'; $('kfPesan').style.display='none';
-    var URL_WEB_APP = 'https://script.google.com/macros/s/AKfycbz6CzA5MOAXSNJoWTxNq-vajRxxEYFpDnkUufEm56-XOLwOKTgo4SNik111zXvVgsVSSQ/exec';
+    var URL_WEB_APP = 'https://script.google.com/macros/s/AKfycbzbuzDZRkCSEgcm8Pb-WBsQo9e_0QqlaWh44ezuGuZGmCTuUW59HuI984bsCjhTK2fe7g/exec';
     fetch(URL_WEB_APP, {
       method:'POST', mode:'no-cors', headers:{'Content-Type':'application/x-www-form-urlencoded;charset=utf-8'},
       body: new URLSearchParams({data: JSON.stringify({nama:nama, wilayah:wilayah, nominal:nominal, metode:metode, keterangan:keterangan, buktiGambar:bukti})}).toString()
