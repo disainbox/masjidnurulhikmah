@@ -413,18 +413,36 @@ td.met{white-space:nowrap}
     return out.length? out : SNAPSHOT.pencairan;
   }
 
+  // Normalisasi nama donatur agar hitungan unik konsisten otomatis:
+  // huruf kecil, spasi berlebih & tanda baca dibuang, ejaan 'infak/infaq' disamakan.
+  function normNameKey(n){
+    return String(n||'').toLowerCase()
+      .replace(/[^a-z0-9\s]/g,' ')
+      .replace(/\s+/g,' ').trim()
+      .replace(/kotak\s+inf(ak|aq)/g,'kotak infaq');
+  }
+  var ANON_RE=/hamba allah/i;
+  // Bukan donatur pribadi (entri rekap/cetak saldo panitia): tetap masuk total & tabel,
+  // tetapi tidak dihitung sebagai donatur unik.
+  var INTERNAL_KEYS={'print rek':1};
+
   function compute(detail, pc){
-    var total=0, methods={}, cities={}, months={}, names={}, anon=0, dmin=null, dmax=null;
+    var total=0, methods={}, cities={}, months={}, names={}, anon=0, internal=0, dmin=null, dmax=null;
     detail.forEach(function(r){
       total+=r.nominal;
       methods[r.metode]=(methods[r.metode]||0)+r.nominal;
       var ck=r.kota||'Tidak dicantumkan'; cities[ck]=(cities[ck]||0)+r.nominal;
       if(r.t){var mk=r.t.slice(0,7); months[mk]=(months[mk]||0)+r.nominal;}
-      if(r.nama){names[r.nama]=1; if(/hamba allah/i.test(r.nama))anon++;}
+      if(r.nama){
+        var key=normNameKey(r.nama);
+        if(ANON_RE.test(r.nama)){ anon++; }
+        else if(INTERNAL_KEYS[key]){ internal++; }
+        else { names[key]=1; }
+      }
       if(r.t){var d=new Date(r.t); if(!dmin||d<dmin)dmin=d; if(!dmax||d>dmax)dmax=d;}
     });
     return {total:total, count:detail.length, methods:methods, cities:cities, months:months,
-      donors:Object.keys(names).length, anon:anon, dmin:dmin, dmax:dmax, pc:pc,
+      donors:Object.keys(names).length, anon:anon, internal:internal, dmin:dmin, dmax:dmax, pc:pc,
       cair:pc.reduce(function(a,p){return a+p.jumlah;},0)};
   }
 
@@ -435,8 +453,10 @@ td.met{white-space:nowrap}
     document.getElementById('kpiOut').textContent=fmtRp(cair);
     document.getElementById('kpiOutSub').textContent=pc.length+' kali pencairan ('+pc.map(function(p){return p.ket.replace(/^Pencairan\s*/i,'');}).join(' + ')+')';
     document.getElementById('kpiBalance').textContent=fmtRp(saldo);
-    document.getElementById('kpiDonors').textContent=st.donors+' orang';
-    document.getElementById('kpiAnonim').textContent=st.anon+' di antaranya donatur anonim (Hamba Allah)';
+    document.getElementById('kpiDonors').textContent=st.donors+' donatur';
+    var anonTxt=st.anon+' entri donasi anonim (Hamba Allah)';
+    if(st.internal>0) anonTxt+=' · '+st.internal+' catatan non-donasi dilewati';
+    document.getElementById('kpiAnonim').textContent=anonTxt;
     var pct=st.total>0? Math.min(100, cair/st.total*100):0;
     document.getElementById('outPct').textContent=pct.toFixed(1).replace('.',',')+'%';
     setTimeout(function(){document.getElementById('outBar').style.width=pct+'%';},100);
